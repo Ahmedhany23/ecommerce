@@ -1,0 +1,30 @@
+.swiper-button-next,
+.swiper-button-prev
+{
+  padding: 12px 16px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-100%);
+  cursor: pointer;
+  border: none;
+  border-radius: 20px;
+  color: var(--white);
+  font-size: 2em;
+  z-index: 5;
+  transition: transform 0.3 ease;
+}
+
+.swiper-button-next {
+    right: 1px;
+  }
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    background-color: var(--blue-medium);
+  }
+  .swiper-button-disabled {
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s ease-in-out;
+  }
+
+
