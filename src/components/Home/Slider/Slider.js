@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import "./slider.css";
 //images
-import image1 from "@/app/images/image.webp";
-import image2 from "@/app/images/image2.webp";
-import image3 from "@/app/images/image3.webp";
+import image1 from "../../../app/images/Image.webp";
+import image2 from "../../../app/images/image2.webp";
+import image3 from "../../../app/images/image3.webp";
 
 
 import { Swiper, SwiperSlide } from "swiper/react";

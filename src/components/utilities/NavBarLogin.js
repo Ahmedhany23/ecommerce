@@ -1,10 +1,11 @@
+import Link from "next/link";
 import { IoIosLogIn } from "react-icons/io";
 import { LuShoppingCart } from "react-icons/lu";
 export default function NavBarLogin() {
   return (
     <header className="bg-white dark:bg-gray-900 ">
-      <div className="mx-auto flex h-16 max-w-screen-xl items-center justify-between gap-8 px-4 sm:px-6 lg:px-8">
-        <a className="block text-teal-600 dark:text-teal-300" href="#">
+      <div className="mx-auto flex h-16 container items-center justify-between gap-8 px-4 sm:px-6 lg:px-8">
+        <Link className="block text-teal-600 dark:text-teal-300" href="/">
           <svg
             id="logo-39"
             width="50"
@@ -33,7 +34,7 @@ export default function NavBarLogin() {
               fill-opacity="0.3"
             ></path>
           </svg>
-        </a>
+        </Link>
 
         <div className="hidden md:block w-full">
           <input
@@ -47,13 +48,13 @@ export default function NavBarLogin() {
 
         <div className="flex items-center gap-4">
           <div className="sm:flex sm:gap-4">
-            <a
+            <Link
               className="flex items-center gap-2 rounded-md bg-[#4F46E5] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#A5B4FC] dark:hover:bg-[#A5B4FC]"
-              href="#"
+              href='/Auth/login'
             >
               <IoIosLogIn className="text-lg" />
               Login
-            </a>
+            </Link>
 
             <a
               className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-600/75 sm:flex sm:items-center sm:gap-2 dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
