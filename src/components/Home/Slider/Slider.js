@@ -33,18 +33,18 @@ export default function Slider() {
         pagination={true}
         autoplay
         style={{
-          "--swiper-pagination-color": "#FFBA08",
+          "--swiper-pagination-color": "black",
           "--swiper-pagination-bullet-inactive-color": "#999999",
           "--swiper-pagination-bullet-inactive-opacity": "1",
-          "--swiper-pagination-bullet-size": "16px",
+          "--swiper-pagination-bullet-size": "12px",
           "--swiper-pagination-bullet-horizontal-gap": "6px",
         }}
-        className="w-full "
+        className="w-full h-[200px]  lg:h-full"
       >
         {sliderimage &&
           sliderimage.map((s) => (
-            <SwiperSlide key={s.img} className=" w-full  ">
-              <Image src={s.img} alt={s.img} className="w-full" />
+            <SwiperSlide key={s.img} className=" w-full h-full ">
+              <Image src={s.img} alt={s.img} className="w-full h-full" />
             </SwiperSlide>
           ))}
       </Swiper>
