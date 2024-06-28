@@ -3,7 +3,7 @@ import "./style.css"
 export default function CategoryHeader() {
   return (
     <header className=' w-full  dark:bg-slate-950 py-6'>
-        <ul className=' container  mx-auto flex gap-10  dark:text-white text-lg'>
+        <ul className=' container   mx-auto grid grid-cols-1 sm:grid-cols-6 gap-6 md:gap-10  dark:text-white text-lg'>
             <li>All</li>
             <li>Clothes</li>
             <li>Beauty</li>

@@ -11,7 +11,7 @@ export default function SearchCountResult({ count = 6 }) {
   return (
     <div className="container mx-auto flex justify-between">
       <div className="count">
-        <p className="text-white text-xl">{count} Products</p>
+        <p className="text-white text-xl">{count} search results</p>
       </div>
       <div className="relative">
         <div
