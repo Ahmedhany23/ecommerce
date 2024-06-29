@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+--maincolor: #4F46E5;
+}
