@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
-import iphone from "../../app/images/iphone.png";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Navigation, A11y } from "swiper/modules";
 
-export default function ProductGallery() {
+export default function ProductGallery({products}) {
   return (
     <div className="flex justify-center items-center h-full">
       <Swiper
@@ -17,9 +17,14 @@ export default function ProductGallery() {
         Navigation={true}
         className="w-[370px] h-[470px!important] bg-white rounded-md"
       >
-        <SwiperSlide className="">
-          <Image src={iphone} alt="iphone"  className="w-full"/>
+      {
+        products && products.map((product,index)=>(
+          <SwiperSlide className="" key={index}>
+          <Image src={product.attributes.images.data[index].attributes.url} alt="iphone"  width={1000} height={1000} className="w-full"/>
         </SwiperSlide>
+        ))
+      }
+        
       </Swiper>
     </div>
   );

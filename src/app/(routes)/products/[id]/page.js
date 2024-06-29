@@ -1,8 +1,10 @@
+
 import CategoryHeader from "@/components/Category/CategoryHeader";
 import ProductDetailsComponent from "@/components/Product/ProductDetails";
 import RateContainer from "@/components/Rate/RateContainer";
 
 export default function ProductDetails() {
+
   return (
     <main className="dark:bg-slate-900 h-full">
     <CategoryHeader/>
