@@ -18,7 +18,7 @@ const Category = [
 export default function HomeCategory() {
   return (
     <div className="container mx-auto dark:bg-slate-900 py-20 relative">
-      <Subtitle title={"Categories"} btnTitle={"See More"} path="/Category/categories" />
+      <Subtitle title={"Categories"} />
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 text-center items-center place-content-center lg:ml-10">
         {Category &&
