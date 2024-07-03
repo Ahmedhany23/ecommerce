@@ -3,13 +3,13 @@ import { LiaStarSolid } from "react-icons/lia";
 import ReactStars from "react-rating-stars-component";
 export default function RateContainer() {
   return (
-    <div className="w-full dark:bg-slate-800 shadow-sm shadow-gray-400 px-10 text-white">
+    <div className="w-full shadow-sm shadow-gray-400 px-10 text-ltext">
       <h3 className=" text-2xl border-b py-8 font-bold">
         Product Ratings & Reviews
       </h3>
       <p className="pt-10 text-xl font-semibold">Overall Rating</p>
       <p className="mt-1 text-3xl font-semibold ">4.7</p>
-      <div className="text-[var(--maincolor)] text-lg flex gap-1 ">
+      <div className="text-laccent text-lg flex gap-1 ">
         <LiaStarSolid />
         <LiaStarSolid />
         <LiaStarSolid />
@@ -23,7 +23,7 @@ export default function RateContainer() {
           <ReactStars
             count={5}
             size={24}
-            activeColor="#4F46E5"/>
+            activeColor="#2cb67d"/>
         </div>
         <textarea name="" id="" className="rounded-md w-full min-h-[40px] text-black p-1 outline-[var(--maincolor)]"></textarea>
 

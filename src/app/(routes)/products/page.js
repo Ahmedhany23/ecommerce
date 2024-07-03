@@ -8,7 +8,7 @@ import SideFilter from "@/components/utilities/SideFilter";
 
 export default function Product() {
   return (
-    <main className="h-full dark:bg-slate-900">
+    <main className="h-full bg-lbackground">
       <CategoryHeader />
       <div className="py-10 relative container mx-auto">
         <SearchCountResult count={300} />

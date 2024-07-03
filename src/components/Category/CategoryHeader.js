@@ -1,15 +1,14 @@
 import React from 'react'
-import "./style.css"
 export default function CategoryHeader() {
   return (
-    <header className=' w-full  dark:bg-slate-950 py-6'>
-        <ul className=' container   mx-auto grid grid-cols-1  sm:flex sm: gap-6   dark:text-white text-lg'>
-            <li>All</li>
-            <li>Clothes</li>
-            <li>Beauty</li>
-            <li>Laptops</li>
-            <li>Sale</li>
-            <li>Kitchen</li>
+    <header className=' w-full bg-lsecondary py-6'>
+        <ul className=' container   mx-auto grid grid-cols-1  sm:flex sm: gap-6  text-ltext   text-lg'>
+            <li className='hover:text-laccent'>All</li>
+            <li className='hover:text-laccent'>Clothes</li>
+            <li className='hover:text-laccent'>Beauty</li>
+            <li className='hover:text-laccent'>Laptops</li>
+            <li className='hover:text-laccent'>Sale</li>
+            <li className='hover:text-laccent'>Kitchen</li>
         </ul>
     </header>
   )

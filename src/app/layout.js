@@ -1,12 +1,12 @@
-import { Roboto } from "next/font/google";
+import { Rajdhani } from "next/font/google";
 import "./globals.css";
 import NavBarLogin from "../components/utilities/NavBarLogin";
 
-const roboto = Roboto({
-  weight: ['400', '700'],
-  style: ['normal', 'italic'],
+const roboto = Rajdhani({
+  weight: ['400'],
+
   subsets: ['latin'],
-  display: 'swap',
+ 
 })
 
 export const metadata = {

@@ -1,31 +1,49 @@
 "use client";
 import Image from "next/image";
+import { useState } from "react";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { Navigation, A11y } from "swiper/modules";
+export default function ProductGallery({ products }) {
+  const [index, setIndex] = useState(0);
 
-export default function ProductGallery({products}) {
+  const handleclickImage = (i) => {
+    setIndex(i);
+  };
+
   return (
-    <div className="flex justify-center items-center h-full">
-      <Swiper
-        spaceBetween={0}
-        slidesPerView="auto"
-        modules={[Navigation, A11y]}
-        speed={700}
-        loop
-        Navigation={true}
-        className="w-[370px] h-[470px!important] bg-white rounded-md"
-      >
-      {
-        products && products.map((product,index)=>(
-          <SwiperSlide className="" key={index}>
-          <Image src={product.attributes.images.data[index].attributes.url} alt="iphone"  width={1000} height={1000} className="w-full"/>
-        </SwiperSlide>
-        ))
-      }
-        
-      </Swiper>
+    <div className="flex">
+      {products &&
+        products.map((product, productIndex) => (
+          <div key={product.id || productIndex} className="flex flex-col gap-3">
+            {product.attributes.images.data.map((image, imgIndex) => (
+              <div
+                key={image.id}
+                className="w-[76px] h-[103.7px] border rounded-md border-laccent cursor-pointer hover:scale-95"
+                onClick={() => handleclickImage(imgIndex)}
+              >
+                <Image
+                  src={image.attributes.url}
+                  alt={`Product Image ${imgIndex + 1}`}
+                  width={1000}
+                  height={1000}
+                  priority
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+      <div className="w-[370px] h-[470px!important] bg-transparent rounded-md">
+        {products &&
+          products.map((product, productIndex) => (
+            <Image
+              key={`main-image-${product.id || productIndex}`}
+              src={product.attributes.images.data[index].attributes.url}
+              alt={`Product Image ${productIndex + 1}`}
+              width={1000}
+              height={1000}
+              priority
+            />
+          ))}
+      </div>
     </div>
   );
 }

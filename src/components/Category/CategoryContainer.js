@@ -19,7 +19,7 @@ export default function CategorieContainer() {
  
 
     <div className='mx-auto md:px-2 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-10 items-center place-content-center'>
-    {Category && (Category.map((c)=>(<CategoryCard key={c.title} img={c.img} title={c.title}/>)))}
+    {Category && (Category.map((c,i)=>(<CategoryCard key={i} img={c.img} title={c.title}/>)))}
     
     
     </div>

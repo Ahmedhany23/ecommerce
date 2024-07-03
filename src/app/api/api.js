@@ -3,7 +3,7 @@ import axios from 'axios';
 const api = axios.create({
     baseURL: "http://localhost:1337/api/",
     headers: {
-        "Content-Type": "Media",
+        "Content-Type": "application/json",
     },
     params: {
         "api_key": process.env.strapi_api_token,

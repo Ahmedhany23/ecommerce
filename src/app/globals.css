@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 :root{
---maincolor: #4F46E5;
+--light-text: #fffffe;
+--light-background: #16161a;
+--light-primary: #16161a;
+--light-secondary:#72757e;
+--light-accent:#2cb67d;
 }

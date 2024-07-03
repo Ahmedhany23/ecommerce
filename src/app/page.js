@@ -1,5 +1,5 @@
+"use client"
 
-import BrandFeatured from "@/components/Brand/BrandFeatured";
 import DiscountSection from "@/components/Home/DiscountSection";
 import HomeCategory from "@/components/Home/HomeCategory";
 import RecommendedSection from "@/components/Home/RecommendedSection";
@@ -12,12 +12,12 @@ export default function Home() {
    
 
   return (
-    <main className=" bg-white dark:bg-slate-900">
+    <main className=" bg-lbackground dark:bg-dbackground">
       <Slider />
       <HomeCategory />
-      <BrandFeatured title={"Brands"} />
       {/* Recommended for you */}
       <RecommendedSection/>
+      {/* Discount */}
       <DiscountSection />
       <ProductComponent title={"Electronics"} btnTitle={"See More"} />
       <ProductComponent title={"Home & kitchen"} btnTitle={"See More"} />
