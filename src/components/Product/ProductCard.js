@@ -5,7 +5,7 @@ import { IoStar } from "react-icons/io5";
 import { MdAddShoppingCart } from "react-icons/md";
 export default function ProductCard({ image, description, price, rate, id }) {
   return (
-    <div className=" mx-auto w-[230px] sm:w-[240px] rounded-md shadow-xl  bg-lsecondary pb-5">
+    <div className=" mx-auto w-[230px] sm:w-[240px] rounded-md shadow-xl  bg-lsecondary pb-5 ">
       {image ? (
         <>
           <div className="relative px-2">
@@ -13,7 +13,7 @@ export default function ProductCard({ image, description, price, rate, id }) {
               <Image
                 src={image}
                 alt="image"
-                className=""
+                className="h-[300px]"
                 width={2000}
                 height={2000}
               />
@@ -30,7 +30,7 @@ export default function ProductCard({ image, description, price, rate, id }) {
           </div>
           <div className="px-2 flex flex-col">
             <p className="font-medium max-w-lg text-ltext hover:text-laccent duration-200 ">
-              <Link href={`products/${id}`}>{description}</Link>
+              <Link href={`products/${id}`}>{`${description.slice(0,50)}..`}</Link>
             </p>
             <p className="font-semibold text-lg text-ltext">
               <span className="font-thin text-sm mr-1">EGP</span>

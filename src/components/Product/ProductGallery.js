@@ -10,7 +10,7 @@ export default function ProductGallery({ products }) {
   };
 
   return (
-    <div className="flex">
+    <div className="flex gap-3">
       {products &&
         products.map((product, productIndex) => (
           <div key={product.id || productIndex} className="flex flex-col gap-3">

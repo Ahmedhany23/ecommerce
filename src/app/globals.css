@@ -2,10 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
---light-text: #fffffe;
---light-background: #16161a;
---light-primary: #16161a;
---light-secondary:#72757e;
---light-accent:#2cb67d;
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+:root {
+  --light-text: #fffffe;
+  --light-background: #16161a;
+  --light-primary: #16161a;
+  --light-secondary: #72757e;
+  --light-accent: #2cb67d;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--light-background);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--light-secondary);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--light-accent);
 }

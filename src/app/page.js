@@ -19,8 +19,8 @@ export default function Home() {
       <RecommendedSection/>
       {/* Discount */}
       <DiscountSection />
-      <ProductComponent title={"Electronics"} btnTitle={"See More"} />
-      <ProductComponent title={"Home & kitchen"} btnTitle={"See More"} />
+    {/*   <ProductComponent title={"Electronics"} btnTitle={"See More"} />
+      <ProductComponent title={"Home & kitchen"} btnTitle={"See More"} /> */}
     </main>
   );
 }

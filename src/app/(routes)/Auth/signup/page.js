@@ -3,7 +3,7 @@ import Link from "next/link"
 export default function Signup() {
   return (
     <main className="bg-lbackground h-screen flex py-32 justify-center ">
-    <form className="flex flex-col   gap-10 w-[400px] h-fit py-10">
+    <form className="flex flex-col w-full px-4 sm:px-0    gap-10 sm:w-[400px] h-fit py-10">
       <h1 className="text-laccent text-3xl font-bold  text-center">
         Signup
       </h1>
