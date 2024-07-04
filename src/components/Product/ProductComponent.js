@@ -55,7 +55,7 @@ export default function ProductComponent({ title, btnTitle, path, products }) {
                   slidesPerView: 5,
                 },
                 1700: {
-                  slidesPerView: 6,
+                  slidesPerView: 5,
                 },
               }}
               modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}

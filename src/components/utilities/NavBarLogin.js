@@ -2,11 +2,7 @@ import Link from "next/link";
 import { IoIosLogIn } from "react-icons/io";
 import { LuShoppingCart } from "react-icons/lu";
 
-
-
 export default function NavBarLogin() {
-
-
   return (
     <header className="bg-lbackground ">
       <div className="mx-auto flex h-16 container items-center justify-between gap-8 px-4 sm:px-6 lg:px-8">
@@ -21,7 +17,6 @@ export default function NavBarLogin() {
           >
             <path
               d="M25.0001 0L50 15.0098V24.9863L25.0001 40L0 24.9863V15.0099L25.0001 0Z"
-           
               className="ccompli2"
             ></path>
             <path
@@ -51,7 +46,7 @@ export default function NavBarLogin() {
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="sm:flex sm:gap-4">
+          <div className="flex gap-4">
             <Link
               className="flex items-center gap-2 rounded-md bg-lsecondary px-5 py-2.5 text-sm font-medium text-white transition  hover:bg-laccent "
               href="/Auth/login"
@@ -61,31 +56,13 @@ export default function NavBarLogin() {
             </Link>
 
             <a
-              className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium hover:bg-lsecondary hover:text-ltext sm:flex sm:items-center sm:gap-2 "
+              className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium hover:bg-lsecondary hover:text-ltext flex items-center sm:gap-2 "
               href="#"
             >
               <LuShoppingCart className="text-lg" />
               Cart
             </a>
           </div>
-
-          <button className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden dark:bg-gray-800 dark:text-white dark:hover:text-white/75">
-            <span className="sr-only">Toggle menu</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
         </div>
       </div>
     </header>
