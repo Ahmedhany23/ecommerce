@@ -8,7 +8,7 @@ export default function NavBarComponent() {
   const [isLogged, setIsLogged] = useState(false)
   const [isLoading , setIsLoading] = useState(true)
   const [username, setUsername] = useState("")
-/*   const Userlogged = useSelector((state)=>state.authReducer.logged)
+  const Userlogged = useSelector((state)=>state.authReducer.logged)
   const UserProfile = useSelector((state)=>state.authReducer.user)
   useEffect(() => {
     setIsLogged(Userlogged);
@@ -20,7 +20,7 @@ export default function NavBarComponent() {
       setIsLoading(false)
       setUsername(UserProfile.user.username)
     }
-  }, [Userlogged, UserProfile]); */
+  }, [Userlogged, UserProfile]);
   
  if(isLogged){
   return <NavBarUser username={username} isLoading={isLoading}/>

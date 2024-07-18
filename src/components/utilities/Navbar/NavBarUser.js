@@ -3,6 +3,7 @@ import Loading from "@/app/Loading";
 import Link from "next/link";
 import { CgProfile } from "react-icons/cg";
 import { LuShoppingCart } from "react-icons/lu";
+import SearchProduct from "../SearchProduct";
 
 export default function NavBarUser({ username, isLoading }) {
   return (
@@ -37,15 +38,7 @@ export default function NavBarUser({ username, isLoading }) {
           </svg>
         </Link>
 
-        <div className="hidden md:block w-full">
-          <input
-            type="search"
-            name="search"
-            className="w-full px-2 outline-none py-1"
-            id=""
-            placeholder="search.."
-          />
-        </div>
+        <SearchProduct/>
 
         <div className="flex items-center gap-4">
           <div className="flex gap-4">

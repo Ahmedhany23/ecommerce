@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { IoIosLogIn } from "react-icons/io";
 import { LuShoppingCart } from "react-icons/lu";
+import SearchProduct from "../SearchProduct";
 
 export default function NavBarLogin() {
   return (
@@ -36,15 +37,7 @@ export default function NavBarLogin() {
           </svg>
         </Link>
 
-        <div className="hidden md:block w-full">
-          <input
-            type="search"
-            name="search"
-            className="w-full px-2 outline-none py-1"
-            id=""
-            placeholder="search.."
-          />
-        </div>
+        <SearchProduct/>
 
         <div className="flex items-center gap-4">
           <div className="flex gap-4">

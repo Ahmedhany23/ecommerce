@@ -3,7 +3,7 @@ import { useState } from "react";
 
 //icons
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-export default function SearchCountResult({ count = 6 }) {
+export default function SearchCountResult({ count }) {
   const [isClicked, setIsClicked] = useState(false);
   const handleDropMenu = () => {
     setIsClicked(!isClicked);
