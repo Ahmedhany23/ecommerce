@@ -1,6 +1,6 @@
-import axios from 'axios';
+/* import axios from 'axios';
 
-const api = axios.create({
+export const api = axios.create({
     baseURL: "http://localhost:1337/api/",
     headers: {
         "Content-Type": "application/json",
@@ -10,4 +10,4 @@ const api = axios.create({
     },
 });
 
-export default api;
+export default api; */

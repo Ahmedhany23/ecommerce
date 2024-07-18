@@ -18,16 +18,11 @@ import "./style.css";
 import Loading from "@/app/Loading";
 export default function ProductComponent({ title, btnTitle, path, products }) {
   useEffect(() => {}, [products]);
-
-  if(!products){
-    return <Loading/>
-  }
-
   if (products) {
     return (
       <div className="py-10 container mx-auto flex flex-col justify-center  ">
         <Subtitle title={title} btnTitle={btnTitle} path={path} />
-        {products?.length >= 1 && (
+        {products?.length >= 1 ? (
           <div className="relative">
             <div className="swiper-button-next">
               <IoIosArrowForward />
@@ -82,6 +77,8 @@ export default function ProductComponent({ title, btnTitle, path, products }) {
               ))}
             </Swiper>
           </div>
+        ) : (
+          <Loading />
         )}
       </div>
     );

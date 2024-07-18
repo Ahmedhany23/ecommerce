@@ -5,7 +5,7 @@ export default function CategoryCard({img,title}) {
     <div className=' my-4 flex flex-col  gap-5 '>
         <div className='mb-3 relative flex flex-col items-center'>
             <div className='  rounded-full w-36 h-36 relative bg-lsecondary flex items-center text-center justify-center '>
-            <Image src={img} alt="image" className=" max-w-[120px] maw-h-[100px]  " width={1000} height={1000} />
+            <Image src={img} alt="image" className=" max-w-[120px] maw-h-[100px]  " width={1000} height={1000}  priority/>
             </div>
            
             <p className="text-ltext text-lg text-center ">{title}</p>

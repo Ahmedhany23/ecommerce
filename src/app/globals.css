@@ -2,13 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  height: 100%;
-}
-
 :root {
   --light-text: #fffffe;
   --light-background: #16161a;

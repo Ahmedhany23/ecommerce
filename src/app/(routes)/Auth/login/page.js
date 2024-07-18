@@ -1,13 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Link from "next/link";
-import { login } from "@/app/api/Auth/login";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { getUser } from "@/app/redux/actions/authAction";
+import { useDispatch,useSelector } from "react-redux";
+
 
 export default function LoginPage() {
   const [confirmed, setConfirmed] = useState(false);
   const [error, setError] = useState(null);
+  const dispatch =useDispatch();
 
   const router = useRouter();
 
@@ -16,23 +19,22 @@ export default function LoginPage() {
 
     const formData = new FormData(event.target);
     const jsonData = Object.fromEntries(formData);
-
-    const loginUser = await login(jsonData);
-
-    if (loginUser.error) {
-      setError(loginUser.error);
+    dispatch(getUser(jsonData))
+  };
+  const User = useSelector((state)=>state.authReducer.user)
+  useEffect(()=>{
+    if (User.error) {
+      setError(User.error);
       return;
     }
-
-    if (loginUser.user && loginUser.jwt) {
+    if (User.user && User.jwt) {
       setConfirmed(true);
       setTimeout(() => {
         router.push("/");
       }, 2000);
       clearTimeout();
     }
-  };
-
+  },[User,router])
   return (
     <main className="bg-lbackground h-screen flex py-32 justify-center relative">
       <form

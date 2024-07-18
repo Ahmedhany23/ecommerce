@@ -1,19 +1,20 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import Loading from "@/app/Loading";
 
 import ProductCard from "./ProductCard";
+
 export default function ProductContainer({products}) {
+
+
     useEffect(() => {}, [products]);
-    if(!products){
-        return <Loading/>
-      }
-    if (products) {
+  
+    
         return (
           <div className="py-10 container mx-auto   ">
            
-            {products?.length >= 1 && (
-              <div className="grid gap-10  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+            {products?.length >= 1 ? (
+              <div className="grid gap-10  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 place-items-center justify-items-center">
                 
                   {products.map((product, index) => (
                     <div
@@ -31,8 +32,8 @@ export default function ProductContainer({products}) {
                   ))}
               
               </div>
-            )}
+            ): <Loading/>}
           </div>
         );
-      }
+   
     }

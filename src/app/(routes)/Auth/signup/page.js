@@ -1,38 +1,42 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
-import { signup } from "@/app/api/Auth/signup";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { CreateUser } from "@/app/redux/actions/authAction";
+import { useDispatch,useSelector } from "react-redux";
 
 export default function Signup() {
   const [confirmed, setConfirmed] = useState(false);
   const [error, setError] = useState(null);
+  const dispatch =useDispatch();
 
   const router = useRouter();
 
   const handleSignup = async (event) => {
     event.preventDefault();
-
     const formData = new FormData(event.target);
     const jsonData = Object.fromEntries(formData);
-
-    const loginUser = await signup(jsonData);
-
-    if (loginUser.error) {
-      setError(loginUser.error);
-      return;
-    }
-
-    if (loginUser.user && loginUser.jwt) {
-      setConfirmed(true);
-      setTimeout(() => {
-        router.push("/Auth/login");
-      }, 3000);
-      clearTimeout();
-    }
+    dispatch(CreateUser(jsonData))
   };
+    const Newuser = useSelector((state)=>state.authReducer.newUser)
 
+    useEffect(()=>{
+      if (Newuser.error) {
+        setError(Newuser.error);
+        return;
+      }
+    
+      if (Newuser.user && Newuser.jwt) {
+        setConfirmed(true);
+        setTimeout(() => {
+          router.push("/Auth/login");
+        }, 3000);
+        clearTimeout();
+      }
+    
+    },[Newuser,router])
+  
   return (
     <main className=" relative bg-lbackground h-screen flex py-32 justify-center ">
       <form
@@ -82,7 +86,7 @@ export default function Signup() {
           animate={{ x: 0 }}
           className="text-laccent  absolute top-6 left-0 px-10 py-4 bg-ltext"
         >
-          Login Success
+           Account Created
         </motion.div>
       )}
     </main>

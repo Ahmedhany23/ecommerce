@@ -23,13 +23,13 @@ import Loading from "@/app/Loading";
 
 export default function Slider() {
   const [sliderImages, setSliderimages] = useState(null);
-  useEffect(() => {
+/*   useEffect(() => {
     const fetchData = async () => {
       const ImagesResponse = await getMainImage();
       setSliderimages(ImagesResponse.data);
     };
     fetchData();
-  }, []);
+  }, []); */
   return (
     <div className="w-full relative container mx-auto">
       {sliderImages ? (

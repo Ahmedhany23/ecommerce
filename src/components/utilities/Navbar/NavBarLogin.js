@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { IoIosLogIn } from "react-icons/io";
 import { LuShoppingCart } from "react-icons/lu";
@@ -55,13 +56,13 @@ export default function NavBarLogin() {
               Login
             </Link>
 
-            <a
+            <Link
               className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium hover:bg-lsecondary hover:text-ltext flex items-center sm:gap-2 "
-              href="#"
+              href="/cart"
             >
               <LuShoppingCart className="text-lg" />
               Cart
-            </a>
+            </Link>
           </div>
         </div>
       </div>

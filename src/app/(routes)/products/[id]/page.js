@@ -1,4 +1,4 @@
-
+"use client"
 import CategoryHeader from "@/components/Category/CategoryHeader";
 import ProductDetailsComponent from "@/components/Product/ProductDetails";
 import RateContainer from "@/components/Rate/RateContainer";

@@ -7,23 +7,14 @@ import Pagination from "@/components/utilities/Pagination";
 import SearchCountResult from "@/components/utilities/SearchCountResult";
 import SideFilter from "@/components/utilities/SideFilter";
 
-//api
-import { getRecommend } from "@/app/api/getRecommended";
 import Loading from "@/app/Loading";
 
 export default function Product() {
-  const [products, setProducts] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      const ProductsResponse = await getRecommend();
-      setProducts(ProductsResponse.data);
-    };
-    fetchData();
-  }, []);
-
+  const [products, setProducts] = useState([]);
+  
   return (
     <main className="h-full bg-lbackground">
-      {products ? (
+   
         <>
           <CategoryHeader />
           <div className="py-10 relative px-3 container mx-auto">
@@ -35,9 +26,7 @@ export default function Product() {
             <Pagination />
           </div>
         </>
-      ) : (
-        <Loading />
-      )}
+      
     </main>
   );
 }
