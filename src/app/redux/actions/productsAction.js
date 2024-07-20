@@ -1,7 +1,8 @@
+
 import axios from "axios";
 import { CATEGORIES, ProductByCategorie, PRODUCTS, SearchByTitle } from "../types/ecommerceType";
 
-const base_URL = "http://localhost:8080/"
+
 
 export const getProducts = () => {
   return async (dispatch) => {
@@ -11,13 +12,13 @@ export const getProducts = () => {
 };
 export const getProduct = (id) => {
   return async (dispatch) => {
-    const { data } = axios.get(base_URL + `products/${id}`)
+    const { data } =  await axios.get(`${process.env.base_URL}products/${id}`)
     dispatch({ type: PRODUCTS, data: data });
   };
 };
 export const getCategories = () => {
   return async (dispatch) => {
-    const { data } = await axios.get(base_URL + 'categories')
+    const { data } = await axios.get(process.env.base_URL + 'categories')
     dispatch({ type: CATEGORIES, data: data});
   };
 };

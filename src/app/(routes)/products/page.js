@@ -5,47 +5,32 @@ import ProductContainer from "@/components/Product/ProductContainer";
 import SearchCountResult from "@/components/utilities/SearchCountResult";
 import SideFilter from "@/components/utilities/SideFilter";
 import { useSearchParams } from "next/navigation";
-import { useState,useEffect } from "react";
-import { getProducts, getProductsByCategorie } from "@/app/redux/actions/productsAction";
-import { useDispatch,useSelector } from "react-redux";
+import { useGetproductsByQuery } from "@/app/redux/api/productsApi";
+import { useEffect, useState } from "react";
+
 export default function Product() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.productsReducer.data.products);
-  
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const { data, error, isLoading } = useGetproductsByQuery(query);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if(query === ""){
-          dispatch(getProducts());
-        }
-        else{
-          dispatch(getProductsByCategorie(query))
-        }
-         
-        setLoading(false);
-      } catch (err) {
-        setError("Failed to fetch data");
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [dispatch,query]);
+    if (Array.isArray(data)) {
+      setCount(data.length);
+    } else {
+      setCount(0);
+    }
+  }, [data]);
 
   return (
     <main className="h-full bg-lbackground">
       <>
         <CategoryHeader />
         <div className="py-10 relative px-3 container mx-auto">
-          <SearchCountResult count={products.length > 0 ? products.length : 0} />
+          <SearchCountResult count={count} />
           <div className="flex gap-7">
             <SideFilter />
-            <ProductContainer isLoading={loading} error={error} data={products} />
+            <ProductContainer isLoading={isLoading} error={error} data={data} />
           </div>
         </div>
       </>

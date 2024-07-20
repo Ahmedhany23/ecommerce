@@ -8,6 +8,7 @@ export default function SearchCountResult({ count }) {
   const handleDropMenu = () => {
     setIsClicked(!isClicked);
   };
+
   return (
     <div className="container mx-auto flex justify-between">
       <div className="count">
@@ -30,7 +31,7 @@ export default function SearchCountResult({ count }) {
             {isClicked ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
           </button>
         </div>
-        { isClicked &&
+        {isClicked && (
           <div
             className="absolute end-0 z-10 mt-2 w-56 rounded-md border border-gray-100 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900"
             role="menu"
@@ -76,7 +77,7 @@ export default function SearchCountResult({ count }) {
               </a>
             </div>
           </div>
-        }
+        )}
       </div>
     </div>
   );

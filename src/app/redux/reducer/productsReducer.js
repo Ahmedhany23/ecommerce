@@ -1,5 +1,5 @@
 
-import Product from "@/app/(routes)/products/page";
+
 import { PRODUCTS, CATEGORIES,SearchByTitle,ProductByCategorie } from "../types/ecommerceType";
 
 const initialValue = { data: { products: [], product:[], categories: [] ,searchProduct:[]  } };
