@@ -1,8 +1,6 @@
 "use client";
 import CategoryCard from "./CategoryCard";
-import { useState, useEffect } from "react";
-import Loading from "@/app/Loading";
-import { useDispatch, useSelector } from "react-redux";
+
 
 
 export default function CategorieContainer({categories}) {

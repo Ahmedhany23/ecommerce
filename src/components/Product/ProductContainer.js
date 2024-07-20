@@ -7,7 +7,7 @@ export default function ProductContainer({ isLoading, error, data }) {
     return <Loading />;
   }
   if (error) {
-    throw error(error.meessage);
+    throw error(error.message);
   }
   if (data) {
     return (

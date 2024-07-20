@@ -4,3 +4,4 @@ export const PRODUCT = "PRODUCT";
 export const isLogged = "Login";
 export const Signup = "Signup";
 export const CATEGORIES = "Categories";
+export const ProductByCategorie = "PRODUCTBYCATEGORIE"

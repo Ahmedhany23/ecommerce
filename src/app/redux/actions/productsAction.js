@@ -1,30 +1,35 @@
-import api from "@/app/api/api";
-import { CATEGORIES, PRODUCTS, SearchByTitle } from "../types/ecommerceType";
+import axios from "axios";
+import { CATEGORIES, ProductByCategorie, PRODUCTS, SearchByTitle } from "../types/ecommerceType";
+
+const base_URL = "http://localhost:8080/"
 
 export const getProducts = () => {
   return async (dispatch) => {
-    const { data } = await api("products?populate=*");
-    dispatch({ type: PRODUCTS, data: data.data });
+    const { data } = await axios.get("http://localhost:8080/" + `products`)
+    dispatch({ type: PRODUCTS, data: data });
   };
 };
 export const getProduct = (id) => {
   return async (dispatch) => {
-    const { data } = await api(`products/${id}?populate=*`);
-    dispatch({ type: PRODUCTS, data: data.data });
+    const { data } = axios.get(base_URL + `products/${id}`)
+    dispatch({ type: PRODUCTS, data: data });
   };
 };
 export const getCategories = () => {
   return async (dispatch) => {
-    const { data } = await api("categories?populate=*");
-    dispatch({ type: CATEGORIES, data: data.data });
+    const { data } = await axios.get(base_URL + 'categories')
+    dispatch({ type: CATEGORIES, data: data});
   };
 };
 export const getSearchBytitle = (query) => {
   return async (dispatch) => {
-    const { data } = await api(
-      `products?filters[$or][0][description][$contains]=${query}&filters[$or][1][Brand][$contains]=${query}&populate=*`
-    );
-
-    dispatch({ type: SearchByTitle, data: data.data });
+    const { data } = await axios.get("http://localhost:8080/" + `products?query=${query}` );
+    dispatch({ type: PRODUCTS, data: data });
+  };
+};
+export const getProductsByCategorie = (query,from,to) => {
+  return async (dispatch) => {
+    const { data } = await axios.get("http://localhost:8080/" + `products?query=${query}&from=${from}&to=${to}` );
+    dispatch({ type: PRODUCTS, data: data });
   };
 };
