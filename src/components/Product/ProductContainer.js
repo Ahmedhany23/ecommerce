@@ -17,6 +17,7 @@ export default function ProductContainer({ isLoading, error, data }) {
             {data.map((product, index) => (
               <div key={index} className="">
                 <ProductCard
+                  products={product}
                   id={product.id}
                   image={product.attributes.images.data[0].attributes.url}
                   description={product.attributes.description}

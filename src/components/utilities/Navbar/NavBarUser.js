@@ -44,7 +44,7 @@ export default function NavBarUser({ username, isLoading }) {
           <div className="flex gap-4">
             <Link
               className="flex items-center gap-2 rounded-md bg-lsecondary px-5 py-2.5 text-sm font-medium text-white transition  hover:bg-laccent whitespace-nowrap "
-              href="/Auth/login"
+              href="/profile"
             >
               <CgProfile className="text-lg" />
               {isLoading ? <Loading /> : <p>Hi, {username}</p>}

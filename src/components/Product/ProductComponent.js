@@ -67,6 +67,7 @@ export default function ProductComponent({ title, btnTitle, path, products }) {
                   className="flex justify-center items-center"
                 >
                   <ProductCard
+                    products={product}
                     id={product.id}
                     image={product.attributes.images.data[0].attributes.url}
                     description={product.attributes.description}

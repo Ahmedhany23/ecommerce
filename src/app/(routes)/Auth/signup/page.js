@@ -5,46 +5,91 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { CreateUser } from "@/app/redux/actions/authAction";
 import { useDispatch,useSelector } from "react-redux";
-
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/config";
 export default function Signup() {
-  const [confirmed, setConfirmed] = useState(false);
-  const [error, setError] = useState(null);
-  const dispatch =useDispatch();
-
   const router = useRouter();
+  const [firebaseError, setfirebaseError] = useState(false);
+  const [verfied,setVerfied] = useState(false);
+  const [user, loading, error] = useAuthState(auth);
 
-  const handleSignup = async (event) => {
+ 
+  useEffect(() => {
+    if (user) {
+      if (user.emailVerified) {
+        router.push("/Auth/login");
+      }
+    }
+  });
+
+  const handleSignup =  (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const jsonData = Object.fromEntries(formData);
-    dispatch(CreateUser(jsonData))
-  };
-    const Newuser = useSelector((state)=>state.authReducer.newUser)
+    const {username,email,password} = Object.fromEntries(formData);
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      sendEmailVerification(auth.currentUser).then(() => {
+        setVerfied(true)
+      });
 
-    useEffect(()=>{
-      if (Newuser.error) {
-        setError(Newuser.error);
-        return;
+      updateProfile(auth.currentUser, {
+        displayName: username,
+      })
+        .then(() => {
+          setTimeout(() => {
+            router.push("/Auth/login");
+           }, 3000);
+        })
+        .catch((error) => {
+          console.log(error.code);
+          // ...
+        });
+
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      sethasError(true);
+
+      switch (errorCode) {
+        case "auth/invalid-email":
+          setfirebaseError("Wrong Email");
+          break;
+
+        case "auth/user-not-found":
+          setfirebaseError("Wrong Email");
+          break;
+
+        case "auth/wrong-password":
+          setfirebaseError("Wrong Password");
+          break;
+
+        case "auth/too-many-requests":
+          setfirebaseError("Too many requests, please try aganin later");
+          break;
+
+        default:
+          setfirebaseError("Please check your email & password");
+          break;
       }
+    });
+  };
     
-      if (Newuser.user && Newuser.jwt) {
-        setConfirmed(true);
-        setTimeout(() => {
-          router.push("/Auth/login");
-        }, 3000);
-        clearTimeout();
-      }
-    
-    },[Newuser,router])
-  
+
   return (
     <main className=" relative bg-lbackground h-screen flex py-32 justify-center ">
       <form
         onSubmit={handleSignup}
-        className="flex flex-col w-full px-4 sm:px-0    gap-10 sm:w-[400px] h-fit py-10"
+        className="flex flex-col w-full px-4 sm:px-0 gap-10 sm:w-[400px] h-fit py-10"
       >
         <h1 className="text-laccent text-3xl font-bold  text-center">Signup</h1>
-        {error && <p className="text-laccent text-center">{error}</p>}
         <input
           type="text"
           name="username"
@@ -80,7 +125,7 @@ export default function Signup() {
           </Link>
         </div>
       </form>
-      {confirmed && (
+      {user && (
         <motion.div
           initial={{ x: -200 }}
           animate={{ x: 0 }}
@@ -89,6 +134,26 @@ export default function Signup() {
            Account Created
         </motion.div>
       )}
+      {firebaseError && (
+        <motion.div
+          initial={{ x: -200 }}
+          animate={{ x: 0 }}
+          className="text-laccent  absolute top-6 left-0 px-10 py-4 bg-ltext"
+        >
+           {firebaseError}
+        </motion.div>
+      )}
+      {verfied && (
+        <motion.div
+          initial={{ x: -200 }}
+          animate={{ x: 0 }}
+          transition={{delay:2}}
+          className="text-laccent  absolute top-6 left-0 px-10 py-4 bg-ltext"
+        >
+           Email verification sent!
+        </motion.div>
+      )}
+
     </main>
   );
 }

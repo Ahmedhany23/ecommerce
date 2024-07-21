@@ -1,40 +1,67 @@
 "use client";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { getUser } from "@/app/redux/actions/authAction";
-import { useDispatch,useSelector } from "react-redux";
-
-
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/app/firebase/config";
+import { useAuthState } from "react-firebase-hooks/auth";
 export default function LoginPage() {
+  const router = useRouter();
   const [confirmed, setConfirmed] = useState(false);
   const [error, setError] = useState(null);
-  const dispatch =useDispatch();
+  const [user, loading ] = useAuthState(auth);
 
-  const router = useRouter();
+ 
+  useEffect(() => {
+    if (user) {
+      if (user.emailVerified) {
+        router.push("/");
+      }
+    }
+  });
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const jsonData = Object.fromEntries(formData);
-    dispatch(getUser(jsonData))
+    const { email, password } = Object.fromEntries(formData);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        setConfirmed(true)
+        setTimeout(()=>{ router.push("/");},2000)
+       
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+
+        switch (errorCode) {
+          case "auth/invalid-email":
+            setError("Wrong Email");
+            break;
+
+          case "auth/user-not-found":
+            setError("Wrong Email");
+            break;
+
+          case "auth/wrong-password":
+            setError("Wrong Password");
+            break;
+
+          case "auth/too-many-requests":
+            setError("Too many requests, please try aganin later");
+            break;
+
+          default:
+            setError("Please check your email & password");
+            break;
+        }
+      });
   };
-  const User = useSelector((state)=>state.authReducer.user)
-  useEffect(()=>{
-    if (User.error) {
-      setError(User.error);
-      return;
-    }
-    if (User.user && User.jwt) {
-      setConfirmed(true);
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
-      clearTimeout();
-    }
-  },[User,router])
+
   return (
     <main className="bg-lbackground h-screen flex py-32 justify-center relative">
       <form

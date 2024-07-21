@@ -1,11 +1,46 @@
+"use client";
 import Loading from "@/app/Loading";
 import Image from "next/image";
 import Link from "next/link";
+import { styled } from "@mui/material/styles";
+import { IoMdAdd, IoIosRemove } from "react-icons/io";
 import { IoStar } from "react-icons/io5";
 import { MdAddShoppingCart } from "react-icons/md";
-export default function ProductCard({ image, description, price, rate, id }) {
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  decreaseQuantity,
+  increaseQuantity,
+} from "@/app/redux/cartslice/cartSlice";
+import { Badge } from "@mui/material";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    color: "black",
+    backgroundColor: "white",
+  },
+}));
+
+export default function ProductCard({
+  image,
+  description,
+  price,
+  rate,
+  id,
+  products,
+}) {
+  const dispatch = useDispatch();
+  const { selectedProducts, selectedProductsID } = useSelector(
+    (state) => state.carttt
+  );
+  const product = (id) => {
+    const myProduct = selectedProducts.find((itemUser) => {
+      return itemUser.id === products.id;
+    });
+    return myProduct.quantity;
+  };
   return (
-    <div className=" mx-auto w-[230px] sm:w-[240px] rounded-md shadow-xl  bg-lsecondary pb-5 ">
+    <div className="  w-[230px] sm:w-[240px] rounded-md shadow-xl  bg-lsecondary pb-5 ">
       {image ? (
         <>
           <div className="relative px-2">
@@ -23,14 +58,40 @@ export default function ProductCard({ image, description, price, rate, id }) {
               <p className=" flex gap-1 items-center text-lg text-ltext">
                 {rate} <IoStar className="text-md text-laccent " />
               </p>
-              <div className="w-[36px] h-[36px] shadow-md flex items-center rounded-md justify-center text-xl bg-white cursor-pointer hover:bg-slate-500 hover:text-white duration-200">
-                <MdAddShoppingCart />
-              </div>
+              {selectedProductsID.includes(products.id) ? (
+                <div className="flex gap-4 items-center">
+                  <IoMdAdd
+                    className=" cursor-pointer text-lprimary"
+                    onClick={() => {
+                      dispatch(increaseQuantity(products));
+                    }}
+                  />
+                  <StyledBadge badgeContent={product(products.id)} color="white" />
+                  <IoIosRemove
+                    className=" cursor-pointer text-lprimary"
+                    onClick={() => {
+                      dispatch(decreaseQuantity(products));
+                    }}
+                  />
+                </div>
+              ) : (
+                <div
+                  onClick={() => {
+                    dispatch(addToCart(products));
+                  }}
+                  className="w-[36px] h-[36px] shadow-md flex items-center rounded-md justify-center text-xl bg-white cursor-pointer hover:bg-slate-500 hover:text-white duration-200"
+                >
+                  <MdAddShoppingCart />
+                </div>
+              )}
             </div>
           </div>
           <div className="px-2 flex flex-col">
             <p className="font-medium max-w-lg text-ltext hover:text-laccent duration-200 ">
-              <Link href={`products/${id}`}>{`${description.slice(0,50)}..`}</Link>
+              <Link href={`products/${id}`}>{`${description.slice(
+                0,
+                50
+              )}..`}</Link>
             </p>
             <p className="font-semibold text-lg text-ltext">
               <span className="font-thin text-sm mr-1">EGP</span>
