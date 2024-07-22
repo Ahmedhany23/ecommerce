@@ -9,7 +9,9 @@ import {
   OneproductApi,
   productsApi,
   productsApiByQuery,
+  mainImageApi
 } from "../api/productsApi";
+
 
 
 const reducers = combineReducers({
@@ -19,6 +21,7 @@ const reducers = combineReducers({
   [productsApiByQuery.reducerPath]: productsApiByQuery.reducer,
   [productsApi.reducerPath]: productsApi.reducer,
   [categoriesApi.reducerPath]: categoriesApi.reducer,
+  [mainImageApi.reducerPath]: mainImageApi.reducer
 });
 
 export const store = configureStore({
@@ -28,6 +31,7 @@ export const store = configureStore({
       .concat(OneproductApi.middleware)
       .concat(productsApiByQuery.middleware)
       .concat(productsApi.middleware)
-      .concat(categoriesApi.middleware),
+      .concat(categoriesApi.middleware)
+      .concat(mainImageApi.middleware)
 });
 setupListeners(store.dispatch);

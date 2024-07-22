@@ -5,12 +5,7 @@ import { auth } from "@/app/firebase/config";
 import { useState } from "react";
 import ProductContainer from "@/components/Product/ProductContainer";
 import {
-  Box,
-  Button,
   Paper,
-  styled,
-  IconButton,
-  Badge,
   Typography,
   Divider,
   Stack,

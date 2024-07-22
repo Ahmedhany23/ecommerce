@@ -1,109 +1,89 @@
 "use client";
 
 import { getProductsByCategorie } from "@/app/redux/actions/productsAction";
-import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 export default function SideFilter() {
   const dispatch = useDispatch();
-  const [filters, setFilters] = useState({
-    categories: [],
-    brands: [],
-    priceFrom: "",
-    priceTo: ""
-  });
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [priceRange, setPriceRange] = useState({ from: '', to: '' });
+
+  useEffect(() => {
+    const query = [...selectedCategories, ...selectedBrands].join(',');
+    const { from, to } = priceRange;
+    dispatch(getProductsByCategorie(query, from, to));
+  }, [dispatch, selectedCategories, selectedBrands, priceRange]);
 
   const handleCategoryChange = (event) => {
     const { value, checked } = event.target;
-    setFilters((prevFilters) => {
-      const newCategories = checked
-        ? [...prevFilters.categories, value]
-        : prevFilters.categories.filter((category) => category !== value);
-
-      return { ...prevFilters, categories: newCategories };
-    });
+    setSelectedCategories((prev) => 
+      checked ? [...prev, value] : prev.filter((category) => category !== value)
+    );
   };
 
   const handleBrandChange = (event) => {
     const { value, checked } = event.target;
-    setFilters((prevFilters) => {
-      const newBrands = checked
-        ? [...prevFilters.brands, value]
-        : prevFilters.brands.filter((brand) => brand !== value);
-
-      return { ...prevFilters, brands: newBrands };
-    });
+    setSelectedBrands((prev) => 
+      checked ? [...prev, value] : prev.filter((brand) => brand !== value)
+    );
   };
 
   const handlePriceChange = (event) => {
     const { name, value } = event.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: value
-    }));
+    setPriceRange((prev) => ({ ...prev, [name]: value }));
   };
-
-  useEffect(() => {
-    const { categories, brands, priceFrom, priceTo } = filters;
-    let query = [];
-
-    if (categories.length > 0) {
-      query.push(`categories=${categories.join(",")}`);
-    }
-
-    if (brands.length > 0) {
-      query.push(`brands=${brands.join(",")}`);
-    }
-
-    const queryString = query.join(",");
-    dispatch(getProductsByCategorie(queryString, priceFrom, priceTo));
-  }, [filters, dispatch]);
 
   return (
     <div className="flex flex-col py-10">
       <div className="category text-white flex flex-col gap-2">
         <h4 className="text-2xl pb-3 font-semibold">Category</h4>
-        <div className="flex gap-2">
-          <input onChange={handleCategoryChange} type="checkbox" value=""/> <p>All</p>
-        </div>
-        <div className="flex gap-2">
-          <input onChange={handleCategoryChange} type="checkbox" value="routers" /> <p>Routers</p>
-        </div>
-        <div className="flex gap-2">
-          <input onChange={handleCategoryChange} type="checkbox" value="laptops" /> <p>Laptops</p>
-        </div>
-        <div className="flex gap-2">
-          <input onChange={handleCategoryChange} type="checkbox" value="smart" /> <p>Smart Watch</p>
-        </div>
-        <div className="flex gap-2">
-          <input onChange={handleCategoryChange} type="checkbox" value="telvisions" /> <p>Telvisions</p>
-        </div>
-        <div className="flex gap-2">
-          <input onChange={handleCategoryChange} type="checkbox" value="accessories" /> <p>Accessories</p>
-        </div>
-        <div className="flex gap-2">
-          <input onChange={handleCategoryChange} type="checkbox" value="mobiles" /> <p>Mobiles</p>
-        </div>
+        {['routers', 'laptops', 'smart', 'telvisions', 'accessories', 'mobiles'].map((category) => (
+          <div key={category} className="flex gap-2">
+            <input
+              onChange={handleCategoryChange}
+              type="checkbox"
+              value={category}
+            />
+            <p>{category.charAt(0).toUpperCase() + category.slice(1)}</p>
+          </div>
+        ))}
       </div>
       <div className="category text-white flex flex-col gap-2 py-7">
         <h4 className="text-2xl pb-3 font-semibold">Brand</h4>
-        <div className="flex gap-2">
-          <input onChange={handleBrandChange} type="checkbox" value="" /> <p>All</p>
-        </div>
-        <div className="flex gap-2">
-          <input onChange={handleBrandChange} type="checkbox" value="apple" /> <p>Apple</p>
-        </div>
-        <div className="flex gap-2">
-          <input onChange={handleBrandChange} type="checkbox" value="samsung" /> <p>Samsung</p>
-        </div>
+        {['apple', 'samsung'].map((brand) => (
+          <div key={brand} className="flex gap-2">
+            <input
+              onChange={handleBrandChange}
+              type="checkbox"
+              value={brand}
+            />
+            <p>{brand.charAt(0).toUpperCase() + brand.slice(1)}</p>
+          </div>
+        ))}
       </div>
       <div className="text-ltext flex flex-col gap-2 py-7">
         <h4 className="text-2xl pb-3 font-semibold">Price</h4>
         <div className="flex gap-2">
-          <p>From</p> <input type="text" className="w-20 text-lprimary" name="priceFrom" onChange={handlePriceChange} />
+          <p>From</p>
+          <input
+            type="text"
+            className="w-20 text-lprimary"
+            name="from"
+            onChange={handlePriceChange}
+            value={priceRange.from}
+          />
         </div>
         <div className="flex gap-[26px]">
-          <p>To</p> <input type="text" className="w-20 text-lprimary px-1" name="priceTo" onChange={handlePriceChange} />
+          <p>To</p>
+          <input
+            type="text"
+            className="w-20 text-lprimary px-1"
+            name="to"
+            onChange={handlePriceChange}
+            value={priceRange.to}
+          />
         </div>
       </div>
     </div>

@@ -40,7 +40,7 @@ export default function ProductCard({
     return myProduct.quantity;
   };
   return (
-    <div className="  w-[230px] sm:w-[240px] rounded-md shadow-xl  bg-lsecondary pb-5 ">
+    <div className=" mx-auto  w-[230px] sm:w-[240px] rounded-md shadow-xl  bg-lsecondary pb-5 ">
       {image ? (
         <>
           <div className="relative px-2">
@@ -60,17 +60,18 @@ export default function ProductCard({
               </p>
               {selectedProductsID.includes(products.id) ? (
                 <div className="flex gap-4 items-center">
-                  <IoMdAdd
-                    className=" cursor-pointer text-lprimary"
-                    onClick={() => {
-                      dispatch(increaseQuantity(products));
-                    }}
-                  />
-                  <StyledBadge badgeContent={product(products.id)} color="white" />
-                  <IoIosRemove
+                <IoIosRemove
                     className=" cursor-pointer text-lprimary"
                     onClick={() => {
                       dispatch(decreaseQuantity(products));
+                    }}
+                  />
+                  <StyledBadge badgeContent={product(products.id)} color="white" />
+                 
+                   <IoMdAdd
+                    className=" cursor-pointer text-lprimary"
+                    onClick={() => {
+                      dispatch(increaseQuantity(products));
                     }}
                   />
                 </div>

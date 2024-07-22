@@ -1,4 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+export const mainImageApi = createApi({
+  reducerPath: "mainimgaes",
+  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.base_URL}` }),
+  endpoints: (builder) => ({
+    getmainimage: builder.query({
+      query: () => `mainimages`,
+    }),
+  }),
+});
 export const productsApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.base_URL}` }),
@@ -36,6 +45,7 @@ export const productsApiByQuery = createApi({
   }),
 });
 
+export const { useGetmainimageQuery } = mainImageApi;
 export const { useGetcategoriesQuery } = categoriesApi;
 export const { useGetproductsQuery } = productsApi;
 export const { useGetOneProductQuery } = OneproductApi;

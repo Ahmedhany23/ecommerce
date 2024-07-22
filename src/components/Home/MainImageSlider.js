@@ -1,8 +1,5 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
-import "./slider.css";
-import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -15,11 +12,10 @@ import {
 } from "swiper/modules";
 import "swiper/css/pagination";
 import Loading from "@/app/Loading";
+import { useGetmainimageQuery } from "@/app/redux/api/productsApi";
 
-import { getMainImage } from "@/app/api/getMainImage";
-
-export default function Slider() {
-  const { isLoading, error, data } = useQuery('mainImage', getMainImage);
+export default function MainImageSlider() {
+  const { isLoading, error, data } = useGetmainimageQuery();
 
   if (isLoading) {
     return <Loading />;
@@ -31,7 +27,7 @@ export default function Slider() {
   if(data){
     return (
       <div className="w-full relative container mx-auto">
-        {data.data.length > 0 ? (
+        {data ? (
           <Swiper
             spaceBetween={0}
             slidesPerView="auto"
@@ -49,7 +45,7 @@ export default function Slider() {
             }}
             className="w-full h-[200px] lg:h-[319px]"
           >
-            {data.data.map((sliderItem) =>
+            {data.map((sliderItem) =>
               sliderItem.attributes.image.data.map((image) => (
                 <SwiperSlide key={image.id} className="w-full h-full">
                   <Image

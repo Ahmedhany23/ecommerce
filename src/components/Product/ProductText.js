@@ -34,33 +34,31 @@ export default function ProductText({ products }) {
           </p>
           {selectedProductsID.includes(products.id) ? (
             <div className="flex gap-4 items-center mt-10">
-              <IoMdAdd
-                className=" cursor-pointer text-laccent text-3xl"
-                onClick={() => {
-                  dispatch(increaseQuantity(products));
-                }}
-              />
-              <div className="w-8 h-5 rounded-full bg-lsecondary">
-                <p className="text-center text-ltext">{product(products.id)}</p>
-              </div>
               <IoIosRemove
                 className=" cursor-pointer text-laccent text-3xl"
                 onClick={() => {
                   dispatch(decreaseQuantity(products));
                 }}
               />
+              <div className="w-8 h-5 rounded-full bg-lsecondary">
+                <p className="text-center text-ltext">{product(products.id)}</p>
+              </div>
+              <IoMdAdd
+                className=" cursor-pointer text-laccent text-3xl"
+                onClick={() => {
+                  dispatch(increaseQuantity(products));
+                }}
+              />
             </div>
           ) : (
-
-              <button
-                onClick={() => {
-                  dispatch(addToCart(products));
-                }}
-                className="mt-10 w-56 bg-lsecondary  py-3 text-white text-lg hover:bg-laccent"
-              >
-                Add to Cart
-              </button>
-            
+            <button
+              onClick={() => {
+                dispatch(addToCart(products));
+              }}
+              className="mt-10 w-56 bg-lsecondary  py-3 text-white text-lg hover:bg-laccent"
+            >
+              Add to Cart
+            </button>
           )}
         </>
       )}

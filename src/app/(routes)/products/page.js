@@ -5,14 +5,23 @@ import ProductContainer from "@/components/Product/ProductContainer";
 import SearchCountResult from "@/components/utilities/SearchCountResult";
 import SideFilter from "@/components/utilities/SideFilter";
 import { useSearchParams } from "next/navigation";
-import { useGetproductsByQuery } from "@/app/redux/api/productsApi";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductsByCategorie } from "@/app/redux/actions/productsAction";
 
 export default function Product() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
-  const { data, error, isLoading } = useGetproductsByQuery(query);
+  const dispatch = useDispatch();
+  const data = useSelector(state => state.productsReducer.data.products)
   const [count, setCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(()=>{
+    dispatch(getProductsByCategorie(query))
+    setIsLoading(false)
+  },[query,dispatch])
+
 
   useEffect(() => {
     if (Array.isArray(data)) {
@@ -30,7 +39,7 @@ export default function Product() {
           <SearchCountResult count={count} />
           <div className="flex gap-7">
             <SideFilter />
-            <ProductContainer isLoading={isLoading} error={error} data={data} />
+            <ProductContainer isLoading={isLoading} error={""} data={data} />
           </div>
         </div>
       </>

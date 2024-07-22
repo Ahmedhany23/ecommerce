@@ -3,8 +3,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { CreateUser } from "@/app/redux/actions/authAction";
-import { useDispatch,useSelector } from "react-redux";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
