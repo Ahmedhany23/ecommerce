@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { useQuery } from "react-query";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import {

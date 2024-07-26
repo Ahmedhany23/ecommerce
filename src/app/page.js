@@ -1,20 +1,16 @@
-"use client";
+import dynamic from 'next/dynamic';
 
-import DiscountSection from "@/components/Home/DiscountSection";
-import HomeCategory from "@/components/Home/HomeCategory";
-import RecommendedSection from "@/components/Home/RecommendedSection";
-import MainImageSlider from "@/components/Home/MainImageSlider";
-
+const MainImageSlider = dynamic(() => import('@/components/Home/MainImageSlider'), { ssr: false });
+const HomeCategory = dynamic(() => import('@/components/Home/HomeCategory'), { ssr: false });
+const DiscountSection = dynamic(() => import('@/components/Home/DiscountSection'), { ssr: false });
+const RecommendedSection = dynamic(() => import('@/components/Home/RecommendedSection'), { ssr: false });
 
 export default function Home() {
   return (
     <main className=" bg-lbackground dark:bg-dbackground">
       <MainImageSlider />
-       {/* Category */}
       <HomeCategory />
-      {/* Discount */}
       <DiscountSection />
-      {/* Recommended for you */}
       <RecommendedSection />
     </main>
   );

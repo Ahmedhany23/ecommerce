@@ -1,9 +1,8 @@
 "use client";
+
 import ProductCard from "@/components/Product/ProductCard";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
-import { useState } from "react";
-import ProductContainer from "@/components/Product/ProductContainer";
 import { useRouter } from "next/navigation";
 import {
   Paper,
@@ -12,43 +11,50 @@ import {
   Stack,
 } from "@mui/material";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+
 export default function Cartpage() {
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
   
+  const [clientSide, setClientSide] = useState(false);
+  
+  useEffect(() => {
+    setClientSide(true);
+  }, []);
+  
   const handleCheckout = (e) => {
     e.preventDefault();
-    if(!user){
-      router.push('/Auth/login')
+    if (!user) {
+      router.push('/Auth/login');
     }
+  };
+
+  const { selectedProducts } = useSelector((state) => state.carttt);
+  let price = 0;
+
+  if (!clientSide) {
+    return null; // or a loading spinner
   }
 
-  const { selectedProducts } = useSelector(
-    (state) => state.carttt
-  );
-  let price = 0 ;
   return (
-    <main className=" py-32">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-20 ">
+    <main className="py-32">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-20">
         {selectedProducts.map((product) => {
-          price += Number(product.attributes.price) * Number(product.quantity)
-          return(
-
+          price += Number(product.attributes.price) * Number(product.quantity);
+          return (
             <div key={product.id}>
-            <ProductCard
-              products={product}
-              id={product.id}
-              image={product.attributes.images.data[0].attributes.url}
-              description={product.attributes.description}
-              price={product.attributes.price}
-              rate={product.attributes.rate}
-            />
-          </div>
+              <ProductCard
+                products={product}
+                id={product.id}
+                image={product.attributes.images.data[0].attributes.url}
+                description={product.attributes.description}
+                price={product.attributes.price}
+                rate={product.attributes.rate}
+              />
+            </div>
           );
-        }
-         
-      
-        )}
+        })}
       </div>
 
       <Paper sx={{ width: "200px", mx: "auto", mt: "60px" }}>
@@ -58,19 +64,16 @@ export default function Cartpage() {
 
         <Divider />
 
-        <Stack
-          sx={{ justifyContent: "space-between", p: 1.2 }}
-          direction={"row"}
-        >
+        <Stack sx={{ justifyContent: "space-between", p: 1.2 }} direction={"row"}>
           <Typography variant="body1">Subtotal</Typography>
-          <Typography variant="body1">${price}</Typography>
+          <Typography variant="body1">${price.toFixed(2)}</Typography>
         </Stack>
 
         <Divider />
 
-       <button onClick={handleCheckout} className="text-center w-full text-2xl text-ltext py-3 bg-lsecondary hover:bg-laccent">
-        Checkout    
-       </button>
+        <button onClick={handleCheckout} className="text-center w-full text-2xl text-ltext py-3 bg-lsecondary hover:bg-laccent">
+          Checkout
+        </button>
       </Paper>
     </main>
   );
