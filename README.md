@@ -33,17 +33,37 @@ Welcome to the **E-commerce Website**, a platform where you can explore a wide v
 
 ---
 
+## Technologies Used
+
+- **Frontend:** HTML, CSS, JavaScript, React.js, Nextjs.
+- **Backend:** Node.js, Express.js.
+- **Authentication:** Firebase.
+- **Hosting:** Vercel.
+
+---
+
 ## Installation
 
 Follow these steps to set up the project on your local machine:
 
-### Prerequisites
 
-Ensure you have Node.js and npm installed:
 
+## Clone the Repository
 ```bash
-# Check Node.js version
-node -v
+git clone https://github.com/Ahmedhany23/ecommerce.git
+cd ecommerce
 
-# Check npm version
-npm -v
+# Install Dependencies
+npm install
+
+# Set Up Environment Variables
+# Added to next.config.mjs
+ env: {
+    base_URL: `https://ecommerce-backend-production-fdab.up.railway.app/`,
+    admin_email:  'admin@admin.com',
+    admin_password: "admin123456",
+  },
+
+# Run the Server
+npm run dev
+
