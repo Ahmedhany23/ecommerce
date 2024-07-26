@@ -1,8 +1,6 @@
 <h1 align="center">E-commerce Website</h1>
 
-<p align="center">
-  <img src="link-to-logo.png" alt="Project Logo" width="150">
-</p>
+
 
 <p align="center">
   An E-commerce platform to browse, search, and purchase products seamlessly.
