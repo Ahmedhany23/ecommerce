@@ -1,19 +1,24 @@
 "use client";
-import { useState,useEffect } from "react";
-import { useSelector } from "react-redux";
+
+import NavBarAdmin from "./NavBarAdmin";
 import NavBarLogin from "./NavBarLogin";
 import NavBarUser from "./NavBarUser";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
+import Loading from "@/app/Loading";
 export default function NavBarComponent() {
   const [user, loading, error] = useAuthState(auth);
 
-  
- if(user){
-  return <NavBarUser username={user.displayName} isLoading={loading}/>
- }
- else{
-  return <NavBarLogin/>
- }
-
+  if (user) {
+    if (user.email === process.env.admin_email) {
+      return <NavBarAdmin username={"admin"} isLoading={loading} />;
+    }
+    return (
+      <NavBarUser
+        isLoading={loading}
+      />
+    );
+  } else {
+    return <NavBarLogin />;
+  }
 }

@@ -1,13 +1,22 @@
-"use client"
+"use client";
 import Loading from "@/app/Loading";
 import Link from "next/link";
 import { CgProfile } from "react-icons/cg";
-import { LuShoppingCart } from "react-icons/lu";
 import SearchProduct from "../SearchProduct";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
-export default function NavBarUser({isLoading }) {
-  const [user] = useAuthState(auth)
+import { signOut } from "firebase/auth";
+export default function NavBarAdmin({ username, isLoading }) {
+  const [user] = useAuthState(auth);
+  const handleSignout = () => {
+    if (user) {
+      signOut(auth)
+        .then(() => {
+          router.push("/");
+        })
+        .catch((error) => {});
+    }
+  };
   return (
     <header className="bg-lbackground ">
       <div className="mx-auto flex h-16 container items-center justify-between gap-8 px-4 sm:px-6 lg:px-8">
@@ -40,25 +49,24 @@ export default function NavBarUser({isLoading }) {
           </svg>
         </Link>
 
-        <SearchProduct/>
+        <SearchProduct />
 
         <div className="flex items-center gap-4">
           <div className="flex gap-4">
             <Link
               className="flex items-center gap-2 rounded-md bg-lsecondary px-5 py-2.5 text-sm font-medium text-white transition  hover:bg-laccent whitespace-nowrap "
-              href="/profile"
+              href="/Admin/createproduct"
             >
               <CgProfile className="text-lg" />
-              {isLoading ? <Loading /> :<p>Hi, {user.displayName}</p> }
+              {isLoading ? <Loading /> : <p>Hi, {username}</p>}
             </Link>
 
-            <Link
+            <button
               className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium hover:bg-lsecondary hover:text-ltext flex items-center sm:gap-2 "
-              href="/cart"
+              onClick={handleSignout}
             >
-              <LuShoppingCart className="text-lg" />
-              Cart
-            </Link>
+              Logout
+            </button>
           </div>
         </div>
       </div>

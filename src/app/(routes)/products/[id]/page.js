@@ -29,6 +29,7 @@ export default function ProductDetails() {
           <RateContainer
             user={user ? user.displayName : "Guest"}
             rate={data.attributes.rate}
+            productId={id}
           />
         </div>
       </main>

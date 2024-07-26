@@ -1,6 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useState } from "react";
+
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -10,23 +10,18 @@ export default function LoginPage() {
   const router = useRouter();
   const [confirmed, setConfirmed] = useState(false);
   const [error, setError] = useState(null);
-  const [user, loading ] = useAuthState(auth);
+
 
  
-  useEffect(() => {
-    if (user) {
-      if (user.emailVerified) {
-        router.push("/");
-      }
-    }
-  });
+
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const { email, password } = Object.fromEntries(formData);
-    signInWithEmailAndPassword(auth, email, password)
+    if(email === process.env.admin_email && password === process.env.admin_password){
+      signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -60,6 +55,8 @@ export default function LoginPage() {
             break;
         }
       });
+    }
+   
   };
 
   return (
@@ -96,19 +93,6 @@ export default function LoginPage() {
         >
           Login
         </button>
-
-        <div className="flex gap-2 flex-col sm:flex-row">
-          <p className="text-lg text-ltext">Don&apos;t have an account?</p>
-          <Link className="text-lg text-laccent" href="/Auth/signup">
-            Sign up
-          </Link>
-        </div>
-        <div className="flex gap-2 flex-col sm:flex-row">
-          <p className="text-lg text-ltext">Login As </p>
-          <Link className="text-lg text-laccent" href="/Admin/Auth/login">
-            Admin
-          </Link>
-        </div>
       </form>
       {confirmed && (
         <motion.div

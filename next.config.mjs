@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    base_URL: `http://localhost:8080/`,
+    base_URL: `https://ecommerce-backend-production-fdab.up.railway.app/`,
+    admin_email:  'admin@admin.com',
+    admin_password: "admin123456",
   },
    images: {
     remotePatterns: [

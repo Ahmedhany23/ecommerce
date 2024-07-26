@@ -4,6 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import { useState } from "react";
 import ProductContainer from "@/components/Product/ProductContainer";
+import { useRouter } from "next/navigation";
 import {
   Paper,
   Typography,
@@ -12,7 +13,17 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 export default function Cartpage() {
-  const { selectedProducts, selectedProductsID } = useSelector(
+  const [user, loading, error] = useAuthState(auth);
+  const router = useRouter();
+  
+  const handleCheckout = (e) => {
+    e.preventDefault();
+    if(!user){
+      router.push('/Auth/login')
+    }
+  }
+
+  const { selectedProducts } = useSelector(
     (state) => state.carttt
   );
   let price = 0 ;
@@ -57,7 +68,7 @@ export default function Cartpage() {
 
         <Divider />
 
-       <button className="text-center w-full text-2xl text-ltext py-3 bg-lsecondary hover:bg-laccent">
+       <button onClick={handleCheckout} className="text-center w-full text-2xl text-ltext py-3 bg-lsecondary hover:bg-laccent">
         Checkout    
        </button>
       </Paper>

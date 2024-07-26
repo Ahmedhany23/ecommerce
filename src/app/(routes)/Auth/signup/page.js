@@ -14,13 +14,13 @@ export default function Signup() {
   const router = useRouter();
   const [firebaseError, setfirebaseError] = useState(false);
   const [verfied,setVerfied] = useState(false);
-  const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
  
   useEffect(() => {
     if (user) {
       if (user.emailVerified) {
-        router.push("/Auth/login");
+        router.push("/");
       }
     }
   });
@@ -40,10 +40,7 @@ export default function Signup() {
       updateProfile(auth.currentUser, {
         displayName: username,
       })
-        .then(() => {
-          setTimeout(() => {
-            router.push("/Auth/login");
-           }, 3000);
+        .then(() => { 
         })
         .catch((error) => {
           console.log(error.code);
