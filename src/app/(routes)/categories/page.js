@@ -1,9 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getProductsByCategorie } from "@/app/redux/actions/productsAction";
+import { useEffect, useState, Suspense } from "react";
 import SearchCountResult from "@/components/utilities/SearchCountResult";
 import { useGetproductsByQuery } from "@/app/redux/api/productsApi";
 import ProductContainer from "@/components/Product/ProductContainer";
@@ -23,19 +21,18 @@ export default function CateogriePage() {
     }
   }, [data]);
 
-  if(isLoading){
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />;
   }
-  
-    return (
-      <main className="h-full bg-lbackground">
+
+  return (
+    <main className="h-full bg-lbackground">
+      <Suspense fallback={<Loading />}>
         <div className="py-10 relative px-3 container mx-auto">
           <SearchCountResult count={count} />
-  
           <ProductContainer isLoading={isLoading} error={error} data={data} />
         </div>
-      </main>
-    );
-  
-
+      </Suspense>
+    </main>
+  );
 }

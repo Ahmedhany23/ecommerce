@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+
 export default function CreateProduct() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -67,169 +68,172 @@ export default function CreateProduct() {
     }
   };
 
-  if (!user) {
-    router.push("/");
-  }
-
-  if (user) {
-    if (user.email === process.env.admin_email) {
-      return (
-        <main className="container mx-auto">
-          <h1 className="text-center text-3xl text-laccent">Create Product</h1>
-          <form
-            encType="multipart/form-data"
-            onSubmit={handleSubmit}
-            className="max-w-md mx-auto mt-8 p-4 border rounded shadow-lg"
-          >
-            <div className="mb-4">
-              <label
-                htmlFor="title"
-                className="block text-lg font-medium text-ltext"
-              >
-                Title:
-              </label>
-              <input
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full mt-1 p-2 border border-gray-300 rounded"
-                placeholder="Enter product title"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="description"
-                className="block text-lg font-medium text-ltext"
-              >
-                Description:
-              </label>
-              <textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="w-full mt-1 p-2 border border-gray-300 rounded"
-                placeholder="Enter product description"
-                required
-              ></textarea>
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="category"
-                className="block text-lg font-medium text-ltext"
-              >
-                Category:
-              </label>
-              <input
-                type="text"
-                id="category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full mt-1 p-2 border border-gray-300 rounded"
-                placeholder="Enter product category"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="price"
-                className="block text-lg font-medium text-ltext"
-              >
-                Price:
-              </label>
-              <input
-                type="number"
-                id="price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                className="w-full mt-1 p-2 border border-gray-300 rounded"
-                placeholder="Enter product price"
-                step="0.01"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="brand"
-                className="block text-lg font-medium text-ltext"
-              >
-                Brand:
-              </label>
-              <input
-                type="text"
-                id="brand"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
-                className="w-full mt-1 p-2 border border-gray-300 rounded"
-                placeholder="Enter product brand"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="rate"
-                className="block text-lg font-medium text-ltext"
-              >
-                Rate:
-              </label>
-              <input
-                type="number"
-                id="rate"
-                value={rate}
-                onChange={(e) => setRate(e.target.value)}
-                className="w-full mt-1 p-2 border border-gray-300 rounded"
-                placeholder="Enter product rating"
-                step="0.1"
-                min="0"
-                max="5"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="images"
-                className="block text-lg font-medium text-ltext"
-              >
-                Images:
-              </label>
-              <input
-                type="file"
-                id="images"
-                multiple
-                required
-                onChange={handleFileChange}
-                className="w-full mt-1 p-2 border border-gray-300 rounded text-ltext"
-                accept="image/*"
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-lsecondary hover:bg-laccent text-white py-2 px-4 rounded"
-            >
-              Create Product
-            </button>
-          </form>
-          {confirmed && (
-            <motion.div
-              initial={{ x: -200 }}
-              animate={{ x: 0 }}
-              className="text-laccent  absolute top-6 left-0 px-10 py-4 bg-ltext"
-            >
-              Product Created Successfully
-            </motion.div>
-          )}
-        </main>
-      );
-    } else {
+  // Perform client-side redirects with useEffect
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    } else if (user.email !== process.env.admin_email) {
       router.push("/");
     }
+  }, [user, router]);
+
+  if (!user || (user && user.email !== process.env.admin_email)) {
+    return null; // Render nothing while checking user status
   }
+
+  return (
+    <main className="container mx-auto">
+      <h1 className="text-center text-3xl text-laccent">Create Product</h1>
+      <form
+        encType="multipart/form-data"
+        onSubmit={handleSubmit}
+        className="max-w-md mx-auto mt-8 p-4 border rounded shadow-lg"
+      >
+        <div className="mb-4">
+          <label
+            htmlFor="title"
+            className="block text-lg font-medium text-ltext"
+          >
+            Title:
+          </label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full mt-1 p-2 border border-gray-300 rounded"
+            placeholder="Enter product title"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="description"
+            className="block text-lg font-medium text-ltext"
+          >
+            Description:
+          </label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full mt-1 p-2 border border-gray-300 rounded"
+            placeholder="Enter product description"
+            required
+          ></textarea>
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="category"
+            className="block text-lg font-medium text-ltext"
+          >
+            Category:
+          </label>
+          <input
+            type="text"
+            id="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full mt-1 p-2 border border-gray-300 rounded"
+            placeholder="Enter product category"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="price"
+            className="block text-lg font-medium text-ltext"
+          >
+            Price:
+          </label>
+          <input
+            type="number"
+            id="price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="w-full mt-1 p-2 border border-gray-300 rounded"
+            placeholder="Enter product price"
+            step="0.01"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="brand"
+            className="block text-lg font-medium text-ltext"
+          >
+            Brand:
+          </label>
+          <input
+            type="text"
+            id="brand"
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+            className="w-full mt-1 p-2 border border-gray-300 rounded"
+            placeholder="Enter product brand"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="rate"
+            className="block text-lg font-medium text-ltext"
+          >
+            Rate:
+          </label>
+          <input
+            type="number"
+            id="rate"
+            value={rate}
+            onChange={(e) => setRate(e.target.value)}
+            className="w-full mt-1 p-2 border border-gray-300 rounded"
+            placeholder="Enter product rating"
+            step="0.1"
+            min="0"
+            max="5"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="images"
+            className="block text-lg font-medium text-ltext"
+          >
+            Images:
+          </label>
+          <input
+            type="file"
+            id="images"
+            multiple
+            required
+            onChange={handleFileChange}
+            className="w-full mt-1 p-2 border border-gray-300 rounded text-ltext"
+            accept="image/*"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-lsecondary hover:bg-laccent text-white py-2 px-4 rounded"
+        >
+          Create Product
+        </button>
+      </form>
+      {confirmed && (
+        <motion.div
+          initial={{ x: -200 }}
+          animate={{ x: 0 }}
+          className="text-laccent  absolute top-6 left-0 px-10 py-4 bg-ltext"
+        >
+          Product Created Successfully
+        </motion.div>
+      )}
+    </main>
+  );
 }

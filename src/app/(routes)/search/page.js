@@ -1,25 +1,27 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useState ,useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import SearchCountResult from "@/components/utilities/SearchCountResult";
 import SideFilter from "@/components/utilities/SideFilter";
 import ProductContainer from "@/components/Product/ProductContainer";
 import { getProductsByCategorie } from "@/app/redux/actions/productsAction";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "@/app/Loading";
+
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
   const dispatch = useDispatch();
-  const data = useSelector(state => state.productsReducer.data.products)
+  const data = useSelector((state) => state.productsReducer.data.products);
   const [count, setCount] = useState(0);
 
   const [isLoading, setIsLoading] = useState(true);
-  
-  useEffect(()=>{
-    dispatch(getProductsByCategorie(query))
-    setIsLoading(false)
-  },[query,dispatch])
+
+  useEffect(() => {
+    dispatch(getProductsByCategorie(query));
+    setIsLoading(false);
+  }, [query, dispatch]);
   useEffect(() => {
     if (Array.isArray(data)) {
       setCount(data.length);
@@ -34,7 +36,9 @@ export default function SearchPage() {
         <SearchCountResult count={count} />
         <div className="flex gap-6">
           <SideFilter />
-          <ProductContainer isLoading={isLoading} error={""} data={data} />
+          <Suspense fallback={<Loading />}>
+            <ProductContainer isLoading={isLoading} error={""} data={data} />
+          </Suspense>
         </div>
       </div>
     </main>
