@@ -1,3 +1,4 @@
+"use client"
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -11,10 +12,9 @@ const initialState = {
 export const counterSlice = createSlice({
     name: "cart",
     initialState,
-      // action.payload => product From API => القيمة التى بداخل الاقواس
+      
     reducers: {
       addToCart: (state, action) => {
-    // action.payload => product From API => القيمة التى بداخل الاقواس
         const productWithQuantity = {...action.payload, "quantity":1}
         state.selectedProducts.push(productWithQuantity)
         state.selectedProductsID.push(productWithQuantity.id)
