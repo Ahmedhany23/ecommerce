@@ -13,70 +13,65 @@ import { auth } from "@/app/firebase/config";
 export default function Signup() {
   const router = useRouter();
   const [firebaseError, setfirebaseError] = useState(false);
-  const [verfied,setVerfied] = useState(false);
+  const [verfied, setVerfied] = useState(false);
   const [user] = useAuthState(auth);
 
- 
   useEffect(() => {
     if (user) {
-      if (user.emailVerified) {
-        router.push("/");
-      }
+      router.push("/");
     }
   });
 
-  const handleSignup =  (event) => {
+  const handleSignup = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const {username,email,password} = Object.fromEntries(formData);
+    const { username, email, password } = Object.fromEntries(formData);
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      sendEmailVerification(auth.currentUser).then(() => {
-        setVerfied(true)
-      });
-
-      updateProfile(auth.currentUser, {
-        displayName: username,
-      })
-        .then(() => { 
-        })
-        .catch((error) => {
-          console.log(error.code);
-          // ...
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        sendEmailVerification(auth.currentUser).then(() => {
+          setVerfied(true);
         });
 
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      sethasError(true);
+        updateProfile(auth.currentUser, {
+          displayName: username,
+        })
+          .then(() => {})
+          .catch((error) => {
+            console.log(error.code);
+            // ...
+          });
 
-      switch (errorCode) {
-        case "auth/invalid-email":
-          setfirebaseError("Wrong Email");
-          break;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        sethasError(true);
 
-        case "auth/user-not-found":
-          setfirebaseError("Wrong Email");
-          break;
+        switch (errorCode) {
+          case "auth/invalid-email":
+            setfirebaseError("Wrong Email");
+            break;
 
-        case "auth/wrong-password":
-          setfirebaseError("Wrong Password");
-          break;
+          case "auth/user-not-found":
+            setfirebaseError("Wrong Email");
+            break;
 
-        case "auth/too-many-requests":
-          setfirebaseError("Too many requests, please try aganin later");
-          break;
+          case "auth/wrong-password":
+            setfirebaseError("Wrong Password");
+            break;
 
-        default:
-          setfirebaseError("Please check your email & password");
-          break;
-      }
-    });
+          case "auth/too-many-requests":
+            setfirebaseError("Too many requests, please try aganin later");
+            break;
+
+          default:
+            setfirebaseError("Please check your email & password");
+            break;
+        }
+      });
   };
-    
 
   return (
     <main className=" relative bg-lbackground h-screen flex py-32 justify-center ">
@@ -126,7 +121,7 @@ export default function Signup() {
           animate={{ x: 0 }}
           className="text-laccent  absolute top-6 left-0 px-10 py-4 bg-ltext"
         >
-           Account Created
+          Account Created
         </motion.div>
       )}
       {firebaseError && (
@@ -135,20 +130,19 @@ export default function Signup() {
           animate={{ x: 0 }}
           className="text-laccent  absolute top-6 left-0 px-10 py-4 bg-ltext"
         >
-           {firebaseError}
+          {firebaseError}
         </motion.div>
       )}
       {verfied && (
         <motion.div
           initial={{ x: -200 }}
           animate={{ x: 0 }}
-          transition={{delay:2}}
+          transition={{ delay: 2 }}
           className="text-laccent  absolute top-6 left-0 px-10 py-4 bg-ltext"
         >
-           Email verification sent!
+          Email verification sent!
         </motion.div>
       )}
-
     </main>
   );
 }

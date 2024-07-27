@@ -11,7 +11,7 @@ export default function RateContainer({ user, rate, productId }) {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/products/${productId}`);
+        const response = await axios.get(`${process.env.base_URL}products/${productId}`);
         setComments(response.data.attributes.comments || []);
       } catch (error) {
         console.error("Error fetching comments:", error);
@@ -39,7 +39,7 @@ export default function RateContainer({ user, rate, productId }) {
     }
 
     try {
-      const response = await axios.post(`http://localhost:8080/products/${productId}/comments`, {
+      const response = await axios.post(`${process.env.base_URL}products/${productId}/comments`, {
         user,
         comment: userComment,
         rating: userRating,

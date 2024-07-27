@@ -42,20 +42,31 @@ export default function Profilepage() {
     return null;
   }
 
-  if(user){
-    if(!user.emailVerified){
-      return(
-        <div className="flex items-center justify-center text-ltext">U need to verify your email First </div>
-      )
-    }
-    else{
+  if (user) {
+    if (!user.emailVerified) {
+      return (
+        <div className="flex items-center justify-center  h-screen">
+          <div className="flex flex-col items-center gap-5">
+            <p className="text-ltext text-4xl"> U need to verify your email First </p>
+            <button
+              onClick={handleSignout}
+              className="rounded-md bg-lsecondary px-5 py-2.5 text-sm font-medium text-white transition  hover:bg-laccent mx-3"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      );
+    } else {
       return (
         <main className="py-60 flex justify-center items-center flex-col gap-20">
           <h1 className="text-laccent text-4xl font-semibold">
             Hi, {user.displayName}
           </h1>
           <div className="text-center">
-            <p className="text-ltext text-2xl font-medium">Email: {user.email}</p>
+            <p className="text-ltext text-2xl font-medium">
+              Email: {user.email}
+            </p>
             <p className="text-ltext text-2xl font-medium">
               Created At: {user.metadata.creationTime}
             </p>
@@ -78,5 +89,4 @@ export default function Profilepage() {
       );
     }
   }
-  
 }

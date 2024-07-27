@@ -15,9 +15,9 @@ export default function LoginPage() {
  
   useEffect(() => {
     if (user) {
-      if (user.emailVerified) {
+     
         router.push("/");
-      }
+ 
     }
   });
 
