@@ -1,33 +1,31 @@
 "use client";
-import { Input } from "antd";
-import { Search } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { ChangeEvent, useState } from "react";
 
+import { Form, Input, Button, Space } from "antd";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import { SearchOutlined } from "@ant-design/icons";
 export const SearchBar = () => {
   const router = useRouter();
-  const [inputValue, setInputValue] = useState("");
+  const [value, setValue] = useState("");
 
-  function handleChangeInput(event: ChangeEvent<HTMLInputElement>) {
-    setInputValue(event.target.value);
-  }
+  const handleSubmit = () => {
+    if (!value.trim()) return;
+    router.push(`/search?query=${value}`, { scroll: false });
+  };
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    router.push(`/search?query=${inputValue}`, {
-      scroll: false,
-    });
-  }
   return (
-    <form
-      onSubmit={handleSubmit}
-    >
-      <Input.Search
-        value={inputValue}
-        onChange={handleChangeInput}
-        className="outline-none! border-none! h-full w-full! rounded-sm!"
-        placeholder="What are you looking for?"
-      />
-    </form>
+    <Form onFinish={handleSubmit} className="w-full">
+      <Space.Compact style={{ width: "100%" }}>
+        <Input
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder="What are you looking for?"
+        />
+        <Button htmlType="submit">
+          <SearchOutlined />
+        </Button>
+      </Space.Compact>
+    </Form>
   );
 };

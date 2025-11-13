@@ -69,3 +69,10 @@
   border-color: var(--color-surface-alt);
   color: var(--color-text-muted);
 }
+
+.ant-input-group-addon{
+  .ant-btn-icon{
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+}
