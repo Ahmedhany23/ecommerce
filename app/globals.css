@@ -18,6 +18,13 @@
   --font-family-inter: "Inter", sans-serif;
 }
 
+/*
+    Global CSS 
+------------------------ */
+
+.section-container {
+  @apply relative container mx-auto flex flex-col gap-[60px] py-20;
+}
 
 /* 
    Ant Design Components
@@ -31,10 +38,9 @@
   font-family: var(--font-family-inter) !important;
 }
 
-.ant-btn:hover{
+.ant-btn:hover {
   scale: 0.95;
 }
-
 
 .ant-btn-primary {
   background-color: var(--color-accent-danger) !important;
@@ -46,7 +52,7 @@
   background-color: var(--color-accent-danger-hover) !important;
   border-color: var(--color-accent-danger-hover) !important;
   color: white !important;
-}  
+}
 
 .ant-btn-default {
   background-color: var(--color-surface-alt) !important;
@@ -61,18 +67,20 @@
   scale: 0.95;
 }
 
-
-/* Search Input */
-
 .ant-input[type="search"] {
   background-color: var(--color-surface-alt);
   border-color: var(--color-surface-alt);
   color: var(--color-text-muted);
 }
 
-.ant-input-group-addon{
-  .ant-btn-icon{
+.ant-input-group-addon {
+  .ant-btn-icon {
     font-size: 1.2em;
     font-weight: bold;
   }
+}
+
+.ant-menu-item.ant-menu-item-selected {
+  background-color: var(--color-surface-alt) !important;
+  color: var(--color-text-muted) !important;
 }

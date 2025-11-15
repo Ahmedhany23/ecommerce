@@ -3,18 +3,18 @@ import React from "react";
 
 export const Banner = () => {
   return (
-    <div className=" bg-black">
-      <div className="container mx-auto flex flex-row items-center justify-center gap-10 py-4 px-2 ">
-        <p className="text-white font-normal sm:text-sm text-xs  font-poppins">
+    <div className="bg-black">
+      <div className="container mx-auto flex flex-row items-center justify-center gap-10 px-2 py-4">
+        <p className="font-poppins text-xs font-normal text-white sm:text-sm">
           Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
           <Link
-            className="ml-1 text-white sm:text-sm text-xs font-semibold decoration-white underline font-poppins"
+            className="font-poppins ml-1 text-xs font-semibold text-white underline decoration-white sm:text-sm"
             href="/products"
           >
             ShopNow
           </Link>
         </p>
-        <select className=" text-xs sm:text-sm bg-black text-white">
+        <select className="bg-black text-xs text-white sm:text-sm">
           <option value="EN">English</option>
           <option value="AR">Arabic</option>
         </select>

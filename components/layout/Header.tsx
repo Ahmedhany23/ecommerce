@@ -30,7 +30,7 @@ export const Header = () => {
       gsap.fromTo(
         menuRef.current,
         { y: -20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }
+        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" },
       );
 
       // Animate links with stagger
@@ -43,7 +43,7 @@ export const Header = () => {
           duration: 0.2,
           ease: "power3.out",
           stagger: 0.1, // each link delayed by 0.1s
-        }
+        },
       );
     } else if (!isOpen && menuRef.current) {
       // Animate out
@@ -64,19 +64,19 @@ export const Header = () => {
   }, [isOpen]);
 
   return (
-    <header className="border-b-[0.5px] border-b-[#000000] border-opacity-30 pb-4">
+    <header className="border-opacity-30 border-b-[0.5px] border-b-[#000000] pb-4">
       <Banner />
       <div className="container mx-auto">
-        <div className="flex justify-between pt-10 items-center px-3 md:px-0">
+        <div className="flex items-center justify-between px-3 pt-10 md:px-0">
           <Row
             gutter={[16, 16]}
             justify="space-between"
             align="middle"
-            className=" gap-4 md:gap-0 w-full"
+            className="w-full gap-4 md:gap-0"
           >
             {/* Logo */}
             <Col xs={8} md={6} className="">
-              <h1 className="font-inter font-bold text-3xl  ">
+              <h1 className="font-inter text-3xl font-bold">
                 <Link href="/" className="text-black!">
                   Exclusive
                 </Link>
@@ -84,7 +84,7 @@ export const Header = () => {
             </Col>
 
             {/* Hamburger (mobile only) */}
-            <Col xs={8} md={0} className="flex justify-end text-end ">
+            <Col xs={8} md={0} className="flex justify-end text-end">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="relative p-2 text-xl"
@@ -100,15 +100,15 @@ export const Header = () => {
             </Col>
 
             {/* Desktop Nav */}
-            <Col xs={0} md={12} className="flex justify-center ">
+            <Col xs={0} md={12} className="flex justify-center">
               <nav className="flex flex-row justify-center gap-12">
                 {navlinks.map((navlink, i) => (
                   <Link
                     key={i}
                     href={navlink.path}
-                    className={`text-black! text-lg h-fit font-poppins font-normal hover:border-b hover:border-background-2 transition duration-200 ${
+                    className={`font-poppins hover:border-background-2 h-fit text-lg font-normal text-black! transition duration-200 hover:border-b ${
                       pathname === navlink.path
-                        ? "border-b border-black border-opacity-30"
+                        ? "border-opacity-30 border-b border-black"
                         : ""
                     }`}
                   >
@@ -119,7 +119,7 @@ export const Header = () => {
             </Col>
 
             {/* SearchBar on desktop */}
-            <Col xs={0} md={4} className="flex justify-end ">
+            <Col xs={0} md={4} className="flex justify-end">
               <SearchBar />
             </Col>
             <Col xs={24} md={0}>
@@ -139,7 +139,7 @@ export const Header = () => {
                     label: (
                       <Link
                         href={item.path}
-                        className={`text-lg font-poppins mobile-link ${
+                        className={`font-poppins mobile-link text-lg ${
                           pathname === item.path ? "text-accent" : "text-black"
                         }`}
                       >

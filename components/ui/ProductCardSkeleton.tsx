@@ -5,10 +5,10 @@ import { Card, Skeleton } from "antd";
 export function ProductCardSkeleton() {
   return (
     <Card
-      className="max-w-[270px] w-full mx-auto rounded-xl"
+      className="mx-auto w-full max-w-[270px] rounded-xl"
       cover={
-        <div className="relative h-[250px] bg-surface-alt rounded-t-xl flex items-center justify-center">
-          <Skeleton.Image active style={{ width: "100%", height: "100%" }} />
+        <div className="bg-surface-alt relative flex h-[250px] items-center justify-center rounded-t-xl">
+          <Skeleton.Avatar active style={{ width: "100%", height: "100%" }} />
         </div>
       }
     >

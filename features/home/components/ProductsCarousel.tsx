@@ -15,11 +15,17 @@ const ProductsCarousel = ({ products }: { products: Product[] }) => {
   return (
     <>
       {/* Custom arrows */}
-      <div className="flex gap-3 lg:ml-auto w-full justify-end my-3">
-        <Button onClick={handlePrev} className="rounded-full! w-12! h-12! text-lg!">
+      <div className="absolute top-[5%] right-0 my-3 flex w-full justify-end gap-3 lg:ml-auto">
+        <Button
+          onClick={handlePrev}
+          className="h-12! w-12! rounded-full! text-lg!"
+        >
           <ArrowLeftOutlined />
         </Button>
-        <Button onClick={handleNext} className="rounded-full! w-12! h-12! text-lg!">
+        <Button
+          onClick={handleNext}
+          className="h-12! w-12! rounded-full! text-lg!"
+        >
           <ArrowRightOutlined />
         </Button>
       </div>

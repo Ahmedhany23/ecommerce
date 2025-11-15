@@ -17,34 +17,34 @@ export default function ProductCard({ product }: ProductCardProps) {
   if (!product) return null;
 
   const percentage = Math.round(
-    ((product.price - product.removedprice) / product.price) * 100
+    ((product.price - product.removedprice) / product.price) * 100,
   );
 
   return (
     <Card
-      className="max-w-[270px] w-full mx-auto! rounded-xl"
+      className="mx-auto! w-full max-w-[270px] rounded-xl"
       cover={
-        <div className="relative h-[250px] bg-surface-alt flex items-center justify-center overflow-hidden rounded-t-xl">
+        <div className="bg-surface-alt relative flex h-[250px] items-center justify-center overflow-hidden rounded-t-xl">
           <Link href={`/product-details/${product.id}`}>
             <Image
               src={product.image?.[0]?.img || "https://placehold.co/600x400"}
               alt={product.name}
               fill
-              className="object-contain hover:scale-110 ease-in-out transition duration-300 max-w-[230px]!  mx-auto"
+              className="mx-auto max-w-[230px]! object-contain transition duration-300 ease-in-out hover:scale-110"
             />
           </Link>
 
           {/* Wishlist + View */}
-          <div className="absolute top-3 right-3 flex flex-col gap-2 z-20">
+          <div className="absolute top-3 right-3 z-20 flex flex-col gap-2">
             <Button
               color="default"
-              className="w-10! h-10! rounded-full! text-lg! bg-white!"
+              className="h-10! w-10! rounded-full! bg-white! text-lg!"
             >
               <HeartOutlined />
             </Button>
 
             <Link href={`/product-details/${product.id}`}>
-              <Button className="w-10! h-10! rounded-full! text-lg! bg-white!">
+              <Button className="h-10! w-10! rounded-full! bg-white! text-lg!">
                 <EyeOutlined />
               </Button>
             </Link>
@@ -52,7 +52,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           {/* Discount Badge */}
           {product.removedprice && (
-            <div className="absolute top-3 left-3 bg-accent-danger px-3 py-1 ">
+            <div className="bg-accent-danger absolute top-3 left-3 px-3 py-1">
               <p className="text-xs text-white">{percentage}%</p>
             </div>
           )}
@@ -63,7 +63,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <Meta
         title={
           <Link href={`/productdetails/${product.id}`}>
-            <h4 className="truncate text-black hover:text-text-muted transition">
+            <h4 className="hover:text-text-muted truncate text-black transition">
               {product.name}
             </h4>
           </Link>
@@ -83,7 +83,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {/* RATING */}
       {product.rate && (
-        <div className="flex items-center gap-2 mt-2">
+        <div className="mt-2 flex items-center gap-2">
           <Stars count={product.rate} />
           <p className="text-text-muted text-sm font-medium">(100)</p>
         </div>

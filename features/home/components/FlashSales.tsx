@@ -1,23 +1,26 @@
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import Link from "next/link";
 
-import { getProducts } from "./server/products";
+import { ProductCardSkeleton } from "@/components/ui/ProductCardSkeleton";
+import { Button } from "antd";
 import { Suspense } from "react";
 import ProductsCarousel from "./ProductsCarousel";
-import { Button } from "antd";
-import { ProductCardSkeleton } from "@/components/ui/ProductCardSkeleton";
+import { getProducts } from "./server/products";
+import { CountdownSalesTimer } from "./CountdownSalesTimer";
+import { Divider } from "@/components/ui/Divider";
 
- const FlashSales = async () => {
+const FlashSales = async () => {
   const products = await getProducts();
 
   return (
-    <section className="pb-20 overflow-hidden">
-      <div className="container mx-auto relative px-2 sm:px-0">
+    <section className="section-container">
+      <div className="relative container mx-auto px-2 sm:px-0">
         {/* Header */}
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:gap-[87px] mb-10">
+        <div className="mb-10 flex flex-wrap items-center gap-20">
           <SectionTitle title={"Today's"}>
             <h1 className="text-3xl font-bold text-black">Flash Sales</h1>
           </SectionTitle>
+          <CountdownSalesTimer />
         </div>
 
         <Suspense fallback={<ProductFallbackLoader />}>
@@ -32,9 +35,6 @@ import { ProductCardSkeleton } from "@/components/ui/ProductCardSkeleton";
             </Button>
           </Link>
         </div>
-
-        {/* Divider */}
-        <div className="w-full border-[0.5px] border-surface-alt mt-[60px]" />
       </div>
     </section>
   );
@@ -42,9 +42,9 @@ import { ProductCardSkeleton } from "@/components/ui/ProductCardSkeleton";
 
 export default FlashSales;
 
-const ProductFallbackLoader = () => (
-  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    {Array.from({ length: 8 }).map((_, i) => (
+export const ProductFallbackLoader = () => (
+  <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+    {Array.from({ length: 4 }).map((_, i) => (
       <ProductCardSkeleton key={i} />
     ))}
   </div>

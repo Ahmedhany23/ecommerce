@@ -2,7 +2,7 @@ import { Star } from "lucide-react";
 
 interface GenerateStarsProps {
   count?: number; // how many stars to render
-  size?: number;  // icon size
+  size?: number; // icon size
 }
 
 export const Stars = ({ count = 5, size = 20 }: GenerateStarsProps) => {
