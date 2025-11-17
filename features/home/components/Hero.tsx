@@ -1,5 +1,3 @@
-
-
 import { Carousel } from "antd";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,40 +12,40 @@ const Hero = () => {
       dots
       draggable
       effect="scrollx"
-      className="w-full lg:max-w-4xl lg:h-[344px] shadow-2xl mt-10 mx-auto"
+      className="mx-auto mt-10 w-full  lg:h-[344px] lg:max-w-4xl"
     >
       {slides.map((_, index) => (
         <div key={index}>
-          <div className="bg-black w-full px-2 md:pl-16 flex sm:gap-[38px]">
+          <div className="flex w-full rounded-md bg-black px-2 sm:gap-[38px] md:pl-16">
             <div>
               {/* Title */}
-              <div className="flex items-center gap-6 pt-[58px] ">
+              <div className="flex items-center gap-6 pt-[58px]">
                 <Image
                   src="/icons/apple.png"
                   alt="apple logo"
                   width={40}
                   height={49}
                 />
-                <p className="text-white mt-2">iPhone 14 Series</p>
+                <p className="mt-2 text-white">iPhone 14 Series</p>
               </div>
 
               {/* Para */}
-              <p className="mt-5 text-white text-2xl lg:text-5xl max-w-[294px] font-inter font-semibold lg:leading-[60px]">
+              <p className="font-inter mt-5 max-w-[294px] text-2xl font-semibold text-white lg:text-5xl lg:leading-[60px]">
                 Up to 10% off Voucher
               </p>
 
               {/* Link */}
               <Link
                 href="/shop"
-                className="text-white! font-medium flex items-center gap-2 mt-[22px] pb-[47px]"
+                className="mt-[22px] flex items-center gap-2 pb-[47px] font-medium text-white!"
               >
-                <p className="border-b w-fit">Shop Now</p>
+                <p className="w-fit border-b">Shop Now</p>
                 <ArrowRight size={22} />
               </Link>
             </div>
 
             {/* Image */}
-            <div className="w-full sm:w-auto pointer-events-none">
+            <div className="pointer-events-none w-full sm:w-auto">
               <Image
                 src="/images/iphone.png"
                 alt="iphone"

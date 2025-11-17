@@ -75,8 +75,8 @@ export const Header = () => {
             className="w-full gap-4 md:gap-0"
           >
             {/* Logo */}
-            <Col xs={8} md={6} className="">
-              <h1 className="font-inter text-3xl font-bold">
+            <Col xs={8} md={2}>
+              <h1 className="font-poppins text-3xl font-bold">
                 <Link href="/" className="text-black!">
                   Exclusive
                 </Link>
@@ -100,13 +100,13 @@ export const Header = () => {
             </Col>
 
             {/* Desktop Nav */}
-            <Col xs={0} md={12} className="flex justify-center">
+            <Col xs={0} md={8} className="flex justify-center ">
               <nav className="flex flex-row justify-center gap-12">
                 {navlinks.map((navlink, i) => (
                   <Link
                     key={i}
                     href={navlink.path}
-                    className={`font-poppins hover:border-background-2 h-fit text-lg font-normal text-black! transition duration-200 hover:border-b ${
+                    className={`font-poppins! h-fit text-lg font-normal text-black! transition duration-200 hover:border-b ${
                       pathname === navlink.path
                         ? "border-opacity-30 border-b border-black"
                         : ""

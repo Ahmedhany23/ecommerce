@@ -12,6 +12,8 @@ const ProductsCarousel = ({ products }: { products: Product[] }) => {
   const handleNext = () => carouselRef.current?.next();
   const handlePrev = () => carouselRef.current?.prev();
 
+
+
   return (
     <>
       {/* Custom arrows */}

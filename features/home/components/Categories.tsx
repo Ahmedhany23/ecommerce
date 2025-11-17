@@ -42,7 +42,7 @@ const Categories = () => {
         {/* Header */}
         <div className="mb-10 flex flex-wrap items-center gap-20">
           <SectionTitle title={"Categories"}>
-            <h1 className="text-3xl font-bold text-black">
+            <h1 className="text-3xl font-semibold font-inter text-black">
               Browse By Category
             </h1>
           </SectionTitle>
