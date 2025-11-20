@@ -24,9 +24,8 @@ const NewArrival = () => {
               <Image
                 src="/images/ps5.png"
                 alt="ps5"
-                width={570}
-                height={600}
-                className="absolute bottom-0 left-0 object-contain object-center"
+                fill
+                className="right-0 bottom-0 left-0 object-contain object-center"
               />
               <div className="relative z-10 flex h-full max-w-[255px] flex-col justify-end gap-4 pb-6 pl-6">
                 <h4 className="font-inter text-2xl font-semibold whitespace-nowrap text-white">

@@ -17,7 +17,7 @@ const ProductsCarousel = ({ products }: { products: Product[] }) => {
   return (
     <>
       {/* Custom arrows */}
-      <div className="absolute top-[5%] right-0 my-3 flex w-full justify-end gap-3 lg:ml-auto">
+      <div className="absolute top-[5%] right-0 my-3 md:flex w-full justify-end gap-3 hidden lg:ml-auto">
         <Button
           onClick={handlePrev}
           className="h-12! w-12! rounded-full! text-lg!"
@@ -60,7 +60,7 @@ const ProductsCarousel = ({ products }: { products: Product[] }) => {
       >
         {products.map((product) => (
           <div key={product.id} className="px-2">
-            <ProductCard product={product} />
+            <ProductCard product={product} redirectPath={`/products/${product.id}`} />
           </div>
         ))}
       </Carousel>

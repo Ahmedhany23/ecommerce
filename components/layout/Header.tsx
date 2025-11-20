@@ -66,7 +66,7 @@ export const Header = () => {
   return (
     <header className="border-opacity-30 border-b-[0.5px] border-b-[#000000] pb-4">
       <Banner />
-      <div className="container mx-auto">
+      <div className="mx-auto max-w-none lg:container">
         <div className="flex items-center justify-between px-3 pt-10 md:px-0">
           <Row
             gutter={[16, 16]}
@@ -75,7 +75,7 @@ export const Header = () => {
             className="w-full gap-4 md:gap-0"
           >
             {/* Logo */}
-            <Col xs={8} md={2}>
+            <Col xs={8} md={12} lg={2}>
               <h1 className="font-poppins text-3xl font-bold">
                 <Link href="/" className="text-black!">
                   Exclusive
@@ -84,7 +84,7 @@ export const Header = () => {
             </Col>
 
             {/* Hamburger (mobile only) */}
-            <Col xs={8} md={0} className="flex justify-end text-end">
+            <Col xs={8} lg={0} className="flex justify-end text-end">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="relative p-2 text-xl"
@@ -95,12 +95,12 @@ export const Header = () => {
             </Col>
 
             {/* SearchBar on mobile/tablet: full width and on top */}
-            <Col xs={24} md={0}>
+            <Col xs={24} lg={0}>
               <SearchBar />
             </Col>
 
             {/* Desktop Nav */}
-            <Col xs={0} md={8} className="flex justify-center ">
+            <Col xs={0}  lg={12} className="flex justify-center">
               <nav className="flex flex-row justify-center gap-12">
                 {navlinks.map((navlink, i) => (
                   <Link
@@ -119,14 +119,14 @@ export const Header = () => {
             </Col>
 
             {/* SearchBar on desktop */}
-            <Col xs={0} md={4} className="flex justify-end">
+            <Col xs={0} lg={4} className="flex justify-end">
               <SearchBar />
             </Col>
-            <Col xs={24} md={0}>
+            <Col xs={24} lg={0}>
               {/* Mobile nav */}
               <div
                 ref={menuRef}
-                className={`mt-6 px-3 md:hidden ${isOpen ? "block" : "hidden"}`}
+                className={`mt-6 px-3 lg:hidden ${isOpen ? "block" : "hidden"}`}
               >
                 <Menu
                   mode="inline"

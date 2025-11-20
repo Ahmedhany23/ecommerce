@@ -1,12 +1,17 @@
+import {
+  FacebookOutlined,
+  InstagramOutlined,
+  LinkedinOutlined,
+  TwitterOutlined,
+} from "@ant-design/icons";
 import { Col, Row } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 
 export const Footer = () => {
-    
   return (
     <footer className="font-poppins relative clear-both bg-black text-white">
-      <section className="section-container px-2 ">
+      <section className="section-container px-2">
         <Row gutter={[16, 40]} justify="space-between">
           {/* Subscription Section */}
           <Col xs={24} lg={4}>
@@ -144,29 +149,17 @@ export const Footer = () => {
               </div>
 
               <div className="flex items-center gap-6">
-                <Link
-                  href="#"
-                  className="hover:text-secondary-1 text-white transition"
-                >
-                  <img src="/images/icons/Icon-Facebook.png" alt="" />
+                <Link href="#">
+                  <FacebookOutlined className="hover:text-accent-danger! text-white! transition duration-200 text-xl" />
                 </Link>
-                <Link
-                  href="#"
-                  className="hover:text-secondary-1 text-white transition"
-                >
-                  <img src="/images/icons/Icon-Twitter.png" alt="" />
+                <Link href="#">
+                  <TwitterOutlined className="hover:text-accent-danger! text-white! transition duration-200 text-xl" />
                 </Link>
-                <Link
-                  href="#"
-                  className="hover:text-secondary-1 text-white transition"
-                >
-                  <img src="/images/icons/Icon-Instagram.png" alt="" />
+                <Link href="#">
+                  <InstagramOutlined className="hover:text-accent-danger! text-white! transition duration-200 text-xl" />
                 </Link>
-                <Link
-                  href="#"
-                  className="hover:text-secondary-1 text-white transition"
-                >
-                  <img src="/images/icons/Icon-Linkedin.png" alt="" />
+                <Link href="#">
+                  <LinkedinOutlined className="hover:text-accent-danger! text-white! transition duration-200 text-xl" />
                 </Link>
               </div>
             </div>

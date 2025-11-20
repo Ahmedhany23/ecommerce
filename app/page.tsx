@@ -2,14 +2,15 @@ import FlashSales from "@/features/home/components/FlashSales";
 import Hero from "@/features/home/components/Hero";
 import { Divider } from "antd";
 
-import AdvertisementBanner from "@/components/ui/AdvertisementBanner";
+import AdvertisementBanner from "@/features/home/components/AdvertisementBanner";
 import BestSellingProducts from "@/features/home/components/BestSellingProducts";
-import Categories from "@/features/home/components/Categories";
+import BrowseByCategory from "@/features/home/components/BrowseByCategory";
 import ExploreOurProducts from "@/features/home/components/ExploreOurProducts";
-import { getProducts } from "@/features/home/components/server/products";
+import { getProducts } from "@/server/products";
 import { Metadata } from "next";
 import NewArrival from "@/features/home/components/NewArrival";
-import Services from "@/features/home/components/Services";
+import Services from "@/components/Services";
+import ScrollTopFloatButton from "@/components/ui/ScrollTopFloatButton";
 
 export const metadata: Metadata = {
   title: "E-commerce App",
@@ -22,15 +23,16 @@ export default async function Home() {
   return (
     <main>
       <Hero />
-      <FlashSales  products={products} />
+      <FlashSales products={products} />
       <Divider />
-      <Categories />
+      <BrowseByCategory />
       <Divider />
       <BestSellingProducts products={products} />
       <AdvertisementBanner />
       <ExploreOurProducts products={products} />
-      <NewArrival/>
-      <Services/>
+      <NewArrival />
+      <Services />
+      <ScrollTopFloatButton />
     </main>
   );
 }

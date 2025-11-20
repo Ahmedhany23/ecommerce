@@ -10,8 +10,7 @@ export const SearchBar = () => {
   const [value, setValue] = useState("");
 
   const handleSubmit = () => {
-    if (!value.trim()) return;
-    router.push(`/search?query=${value}`, { scroll: false });
+    router.push(`/products?search=${value}`, { scroll: false });
   };
 
   return (

@@ -11,9 +11,15 @@ const { Meta } = Card;
 
 type ProductCardProps = {
   product: Product;
+  redirectPath: string;
 };
 
-export default function ProductCard({ product }: ProductCardProps) {
+
+
+export default function ProductCard({
+  product,
+  redirectPath,
+}: ProductCardProps) {
   if (!product) return null;
 
   const percentage = Math.round(
@@ -25,7 +31,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       className="mx-auto! w-full max-w-[270px] rounded-xl"
       cover={
         <div className="bg-surface-alt relative flex h-[250px] items-center justify-center overflow-hidden rounded-t-xl">
-          <Link href={`/product-details/${product.id}`}>
+          <Link href={redirectPath}>
             <Image
               src={product.image?.[0]?.img || "https://placehold.co/600x400"}
               alt={product.name}
@@ -43,7 +49,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               <HeartOutlined />
             </Button>
 
-            <Link href={`/product-details/${product.id}`}>
+            <Link href={redirectPath}>
               <Button className="h-10! w-10! rounded-full! bg-white! text-lg!">
                 <EyeOutlined />
               </Button>
@@ -62,7 +68,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* TITLE */}
       <Meta
         title={
-          <Link href={`/productdetails/${product.id}`}>
+          <Link href={redirectPath}>
             <h4 className="hover:text-text-muted truncate text-black transition">
               {product.name}
             </h4>

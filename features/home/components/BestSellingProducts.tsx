@@ -31,7 +31,7 @@ const BestSellingProducts = ({ products }: { products: Product[] }) => {
               .slice(0, 4)
               .map((product) => (
                 <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
-                  <ProductCard product={product} />
+                  <ProductCard product={product} redirectPath={`/products/${product.id}`} />
                 </Col>
               ))}
           </Row>

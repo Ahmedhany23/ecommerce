@@ -18,7 +18,7 @@ const ExploreOurProducts = ({ products }: { products: Product[] }) => {
         {/* Header */}
         <div className="mb-10 flex flex-wrap items-center gap-20">
           <SectionTitle title={"Our Products"}>
-            <h1 className="text-3xl font-semibold font-inter text-black">
+            <h1 className="font-inter text-3xl font-semibold text-black">
               Explore Our Products
             </h1>
           </SectionTitle>
@@ -31,7 +31,10 @@ const ExploreOurProducts = ({ products }: { products: Product[] }) => {
               .slice(0, 8)
               .map((product) => (
                 <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
-                  <ProductCard product={product} />
+                  <ProductCard
+                    product={product}
+                    redirectPath={`/products/${product.id}`}
+                  />
                 </Col>
               ))}
           </Row>

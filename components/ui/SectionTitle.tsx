@@ -3,7 +3,7 @@ export const SectionTitle = ({
   children,
 }: {
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) => {
   return (
     <div className="flex w-fit flex-col items-start gap-5">
