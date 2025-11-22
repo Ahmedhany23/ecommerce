@@ -3,30 +3,28 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type ProductsState = {
-  products: Product[];
   cart: Product[];
-  increment: (id: string) => void;
-  decrement: (id: string) => void;
+  increment: (id: number) => void;
+  decrement: (id: number) => void;
   addToCart: (product: Product) => void;
-  removeFromCart: (id: string) => void;
+  removeFromCart: (id: number) => void;
 };
 
 const useProductsStore = create<ProductsState>()(
   persist(
     (set, get) => ({
-      products: [],
       cart: [],
 
       increment: (id) =>
         set((state) => ({
-          products: state.products.map((p) =>
+          cart: state.cart.map((p) =>
             p.id === id ? { ...p, quantity: p.quantity + 1 } : p,
           ),
         })),
 
       decrement: (id) =>
         set((state) => ({
-          products: state.products.map((p) =>
+          cart: state.cart.map((p) =>
             p.id === id && p.quantity > 0
               ? { ...p, quantity: p.quantity - 1 }
               : p,
@@ -57,24 +55,25 @@ const useProductsStore = create<ProductsState>()(
         })),
     }),
     {
-      name: "products-storage", // key in localStorage
+      name: "cart-storage", // key in localStorage
+      
     },
   ),
 );
 
-export const increment = (id: string) =>
+export const increment = (id: number) =>
   useProductsStore.getState().increment(id);
 
-export const decrement = (id: string) =>
+export const decrement = (id: number) =>
   useProductsStore.getState().decrement(id);
 
 export const addToCart = (product: Product) =>
   useProductsStore.getState().addToCart(product);
 
 
-export const removeFromCart = (id: string) =>
+export const removeFromCart = (id: number) =>
   useProductsStore.getState().removeFromCart(id);
 
 // useProductsStore.ts - Add a selector hook
 export const useCart = () => useProductsStore((state) => state.cart);
-export const useProducts = () => useProductsStore((state) => state.products);
+

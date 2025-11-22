@@ -7,11 +7,32 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { HeartOutlined } from "@ant-design/icons";
+import { productInTheCart } from "../utils/productInTheCart";
+import {
+  addToCart,
+  decrement,
+  increment,
+  useCart,
+} from "../store/useProductsStore";
 
 export default function ProductDetails({ product }: { product: Product }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   if (!product) return null;
+
+  const inCart = productInTheCart(product.id);
+  const cart = useCart();
+
+  const handleIncrement = () => {
+    increment(product.id);
+  };
+  const handleDecrement = () => {
+    decrement(product.id);
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product);
+  };
 
   return (
     <div className="py-10">
@@ -72,14 +93,20 @@ export default function ProductDetails({ product }: { product: Product }) {
           <div className="mb-6 w-full border border-black opacity-50"></div>
 
           <div className="mb-10 flex flex-col items-center justify-center gap-[19px] sm:flex-row lg:items-stretch lg:justify-normal">
-            {false ? (
+            {inCart ? (
               <div className="flex items-center justify-center gap-8">
-                <Button size="large">-</Button>
-                <p className="text-xl font-medium">0</p>
-                <Button size="large">+</Button>
+                <Button onClick={handleDecrement} size="large">
+                  -
+                </Button>
+                <p className="text-xl font-medium">
+                  {cart[product.id as number]?.quantity}
+                </p>
+                <Button onClick={handleIncrement} size="large">
+                  +
+                </Button>
               </div>
             ) : (
-              <Button type="primary" size="large">
+              <Button onClick={handleAddToCart} type="primary" size="large">
                 Add To Cart
               </Button>
             )}
