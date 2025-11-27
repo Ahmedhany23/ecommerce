@@ -4,7 +4,7 @@ import { Button, Carousel } from "antd";
 import { ArrowRightOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import ProductCard from "@/src/components/ui/ProductCard";
 import { useRef } from "react";
-import { Product } from "@/src/components/types/product";
+import { Product } from "@/generated/prisma/browser";
 
 const ProductsCarousel = ({ products }: { products: Product[] }) => {
   const carouselRef = useRef<any>(null);

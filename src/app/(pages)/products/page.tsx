@@ -1,8 +1,8 @@
 import { ProductFallbackLoader } from "@/src/features/home/components/loader/ProductFallbackLoader";
 import ProductMenuFilters from "@/src/features/products/components/ProductMenuFilters";
 import ProductsGrid from "@/src/features/products/components/ProductsGrid";
+import { prisma } from "@/src/lib/prisma";
 
-import { getProducts } from "@/src/server/products";
 import { Breadcrumb, Col, Row } from "antd";
 import { Metadata } from "next";
 
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Products() {
-  const products = await getProducts();
+  const products = await prisma.product.findMany();
 
   return (
     <main>

@@ -1,32 +1,35 @@
-import { Product } from "@/src/components/types/product";
+import { Product } from "@/generated/prisma/browser";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type ProductsState = {
   cart: Product[];
-  increment: (id: number) => void;
-  decrement: (id: number) => void;
+  wishlist: Product[];
+  increment: (id: Product["id"]) => void;
+  decrement: (id: Product["id"]) => void;
   addToCart: (product: Product) => void;
-  removeFromCart: (id: number) => void;
+  removeFromCart: (id: Product["id"]) => void;
+  toggleWishlistProduct: (product: Product) => void;
 };
 
 const useProductsStore = create<ProductsState>()(
   persist(
     (set, get) => ({
       cart: [],
+      wishlist: [],
 
       increment: (id) =>
         set((state) => ({
           cart: state.cart.map((p) =>
-            p.id === id ? { ...p, quantity: p.quantity + 1 } : p,
+            p.id === id ? { ...p, quantity: (p.quantity ?? 0) + 1 } : p,
           ),
         })),
 
       decrement: (id) =>
         set((state) => ({
           cart: state.cart.map((p) =>
-            p.id === id && p.quantity > 0
-              ? { ...p, quantity: p.quantity - 1 }
+            p.id === id && (p.quantity ?? 0) > 0
+              ? { ...p, quantity: (p.quantity ?? 0) - 1 }
               : p,
           ),
         })),
@@ -53,27 +56,38 @@ const useProductsStore = create<ProductsState>()(
         set((state) => ({
           cart: state.cart.filter((c) => c.id !== id),
         })),
+
+      toggleWishlistProduct: (product) =>
+        set((state) => ({
+          wishlist: state.wishlist.includes(product)
+            ? state.wishlist.filter((p) => p.id !== product.id)
+            : [...state.wishlist, product],
+        })),
     }),
     {
-      name: "cart-storage", // key in localStorage
-      
+      name: "products-storage", // key in localStorage
     },
   ),
 );
 
-export const increment = (id: number) =>
+//** Cart */
+export const increment = (id: Product["id"]) =>
   useProductsStore.getState().increment(id);
 
-export const decrement = (id: number) =>
+export const decrement = (id: Product["id"]) =>
   useProductsStore.getState().decrement(id);
 
 export const addToCart = (product: Product) =>
   useProductsStore.getState().addToCart(product);
 
-
-export const removeFromCart = (id: number) =>
+export const removeFromCart = (id: Product["id"]) =>
   useProductsStore.getState().removeFromCart(id);
 
-// useProductsStore.ts - Add a selector hook
 export const useCart = () => useProductsStore((state) => state.cart);
 
+//** Wishlist */
+
+export const toggleWishlistProduct = (product: Product) =>
+  useProductsStore.getState().toggleWishlistProduct(product);
+
+export const useWishlist = () => useProductsStore((state) => state.wishlist);

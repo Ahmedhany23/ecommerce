@@ -1,12 +1,12 @@
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
 import Link from "next/link";
 
-import { Product } from "@/src/components/types/product";
 import { Button } from "antd";
 import { Suspense } from "react";
 import { CountdownSalesTimer } from "./CountdownSalesTimer";
 import ProductsCarousel from "./ProductsCarousel";
 import { ProductFallbackLoader } from "./loader/ProductFallbackLoader";
+import { Product } from "@/generated/prisma/browser";
 
 const FlashSales = async ({ products }: { products: Product[] }) => {
   if (!products) return null;

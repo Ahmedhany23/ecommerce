@@ -87,7 +87,7 @@ export const Header = () => {
             <Col xs={8} lg={0} className="flex justify-end text-end">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative p-2 text-xl"
+                className="relative p-2 text-xl cursor-pointer"
                 aria-label="Toggle Menu"
               >
                 {isOpen ? <CloseOutlined /> : <MenuOutlined />}

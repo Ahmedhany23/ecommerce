@@ -77,7 +77,7 @@ const NewArrival = () => {
 
               {/* Speakers + Perfume */}
               <Col xs={24} sm={12}>
-                <div className="relative mx-auto flex h-[284px] w-full max-w-[270px] items-center justify-center bg-black py-[30px] pr-[55px] pl-[24px]">
+                <div className="relative mx-auto flex h-[284px] w-full max-w-[270px] items-center justify-center bg-black py-[30px] pr-[55px] pl-6">
                   <Image
                     src="/images/speakers.png"
                     alt="speakers"
@@ -104,7 +104,7 @@ const NewArrival = () => {
               </Col>
 
               <Col xs={24} sm={12}>
-                <div className="relative mx-auto flex h-[284px] w-full max-w-[270px] items-center justify-center bg-black py-[30px] pr-[55px] pl-[24px]">
+                <div className="relative mx-auto flex h-[284px] w-full max-w-[270px] items-center justify-center bg-black py-[30px] pr-[55px] pl-6">
                   <Image
                     src="/images/perfume.png"
                     alt="perfume"

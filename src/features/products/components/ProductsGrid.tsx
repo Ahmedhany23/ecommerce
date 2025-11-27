@@ -1,5 +1,6 @@
 "use client";
-import { Product } from "@/src/components/types/product";
+
+import { Product } from "@/generated/prisma/browser";
 import ProductCard from "@/src/components/ui/ProductCard";
 import { Col, Row } from "antd";
 import { useSearchParams } from "next/navigation";
@@ -31,7 +32,7 @@ const ProductsGrid = ({ products }: { products: Product[] }) => {
     const searchMatch =
       search === "" ||
       product.name.toLowerCase().includes(search) ||
-      product.description.toLowerCase().includes(search);
+      product.description?.toLowerCase().includes(search);
 
     return categoryMatch && minMatch && maxMatch && searchMatch;
   });

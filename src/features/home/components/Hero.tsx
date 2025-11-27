@@ -24,7 +24,7 @@ const Hero = () => {
         return (
           <div key={index}>
             <div className="flex w-full rounded-md bg-black px-2 sm:gap-[38px] md:pl-16">
-              <div>
+              <div className="select-none">
                 {/* Title */}
                 <div className="flex items-center gap-6 pt-[58px]">
                   <Image

@@ -1,37 +1,56 @@
 "use client";
 
-import { Product } from "@/src/components/types/product";
 import { Stars } from "@/src/components/ui/Stars";
 import { Button, Col, Row, Skeleton } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 
+import { Product } from "@/generated/prisma/browser";
 import { HeartOutlined } from "@ant-design/icons";
-import { productInTheCart } from "../utils/productInTheCart";
 import {
   addToCart,
   decrement,
   increment,
+  removeFromCart,
+  toggleWishlistProduct,
   useCart,
 } from "../store/useProductsStore";
+import { productInTheCart } from "../utils/productInTheCart";
+import { productInTheWishlist } from "../utils/productInTheWishlist";
 
-export default function ProductDetails({ product }: { product: Product }) {
+interface ProductDetailsProps {
+  product: Product | null;
+}
+
+export default function ProductDetails({ product }: ProductDetailsProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   if (!product) return null;
 
   const inCart = productInTheCart(product.id);
+  const inWhishlist = productInTheWishlist(product.id);
   const cart = useCart();
+
+  const currentProduct = cart.find((item) => item.id === product.id);
 
   const handleIncrement = () => {
     increment(product.id);
   };
+
   const handleDecrement = () => {
-    decrement(product.id);
+    if (currentProduct?.quantity === 1) {
+      removeFromCart(product.id);
+    } else {
+      decrement(product.id);
+    }
   };
 
   const handleAddToCart = () => {
     addToCart(product);
+  };
+
+  const handleToggleWishlist = () => {
+    toggleWishlistProduct(product);
   };
 
   return (
@@ -99,7 +118,7 @@ export default function ProductDetails({ product }: { product: Product }) {
                   -
                 </Button>
                 <p className="text-xl font-medium">
-                  {cart[product.id as number]?.quantity}
+                  {currentProduct?.quantity}
                 </p>
                 <Button onClick={handleIncrement} size="large">
                   +
@@ -115,7 +134,12 @@ export default function ProductDetails({ product }: { product: Product }) {
               Buy Now
             </Button>
 
-            <Button type="primary" size="large" className="w-fit! px-2!">
+            <Button
+              type={inWhishlist ? "primary" : "default"}
+              size="large"
+              onClick={handleToggleWishlist}
+              className="w-fit! px-2!"
+            >
               <HeartOutlined
                 className={`cursor-pointer text-3xl transition group-hover:text-white`}
               />

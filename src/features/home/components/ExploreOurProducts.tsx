@@ -1,11 +1,12 @@
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
 import Link from "next/link";
 
-import { Product } from "@/src/components/types/product";
+
 import ProductCard from "@/src/components/ui/ProductCard";
 import { Button, Col, Row } from "antd";
 import { Suspense } from "react";
 import { ProductFallbackLoader } from "./loader/ProductFallbackLoader";
+import { Product } from "@/generated/prisma/browser";
 
 const ExploreOurProducts = ({ products }: { products: Product[] }) => {
   if (!products) return null;

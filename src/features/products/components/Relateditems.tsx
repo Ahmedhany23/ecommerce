@@ -1,8 +1,8 @@
-import { Product } from "@/src/components/types/product";
+
+import { Product } from "@/generated/prisma/browser";
 import ProductCard from "@/src/components/ui/ProductCard";
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
 import { Col, Row } from "antd";
-import React from "react";
 
 const Relateditems = ({ products }: { products: Product[] }) => {
   let shallowCopyProducts = structuredClone(products);

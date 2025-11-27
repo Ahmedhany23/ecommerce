@@ -2,15 +2,16 @@ import FlashSales from "@/src/features/home/components/FlashSales";
 import Hero from "@/src/features/home/components/Hero";
 import { Divider } from "antd";
 
+import Services from "@/src/components/Services";
+import ScrollTopFloatButton from "@/src/components/ui/ScrollTopFloatButton";
 import AdvertisementBanner from "@/src/features/home/components/AdvertisementBanner";
 import BestSellingProducts from "@/src/features/home/components/BestSellingProducts";
 import BrowseByCategory from "@/src/features/home/components/BrowseByCategory";
 import ExploreOurProducts from "@/src/features/home/components/ExploreOurProducts";
-import { getProducts } from "@/src/server/products";
-import { Metadata } from "next";
 import NewArrival from "@/src/features/home/components/NewArrival";
-import Services from "@/src/components/Services";
-import ScrollTopFloatButton from "@/src/components/ui/ScrollTopFloatButton";
+
+import { Metadata } from "next";
+import { prisma } from "../lib/prisma";
 
 export const metadata: Metadata = {
   title: "E-commerce App",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const products = await getProducts();
+  const products = await prisma.product.findMany();
 
   return (
     <main>

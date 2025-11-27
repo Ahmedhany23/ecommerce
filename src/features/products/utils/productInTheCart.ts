@@ -1,4 +1,5 @@
-import { Product } from "@/src/components/types/product";
+
+import { Product } from "@/generated/prisma/browser";
 import { useCart } from "../store/useProductsStore";
 
 export function productInTheCart(id: Product["id"]) {
@@ -6,3 +7,5 @@ export function productInTheCart(id: Product["id"]) {
 
   return cart.find((item) => item.id === id) || null;
 }
+
+ 

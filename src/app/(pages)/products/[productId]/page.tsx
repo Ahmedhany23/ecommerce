@@ -3,8 +3,8 @@ import ProductDetails, {
   ProductDetailsSkeleton,
 } from "@/src/features/products/components/ProductDetails";
 import Relateditems from "@/src/features/products/components/Relateditems";
+import { prisma } from "@/src/lib/prisma";
 
-import { getProduct, getProducts } from "@/src/server/products";
 import { Breadcrumb } from "antd";
 import { Metadata } from "next";
 
@@ -17,7 +17,11 @@ export async function generateMetadata({
   params: Promise<{ productId: string }>;
 }): Promise<Metadata> {
   const { productId } = await params;
-  const product = await getProduct(productId);
+  const product = await prisma.product.findFirst({
+    where: {
+      id: productId,
+    },
+  });
 
   return {
     title: product?.name ?? "Product",
@@ -26,7 +30,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const products = await getProducts();
+  const products = await prisma.product.findMany();
   return products.map((p) => ({ productId: p.id }));
 }
 
@@ -36,8 +40,14 @@ export default async function Product({
   params: Promise<{ productId: string }>;
 }) {
   const { productId } = await params;
-  const product = await getProduct(productId);
-  const products = await getProducts();
+
+  const product = await prisma.product.findFirst({
+    where: {
+      id: productId,
+    },
+  });
+
+  const products = await prisma.product.findMany();
 
   return (
     <main>
