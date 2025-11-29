@@ -46,7 +46,7 @@ const Hero = () => {
                   href="/shop"
                   tabIndex={isActive ? 0 : -1}
                   aria-hidden={!isActive}
-                  className="mt-[22px] flex items-center gap-2 pb-[47px] font-medium text-white"
+                  className="mt-[22px] flex items-center gap-2 pb-[47px] font-medium text-white!"
                 >
                   <p className="w-fit border-b">Shop Now</p>
                   <ArrowRight size={22} />

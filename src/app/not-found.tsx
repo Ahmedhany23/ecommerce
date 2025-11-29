@@ -11,10 +11,12 @@ const NotFound = () => {
         </h1>
         <p className="text-xs font-normal text-black sm:text-base">
           Your visited page not found. You may go home page.
-        </p>
-        <Button type="primary" size="large">
-          <Link href="/">Back to home page</Link>
-        </Button>
+        </p>{" "}
+        <Link href="/" >
+          <Button type="primary" size="large">
+            Back to home page
+          </Button>
+        </Link>
       </div>
     </section>
   );

@@ -68,7 +68,18 @@
   scale: 0.95;
 }
 
-input,textarea {
+.ant-input-affix-wrapper {
+  background-color: var(--color-surface-alt) !important;
+  border-color: var(--color-surface-alt) !important;
+  color: var(--color-text-muted) !important;
+}
+
+.ant-input-affix-wrapper-focused {
+  box-shadow: none !important;
+}
+
+input,
+textarea {
   &.ant-input {
     background-color: var(--color-surface-alt) !important;
     border-color: var(--color-surface-alt) !important;

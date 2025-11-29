@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 
-import gsap from "gsap";
 import { SearchBar } from "../ui/SearchBar";
 import { Col, Menu, Row } from "antd";
 
@@ -21,47 +20,6 @@ export const Header = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    let ctx: gsap.core.Tween | gsap.core.Tween[] | null = null;
-
-    if (isOpen && menuRef.current) {
-      // Animate container
-      gsap.fromTo(
-        menuRef.current,
-        { y: -20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" },
-      );
-
-      // Animate links with stagger
-      ctx = gsap.fromTo(
-        menuRef.current.querySelectorAll(".mobile-link"),
-        { x: -30, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.2,
-          ease: "power3.out",
-          stagger: 0.1, // each link delayed by 0.1s
-        },
-      );
-    } else if (!isOpen && menuRef.current) {
-      // Animate out
-      ctx = gsap.to(menuRef.current, {
-        y: -20,
-        opacity: 0,
-        duration: 0.3,
-        ease: "power3.in",
-      });
-    }
-
-    return () => {
-      if (ctx) {
-        if (Array.isArray(ctx)) ctx.forEach((t) => t.kill());
-        else ctx.kill();
-      }
-    };
-  }, [isOpen]);
 
   return (
     <header className="border-opacity-30 border-b-[0.5px] border-b-[#000000] pb-4">
@@ -87,7 +45,7 @@ export const Header = () => {
             <Col xs={8} lg={0} className="flex justify-end text-end">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative p-2 text-xl cursor-pointer"
+                className="relative cursor-pointer p-2 text-xl"
                 aria-label="Toggle Menu"
               >
                 {isOpen ? <CloseOutlined /> : <MenuOutlined />}
@@ -100,7 +58,7 @@ export const Header = () => {
             </Col>
 
             {/* Desktop Nav */}
-            <Col xs={0}  lg={12} className="flex justify-center">
+            <Col xs={0} lg={12} className="flex justify-center">
               <nav className="flex flex-row justify-center gap-12">
                 {navlinks.map((navlink, i) => (
                   <Link
