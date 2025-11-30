@@ -4,7 +4,11 @@ import { User } from "@/generated/prisma/browser";
 import { Col, Row } from "antd";
 import ChangePasswordForm from "./ChangePasswordForm";
 
-const AccountDetails = ({ user }: { user: User }) => {
+const AccountDetails = ({
+  user,
+}: {
+  user: { name: string | null; email: string | null; createdAt: Date };
+}) => {
   if (!user) return null;
 
   return (
