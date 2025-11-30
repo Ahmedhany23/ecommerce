@@ -1,8 +1,10 @@
+"use client";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 import React from "react";
 import MainLayout from "../components/layout/MainLayout";
 import ScrollContext from "../context/ScrollContext";
+import { SessionProvider } from "next-auth/react";
 
 const antdStyle = {
   contentBg: "#f5f5f5", // background
@@ -27,9 +29,11 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       <AntdRegistry>
-        <MainLayout>
-          <ScrollContext>{children}</ScrollContext>
-        </MainLayout>
+        <SessionProvider>
+          <MainLayout>
+            <ScrollContext>{children}</ScrollContext>
+          </MainLayout>
+        </SessionProvider>
       </AntdRegistry>
     </ConfigProvider>
   );

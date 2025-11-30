@@ -59,30 +59,28 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         {/* Product Images */}
         <Col xs={24} lg={12}>
           <div className="flex flex-col-reverse justify-center gap-[30px] sm:flex-row">
-            <div className="flex justify-center gap-4 sm:flex-col sm:justify-normal">
+            <div className="flex w-full max-w-[130px] justify-center gap-4 sm:flex-col sm:justify-normal">
               {product.image.map((image, i) => (
                 <div
                   key={i}
-                  className="bg-surface-alt group flex h-[130px] cursor-pointer items-center justify-center sm:w-[170px]"
+                  className="bg-surface-alt group relative flex h-[130px] w-full cursor-pointer items-center justify-center"
                 >
                   <Image
                     onClick={() => setCurrentImageIndex(i)}
                     src={image.img}
                     alt="product"
-                    width={121}
-                    height={130}
-                    className="object-cover transition duration-200 group-hover:scale-105"
+                    fill
+                    className="object-contain object-center transition duration-200 group-hover:scale-105"
                   />
                 </div>
               ))}
             </div>
-            <div className="bg-surface-alt flex h-[600px] w-full items-center justify-center px-[27px] lg:w-[500px]">
+            <div className="bg-surface-alt relative flex h-[600px] w-full max-w-[500px] items-center justify-center px-[27px]">
               <Image
                 src={product.image[currentImageIndex]?.img}
                 alt="product"
-                width={446}
-                height={600}
-                className="object-cover"
+                fill
+                className="object-contain object-center"
               />
             </div>
           </div>

@@ -1,25 +1,113 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
-import { Banner } from "./Banner";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
-
+import { useMemo, useRef, useState } from "react";
+import { Banner } from "./Banner";
+import {
+  CloseOutlined,
+  MenuOutlined,
+  UserOutlined,
+  SearchOutlined,
+  ShoppingCartOutlined,
+  HeartOutlined,
+  ProfileOutlined,
+  MailOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
+import {
+  Col,
+  Menu,
+  Row,
+  Dropdown,
+  Avatar,
+  Skeleton,
+  Button,
+  Divider,
+} from "antd";
+import { signOut, useSession } from "next-auth/react";
 import { SearchBar } from "../ui/SearchBar";
-import { Col, Menu, Row } from "antd";
-
-const navlinks = [
-  { link: "Home", path: "/" },
-  { link: "Contact", path: "/contact" },
-  { link: "About", path: "/about" },
-  { link: "Sign Up", path: "/signup" },
-];
+import { cn } from "@/src/lib/utils";
+import {
+  useCart,
+  useWishlist,
+} from "@/src/features/products/store/useProductsStore";
 
 export const Header = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const { data: session, status } = useSession();
+  const user = session?.user;
+
+  const navlinks = useMemo(() => {
+    let links = [
+      { link: "Home", path: "/" },
+      { link: "Contact", path: "/contact" },
+      { link: "About", path: "/about" },
+    ];
+
+    if (!user) {
+      links.push({ link: "Sign Up", path: "/signup" });
+    }
+
+    return links;
+  }, [user]);
+
+  const userMenu = (
+    <Menu className="w-64 rounded-lg shadow-lg">
+      {/* User Info Header */}
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-3">
+        <div className="flex items-center gap-3">
+          <Avatar size={48} icon={<UserOutlined />} className="bg-blue-500" />
+          <div className="min-w-0 flex-1">
+            <div className="truncate font-semibold text-gray-900">
+              {user?.name}
+            </div>
+            <div className="flex items-center gap-1 truncate text-xs text-gray-600">
+              <MailOutlined className="text-gray-400" />
+              {user?.email}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <Divider className="my-0" />
+
+      {/* Profile Menu Item */}
+      <Menu.Item
+        key="profile"
+        icon={<ProfileOutlined className="text-xl!" />}
+        className="font-poppins"
+      >
+        <Link href="/profile" className="text-gray-700 hover:text-blue-600">
+          My Profile
+        </Link>
+      </Menu.Item>
+
+      <Divider className="my-0" />
+
+      {/* Logout Menu Item */}
+      <Menu.Item
+        key="logout"
+        icon={<LogoutOutlined className="text-xl! text-red-500" />}
+        className="font-poppins group"
+        danger
+      >
+        <button
+          onClick={() => signOut()}
+          className="w-full cursor-pointer text-left text-xl text-red-600 group-hover:text-white"
+        >
+          Logout
+        </button>
+      </Menu.Item>
+    </Menu>
+  );
+
+  const isWishlistPage = pathname === "/wishlist";
+  const isCartPage = pathname === "/cart";
+
+  const cart = useCart();
+  const whistlist = useWishlist();
 
   return (
     <header className="border-opacity-30 border-b-[0.5px] border-b-[#000000] pb-4">
@@ -80,8 +168,63 @@ export const Header = () => {
             <Col xs={0} lg={4} className="flex justify-end">
               <SearchBar />
             </Col>
+
+            {/* User Avatar & Dropdown (Desktop & Mobile) */}
+            <Col
+              xs={24}
+              lg={4}
+              className="flex! items-center! justify-start gap-5"
+            >
+              <div className="relative">
+                <Link href="/wishlist">
+                  <Button
+                    className={cn(
+                      "hover:bg-accent-danger! h-10! w-10! rounded-full! border-none! text-lg! text-black! hover:text-white!",
+                      isWishlistPage
+                        ? "bg-accent-danger! text-white!"
+                        : "bg-white!",
+                    )}
+                  >
+                    <HeartOutlined className="text-2xl" />
+                    <div className="bg-accent-danger absolute top-0 right-0 flex h-5 w-5 items-center justify-center rounded-full text-sm text-white">
+                      {whistlist.length}
+                    </div>
+                  </Button>
+                </Link>
+              </div>
+
+              <div className="relative">
+                <Link href="/cart">
+                  <Button
+                    className={cn(
+                      "hover:bg-accent-danger! h-10! w-10! rounded-full! border-none! text-lg! text-black! hover:text-white!",
+                      isCartPage
+                        ? "bg-accent-danger! text-white!"
+                        : "bg-white!",
+                    )}
+                  >
+                    <ShoppingCartOutlined className="text-2xl" />
+                    <div className="bg-accent-danger absolute top-0 right-0 flex h-5 w-5 items-center justify-center rounded-full text-sm text-white">
+                      {cart.length}
+                    </div>
+                  </Button>
+                </Link>
+              </div>
+              {status === "loading" ? null : user ? (
+                <Dropdown overlay={userMenu} trigger={["click"]}>
+                  <Button
+                    className={cn(
+                      "hover:bg-accent-danger! h-10! w-10! rounded-full! border-none! bg-white! text-lg! text-black! hover:text-white!",
+                    )}
+                  >
+                    <UserOutlined className="text-2xl" />
+                  </Button>
+                </Dropdown>
+              ) : null}
+            </Col>
+
+            {/* Mobile nav */}
             <Col xs={24} lg={0}>
-              {/* Mobile nav */}
               <div
                 ref={menuRef}
                 className={`mt-6 px-3 lg:hidden ${isOpen ? "block" : "hidden"}`}
