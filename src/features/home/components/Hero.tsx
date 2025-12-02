@@ -2,7 +2,8 @@
 import { Carousel } from "antd";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+
+import { ArrowRightOutlined as ArrowRight } from "@ant-design/icons";
 import { useState } from "react";
 
 const Hero = () => {
@@ -43,7 +44,7 @@ const Hero = () => {
 
                 {/* Link */}
                 <Link
-                  href="/shop"
+                  href="/products"
                   tabIndex={isActive ? 0 : -1}
                   aria-hidden={!isActive}
                   className="mt-[22px] flex items-center gap-2 pb-[47px] font-medium text-white!"

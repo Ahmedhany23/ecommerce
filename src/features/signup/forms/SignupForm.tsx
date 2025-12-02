@@ -4,16 +4,18 @@ import { Button, Form, Input, message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+type FieldForm = {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+
 const SignupForm = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
 
-  const handleSignup = async (values: {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }) => {
+  const handleSignup = async (values: FieldForm) => {
     try {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
@@ -54,7 +56,7 @@ const SignupForm = () => {
         </div>
 
         {/* Name */}
-        <Form.Item
+        <Form.Item<FieldForm>
           name="name"
           rules={[{ required: true, message: "Please enter your name" }]}
         >
@@ -62,7 +64,7 @@ const SignupForm = () => {
         </Form.Item>
 
         {/* Email */}
-        <Form.Item
+        <Form.Item<FieldForm>
           name="email"
           rules={[
             { required: true, message: "Please enter your email" },
@@ -73,7 +75,7 @@ const SignupForm = () => {
         </Form.Item>
 
         {/* Password */}
-        <Form.Item
+        <Form.Item<FieldForm>
           name="password"
           rules={[
             { required: true, message: "Please enter your password" },
@@ -84,7 +86,7 @@ const SignupForm = () => {
         </Form.Item>
 
         {/* Confirm Password */}
-        <Form.Item
+        <Form.Item<FieldForm>
           name="confirmPassword"
           dependencies={["password"]}
           rules={[

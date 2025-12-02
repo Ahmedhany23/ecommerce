@@ -23,6 +23,7 @@ import {
   Skeleton,
   Button,
   Divider,
+  MenuProps,
 } from "antd";
 import { signOut, useSession } from "next-auth/react";
 import { SearchBar } from "../ui/SearchBar";
@@ -31,13 +32,12 @@ import {
   useCart,
   useWishlist,
 } from "@/src/features/products/store/useProductsStore";
+import { type Session } from "next-auth";
 
-export const Header = () => {
+export const Header = ({ user }: { user?: Session["user"] }) => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
-  const { data: session, status } = useSession();
-  const user = session?.user;
 
   const navlinks = useMemo(() => {
     let links = [
@@ -53,55 +53,52 @@ export const Header = () => {
     return links;
   }, [user]);
 
-  const userMenu = (
-    <Menu className="w-64 rounded-lg shadow-lg">
-      {/* User Info Header */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-3">
-        <div className="flex items-center gap-3">
-          <Avatar size={48} icon={<UserOutlined />} className="bg-blue-500" />
-          <div className="min-w-0 flex-1">
-            <div className="truncate font-semibold text-gray-900">
-              {user?.name}
-            </div>
-            <div className="flex items-center gap-1 truncate text-xs text-gray-600">
-              <MailOutlined className="text-gray-400" />
-              {user?.email}
+  const userMenuItems: MenuProps["items"] = [
+    {
+      type: "group",
+      key: "user-info",
+      label: (
+        <div className="px-3 py-2">
+          <div className="flex items-center gap-3">
+            <Avatar size={48} icon={<UserOutlined />} className="bg-blue-500" />
+            <div className="min-w-0 flex-1">
+              <div className="truncate font-semibold text-gray-900">
+                {user?.name}
+              </div>
+              <div className="flex items-center gap-1 truncate text-xs text-gray-600">
+                <MailOutlined className="text-gray-400" />
+                {user?.email}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ),
+    },
 
-      <Divider className="my-0" />
+    { type: "divider" },
 
-      {/* Profile Menu Item */}
-      <Menu.Item
-        key="profile"
-        icon={<ProfileOutlined className="text-xl!" />}
-        className="font-poppins"
-      >
-        <Link href="/profile" className="text-gray-700 hover:text-blue-600">
-          My Profile
-        </Link>
-      </Menu.Item>
+    {
+      key: "profile",
+      label: <Link href="/profile">My Profile</Link>,
+      icon: <ProfileOutlined />,
+    },
 
-      <Divider className="my-0" />
+    { type: "divider" },
 
-      {/* Logout Menu Item */}
-      <Menu.Item
-        key="logout"
-        icon={<LogoutOutlined className="text-xl! text-red-500" />}
-        className="font-poppins group"
-        danger
-      >
+    {
+      key: "logout",
+      label: (
         <button
           onClick={() => signOut()}
-          className="w-full cursor-pointer text-left text-xl text-red-600 group-hover:text-white"
+          className="w-full cursor-pointer text-left"
         >
           Logout
         </button>
-      </Menu.Item>
-    </Menu>
-  );
+      ),
+      icon: <LogoutOutlined className="text-red-500" />,
+      danger: true,
+    },
+  ];
 
   const isWishlistPage = pathname === "/wishlist";
   const isCartPage = pathname === "/cart";
@@ -121,7 +118,7 @@ export const Header = () => {
             className="w-full gap-4 md:gap-0"
           >
             {/* Logo */}
-            <Col xs={8} md={12} lg={2}>
+            <Col xs={8} md={12} lg={6}>
               <h1 className="font-poppins text-3xl font-bold">
                 <Link href="/" className="text-black!">
                   Exclusive
@@ -146,7 +143,7 @@ export const Header = () => {
             </Col>
 
             {/* Desktop Nav */}
-            <Col xs={0} lg={12} className="flex justify-center">
+            <Col xs={0} lg={8} className="flex justify-center">
               <nav className="flex flex-row justify-center gap-12">
                 {navlinks.map((navlink, i) => (
                   <Link
@@ -210,8 +207,8 @@ export const Header = () => {
                   </Button>
                 </Link>
               </div>
-              {status === "loading" ? null : user ? (
-                <Dropdown overlay={userMenu} trigger={["click"]}>
+              { user ? (
+                <Dropdown menu={{ items: userMenuItems }} trigger={["click"]}>
                   <Button
                     className={cn(
                       "hover:bg-accent-danger! h-10! w-10! rounded-full! border-none! bg-white! text-lg! text-black! hover:text-white!",

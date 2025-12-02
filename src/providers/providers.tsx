@@ -2,8 +2,7 @@
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 import React from "react";
-import MainLayout from "../components/layout/MainLayout";
-import ScrollContext from "../context/ScrollContext";
+
 import { SessionProvider } from "next-auth/react";
 
 const antdStyle = {
@@ -21,6 +20,9 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <ConfigProvider
       theme={{
+        token: {
+          fontFamily: "Poppins",
+        },
         components: {
           Message: {
             ...antdStyle,
@@ -29,11 +31,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       <AntdRegistry>
-        <SessionProvider>
-          <MainLayout>
-            <ScrollContext>{children}</ScrollContext>
-          </MainLayout>
-        </SessionProvider>
+        <SessionProvider>{children}</SessionProvider>
       </AntdRegistry>
     </ConfigProvider>
   );

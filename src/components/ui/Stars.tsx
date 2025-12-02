@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { StarFilled as Star } from "@ant-design/icons";
 
 interface GenerateStarsProps {
   count?: number; // how many stars to render
@@ -9,7 +9,7 @@ export const Stars = ({ count = 5, size = 20 }: GenerateStarsProps) => {
   return (
     <div style={{ display: "flex", gap: "4px" }}>
       {Array.from({ length: count }).map((_, i) => (
-        <Star key={i} size={size} color="#FFAD33" fill="#FFAD33" />
+        <Star key={i} size={size} color="#FFAD33" />
       ))}
     </div>
   );

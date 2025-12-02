@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import Providers from "../providers/providers";
 import "./globals.css";
+import MainLayout from "../components/layout/MainLayout";
+import ScrollContext from "../context/ScrollContext";
+import { getServerSession } from "next-auth";
 
 //** fonts */
 
@@ -25,15 +28,22 @@ export const metadata: Metadata = {
   description: "E-commerce App with Next.js 16",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const session = await getServerSession();
+
   return (
     <html lang="en">
       <body className={`${inter.className} ${poppins.className} antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <MainLayout user={session?.user}>
+            <ScrollContext>{children}</ScrollContext>
+          </MainLayout>
+        </Providers>
       </body>
     </html>
   );
