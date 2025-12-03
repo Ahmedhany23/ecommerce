@@ -119,3 +119,17 @@ textarea {
   background-color: var(--color-surface-alt) !important;
   color: var(--color-text-muted) !important;
 }
+
+.ant-checkbox {
+  .ant-checkbox-inner {
+    border-color: var(--color-surface-alt) !important;
+  }
+
+  &.ant-checkbox-checked .ant-checkbox-inner {
+    background-color: var(--color-accent-danger) !important;
+    border-color: var(--color-accent-danger) !important;
+  }
+  .ant-checkbox-label {
+    font-family: "Poppins", sans-serif !important;
+  }
+}

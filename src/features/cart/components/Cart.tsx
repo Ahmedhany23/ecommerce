@@ -22,6 +22,7 @@ import {
   removeFromCart,
   useCart,
 } from "../../products/store/useProductsStore";
+import calculateCartTotal from "@/src/lib/calculateCartTotal";
 
 const Cart = () => {
   return (
@@ -49,11 +50,7 @@ export default Cart;
 const CartDetails = () => {
   const cart = useCart();
 
-  const subtotal = useMemo(
-    () =>
-      cart.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0),
-    [cart],
-  );
+  const subtotal = calculateCartTotal(cart);
 
   return (
     <Card
@@ -83,10 +80,11 @@ const CartDetails = () => {
         <span>Total:</span>
         <span>${subtotal.toFixed(2)}</span>
       </div>
-
-      <Button type="primary" size="large" className="w-full">
-        Process to checkout
-      </Button>
+      <Link href="/checkout">
+        <Button type="primary" size="large" className="w-full">
+          Process to checkout
+        </Button>
+      </Link>
     </Card>
   );
 };
