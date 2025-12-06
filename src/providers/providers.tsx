@@ -2,7 +2,13 @@
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 import React from "react";
-
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 
 const antdStyle = {
@@ -17,6 +23,8 @@ const antdStyle = {
 };
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
+  const queryClient = new QueryClient();
+
   return (
     <ConfigProvider
       theme={{
@@ -31,7 +39,12 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       <AntdRegistry>
-        <SessionProvider>{children}</SessionProvider>
+        {" "}
+        <SessionProvider>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </SessionProvider>
       </AntdRegistry>
     </ConfigProvider>
   );

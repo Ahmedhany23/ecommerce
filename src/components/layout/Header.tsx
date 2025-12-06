@@ -1,38 +1,28 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useMemo, useRef, useState } from "react";
-import { Banner } from "./Banner";
-import {
-  CloseOutlined,
-  MenuOutlined,
-  UserOutlined,
-  SearchOutlined,
-  ShoppingCartOutlined,
-  HeartOutlined,
-  ProfileOutlined,
-  MailOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons";
-import {
-  Col,
-  Menu,
-  Row,
-  Dropdown,
-  Avatar,
-  Skeleton,
-  Button,
-  Divider,
-  MenuProps,
-} from "antd";
-import { signOut, useSession } from "next-auth/react";
-import { SearchBar } from "../ui/SearchBar";
-import { cn } from "@/src/lib/utils";
 import {
   useCart,
   useWishlist,
 } from "@/src/features/products/store/useProductsStore";
+import { useGetCart } from "@/src/hooks/useGetCart";
+import { cn } from "@/src/lib/utils";
+import {
+  CloseOutlined,
+  HeartOutlined,
+  LogoutOutlined,
+  MailOutlined,
+  MenuOutlined,
+  ProfileOutlined,
+  ShoppingCartOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Avatar, Button, Col, Dropdown, Menu, MenuProps, Row } from "antd";
 import { type Session } from "next-auth";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useMemo, useRef, useState } from "react";
+import { SearchBar } from "../ui/SearchBar";
+import { Banner } from "./Banner";
 
 export const Header = ({ user }: { user?: Session["user"] }) => {
   const pathname = usePathname();
@@ -40,7 +30,7 @@ export const Header = ({ user }: { user?: Session["user"] }) => {
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   const navlinks = useMemo(() => {
-    let links = [
+    const links = [
       { link: "Home", path: "/" },
       { link: "Contact", path: "/contact" },
       { link: "About", path: "/about" },
@@ -103,8 +93,9 @@ export const Header = ({ user }: { user?: Session["user"] }) => {
   const isWishlistPage = pathname === "/wishlist";
   const isCartPage = pathname === "/cart";
 
-  const cart = useCart();
   const whistlist = useWishlist();
+
+  const { cart } = useGetCart();
 
   return (
     <header className="border-opacity-30 border-b-[0.5px] border-b-[#000000] pb-4">
@@ -201,13 +192,15 @@ export const Header = ({ user }: { user?: Session["user"] }) => {
                     )}
                   >
                     <ShoppingCartOutlined className="text-2xl" />
-                    <div className="bg-accent-danger absolute top-0 right-0 flex h-5 w-5 items-center justify-center rounded-full text-sm text-white">
-                      {cart.length}
-                    </div>
+                    {cart && (
+                      <div className="bg-accent-danger absolute top-0 right-0 flex h-5 w-5 items-center justify-center rounded-full text-sm text-white">
+                        {cart?.length}
+                      </div>
+                    )}
                   </Button>
                 </Link>
               </div>
-              { user ? (
+              {user ? (
                 <Dropdown menu={{ items: userMenuItems }} trigger={["click"]}>
                   <Button
                     className={cn(
@@ -229,7 +222,7 @@ export const Header = ({ user }: { user?: Session["user"] }) => {
                 <Menu
                   mode="inline"
                   selectedKeys={[pathname]}
-                  onClick={({ key }) => {
+                  onClick={() => {
                     setIsOpen(false);
                   }}
                   items={navlinks.map((item) => ({

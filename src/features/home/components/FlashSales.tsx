@@ -1,3 +1,5 @@
+"use client";
+
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
 import Link from "next/link";
 
@@ -8,10 +10,10 @@ import ProductsCarousel from "./ProductsCarousel";
 import { ProductFallbackLoader } from "./loader/ProductFallbackLoader";
 import { Product } from "@/generated/prisma/browser";
 
-const FlashSales = async ({ products }: { products: Product[] }) => {
+const FlashSales = ({ products }: { products: Product[] }) => {
   if (!products) return null;
 
-  let shallowCopyProducts = structuredClone(products);
+  const shallowCopyProducts = structuredClone(products);
 
   return (
     <section className="section-container">

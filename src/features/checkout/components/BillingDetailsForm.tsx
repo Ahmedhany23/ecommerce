@@ -8,16 +8,22 @@ import {
   Space,
 } from "antd";
 import React, { useEffect, useState } from "react";
+import { IBillingDetails } from "./StripeCheckout";
 
 const BillingDetailsForm = ({
   setBillingDetails,
 }: {
-  setBillingDetails: React.Dispatch<React.SetStateAction<{}>>;
+  setBillingDetails: React.Dispatch<React.SetStateAction<IBillingDetails>>;
 }) => {
   const [form] = Form.useForm();
 
-  const [stored, setStored] = useState<{} | null>(null);
-
+  const [stored, setStored] = useState(() => {
+    if (typeof window !== "undefined") {
+      const item = localStorage.getItem("billingDetails");
+      return item ? JSON.parse(item) : null;
+    }
+    return null;
+  });
   const handleSaveInformation = (e: CheckboxChangeEvent) => {
     form.validateFields().then((values) => {
       setBillingDetails(values);
@@ -28,34 +34,16 @@ const BillingDetailsForm = ({
   };
 
   useEffect(() => {
-    // Safe access inside browser
-    const item =
-      typeof window !== "undefined"
-        ? localStorage.getItem("billingDetails")
-        : null;
-
-    if (item) {
-      const parsed = JSON.parse(item);
-      setStored(parsed);
-      setBillingDetails(parsed);
-      form.setFieldsValue(parsed);
+    if (stored) {
+      setBillingDetails(stored);
+      form.setFieldsValue(stored);
     }
-  }, []);
+  }, [stored, form, setBillingDetails]);
 
   return (
     <Form form={form} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
       <h3 className="font-inter my-5 text-4xl font-medium">Billing Details</h3>
-      <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-        <Input
-          type="text"
-          size="large"
-          onChange={(e) =>
-            setBillingDetails((prev) => {
-              return { ...prev, name: e.target.value };
-            })
-          }
-        />
-      </Form.Item>
+
       <Form.Item name="company_name" label="Company Name">
         <Input
           type="text"

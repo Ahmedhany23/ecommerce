@@ -4,9 +4,11 @@ import { Col, Row } from "antd";
 import { Suspense } from "react";
 import { ProductFallbackLoader } from "../../home/components/loader/ProductFallbackLoader";
 import { useWishlist } from "../../products/store/useProductsStore";
+import { useGetCart } from "@/src/hooks/useGetCart";
 
 const WishlistProducts = () => {
   const wishlist = useWishlist();
+  const { cart, isLoading } = useGetCart();
 
   return (
     <section className="section-container">
@@ -23,6 +25,8 @@ const WishlistProducts = () => {
                 <ProductCard
                   product={product}
                   redirectPath={`/products/${product.id}`}
+                  cart={cart}
+                  isLoadingCart={isLoading}
                 />
               </Col>
             ))}

@@ -1,5 +1,8 @@
 import { Button } from "antd";
+import { getServerSession } from "next-auth";
+
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Congratulations",
@@ -11,6 +14,11 @@ const PaymentSuccess = async ({
   searchParams: { amount: string };
 }) => {
   const { amount } = await searchParams;
+  const session = await getServerSession();
+
+  if (!session) {
+    redirect("/login");
+  }
 
   return (
     <section className="section-container">

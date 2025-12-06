@@ -1,8 +1,12 @@
+"use client";
 import { Product } from "@/generated/prisma/browser";
 import ProductCard from "@/src/components/ui/ProductCard";
+import { useGetCart } from "@/src/hooks/useGetCart";
 import { Col, Row } from "antd";
 
 const ProductsGrid = ({ products }: { products: Product[] }) => {
+  const { cart, isLoading } = useGetCart();
+
   if (!products) return null;
 
   return (
@@ -12,6 +16,8 @@ const ProductsGrid = ({ products }: { products: Product[] }) => {
           <ProductCard
             product={product}
             redirectPath={`/products/${product.id}`}
+            cart={cart}
+            isLoadingCart={isLoading}
           />
         </Col>
       ))}

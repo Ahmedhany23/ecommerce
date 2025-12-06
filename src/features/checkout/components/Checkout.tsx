@@ -6,10 +6,12 @@ import BillingDetailsForm, {
   BillingDetailsSkeleton,
 } from "./BillingDetailsForm";
 import { Col, Row } from "antd";
-import StripeCheckout from "./StripeCheckout";
+import StripeCheckout, { IBillingDetails } from "./StripeCheckout";
 
 const Checkout = ({ user }: { user?: Session["user"] }) => {
-  const [billingDetails, setBillingDetails] = useState({});
+  const [billingDetails, setBillingDetails] = useState<IBillingDetails>(
+    {} as IBillingDetails,
+  );
 
   return (
     <Row gutter={[50, 50]} justify={"space-between"} align={"middle"}>
@@ -19,7 +21,7 @@ const Checkout = ({ user }: { user?: Session["user"] }) => {
         </Suspense>
       </Col>
       <Col xs={24} md={12} xl={8}>
-        <StripeCheckout />
+        <StripeCheckout billingDetails={billingDetails} />
       </Col>
     </Row>
   );

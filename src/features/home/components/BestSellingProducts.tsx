@@ -1,17 +1,20 @@
+"use client";
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
 import Link from "next/link";
-
 
 import ProductCard from "@/src/components/ui/ProductCard";
 import { Button, Col, Row } from "antd";
 import { Suspense } from "react";
 import { ProductFallbackLoader } from "./loader/ProductFallbackLoader";
 import { Product } from "@/generated/prisma/browser";
+import { useGetCart } from "@/src/hooks/useGetCart";
 
 const BestSellingProducts = ({ products }: { products: Product[] }) => {
+  const { cart, isLoading } = useGetCart();
+
   if (!products) return null;
 
-  let shallowCopyProducts = structuredClone(products);
+  const shallowCopyProducts = structuredClone(products);
 
   return (
     <section className="section-container">
@@ -35,6 +38,8 @@ const BestSellingProducts = ({ products }: { products: Product[] }) => {
                   <ProductCard
                     product={product}
                     redirectPath={`/products/${product.id}`}
+                    cart={cart}
+                    isLoadingCart={isLoading}
                   />
                 </Col>
               ))}

@@ -1,20 +1,22 @@
 "use client";
 
 import { Button, Form, Input, message } from "antd";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { emptyCart, useCart } from "../../products/store/useProductsStore";
 
 const LoginForm = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
+  const cart = useCart();
 
   const handleLogin = async (values: { email: string; password: string }) => {
     try {
       const res = await signIn("credentials", {
         email: values.email.toLowerCase(),
         password: values.password,
-        redirect: false, // no redirect
+        redirect: false,
       });
 
       if (!res) {
@@ -24,8 +26,26 @@ const LoginForm = () => {
 
       if (res.ok) {
         messageApi.success("Logged in successfully");
+
         router.push("/");
         router.refresh();
+
+        const newSession = await getSession();
+
+        if (newSession?.user) {
+          // Merge guest cart
+          const resMerge = await fetch("/api/cart/merge", {
+            method: "POST",
+            body: JSON.stringify({ items: cart }),
+          });
+
+          if (!resMerge.ok) {
+            messageApi.error("Error merging cart");
+            return;
+          } else {
+            emptyCart();
+          }
+        }
       } else {
         // Show proper message
         if (res.error === "CredentialsSignin")

@@ -5,12 +5,16 @@ import { ArrowRightOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import ProductCard from "@/src/components/ui/ProductCard";
 import { useRef } from "react";
 import { Product } from "@/generated/prisma/browser";
+import { CarouselRef } from "antd/es/carousel";
+import { useGetCart } from "@/src/hooks/useGetCart";
 
 const ProductsCarousel = ({ products }: { products: Product[] }) => {
-  const carouselRef = useRef<any>(null);
+  const carouselRef = useRef<CarouselRef>(null);
 
   const handleNext = () => carouselRef.current?.next();
   const handlePrev = () => carouselRef.current?.prev();
+
+  const { cart, isLoading } = useGetCart();
 
   return (
     <>
@@ -61,6 +65,8 @@ const ProductsCarousel = ({ products }: { products: Product[] }) => {
             <ProductCard
               product={product}
               redirectPath={`/products/${product.id}`}
+              cart={cart}
+              isLoadingCart={isLoading}
             />
           </div>
         ))}

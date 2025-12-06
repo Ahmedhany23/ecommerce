@@ -41,10 +41,22 @@ const handler = NextAuth({
           credentials.password,
           user.passwordHash,
         );
+
         return valid ? user : null;
       },
     }),
   ],
+
+  callbacks: {
+    async jwt({ token }) {
+      return token;
+    },
+
+    async session({ session, token }) {
+      if (token) session.user.id = token.id as string;
+      return session;
+    },
+  },
 });
 
 export { handler as GET, handler as POST };

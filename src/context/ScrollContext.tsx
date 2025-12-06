@@ -1,49 +1,52 @@
 "use client";
 
 import Lenis from "lenis";
+import React, { useEffect, useTransition } from "react";
 
-import React, { useEffect } from "react";
+const SmoothScrollerContext = React.createContext<Lenis | null>(null);
 
-const SoomthScrollerContext = React.createContext<Lenis | null>(null);
+export const useSmoothScroller = () => React.useContext(SmoothScrollerContext);
 
-export const useSmoothScroller = () => React.useContext(SoomthScrollerContext);
-
-const ScrollContext = ({ children }: { children: React.ReactNode }) => {
-  const [lenisRef, setLenis] = React.useState<Lenis | null>(null);
-  const [rafState, setRaf] = React.useState<number | null>(null);
+const ScrollProvider = ({ children }: { children: React.ReactNode }) => {
+  const [lenis, setLenis] = React.useState<Lenis | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, startTransition] = useTransition();
 
   useEffect(() => {
-    const scroller = new Lenis({
+    // Initialize Lenis
+    const lenisInstance = new Lenis({
       duration: 1.5,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
     });
-    let rf;
 
-    function raf(time: DOMHighResTimeStamp) {
-      scroller.raf(time);
-      requestAnimationFrame(raf);
-    }
+    // Animation frame function
+    let animationFrameId: number;
 
-    rf = requestAnimationFrame(raf);
+    const raf = (time: number) => {
+      lenisInstance.raf(time);
+      animationFrameId = requestAnimationFrame(raf);
+    };
 
-    setLenis(scroller);
-    setRaf(rf);
+    animationFrameId = requestAnimationFrame(raf);
 
+    // Wrap setState in startTransition to avoid sync updates
+    startTransition(() => {
+      setLenis(lenisInstance);
+    });
+
+    // Cleanup
     return () => {
-      if (lenisRef) {
-        lenisRef.destroy();
-        if (rafState) {
-          cancelAnimationFrame(rafState);
-        }
-      }
+      cancelAnimationFrame(animationFrameId);
+      lenisInstance.destroy();
     };
   }, []);
 
   return (
-    <SoomthScrollerContext.Provider value={lenisRef}>
+    <SmoothScrollerContext.Provider value={lenis}>
       {children}
-    </SoomthScrollerContext.Provider>
+    </SmoothScrollerContext.Provider>
   );
 };
 
-export default ScrollContext;
+export default ScrollProvider;

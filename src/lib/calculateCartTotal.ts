@@ -1,8 +1,10 @@
-import { Product } from "@/generated/prisma/browser";
+import { CartItem } from "../features/products/store/useProductsStore";
 
- function calculateCartTotal(cart: Product[]) {
-  return cart.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
+function calculateCartTotal(cart: CartItem[]) {
+  return cart.reduce(
+    (acc, item) => acc + item.product.price * (item.quantity || 1),
+    0,
+  );
 }
 
-export default calculateCartTotal
-
+export default calculateCartTotal;

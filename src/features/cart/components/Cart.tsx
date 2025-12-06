@@ -8,27 +8,29 @@ import {
   InputNumber,
   Popconfirm,
   Row,
+  Skeleton,
   Table,
   TableProps,
 } from "antd";
 
-import { Product } from "@/generated/prisma/client";
+import calculateCartTotal from "@/src/lib/calculateCartTotal";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
 import {
+  CartItem,
   decrement,
   increment,
   removeFromCart,
-  useCart,
 } from "../../products/store/useProductsStore";
-import calculateCartTotal from "@/src/lib/calculateCartTotal";
+import { useGetCart } from "@/src/hooks/useGetCart";
 
 const Cart = () => {
+  const { cart, isLoading } = useGetCart();
+
   return (
     <Row gutter={[50, 50]} justify="center" align="middle">
       <Col xs={24}>
-        <CartTable />
+        <CartTable cart={cart} isLoadingCart={isLoading} />
       </Col>
       <Col xs={24}>
         {/* Actions */}
@@ -39,7 +41,7 @@ const Cart = () => {
         </div>
       </Col>
       <Col xs={24} className="flex! justify-end">
-        <CartDetails />
+        <CartDetails cart={cart} isLoadingCart={isLoading} />
       </Col>
     </Row>
   );
@@ -47,10 +49,18 @@ const Cart = () => {
 
 export default Cart;
 
-const CartDetails = () => {
-  const cart = useCart();
-
+const CartDetails = ({
+  cart,
+  isLoadingCart,
+}: {
+  cart: CartItem[];
+  isLoadingCart?: boolean;
+}) => {
   const subtotal = calculateCartTotal(cart);
+
+  if (isLoadingCart) return <Skeleton active />;
+
+  if(!cart) return null
 
   return (
     <Card
@@ -89,13 +99,24 @@ const CartDetails = () => {
   );
 };
 
-const CartTable = () => {
-  const cart = useCart();
+type CartTableItem = CartItem["product"] & { quantity: number };
 
-  const [items, setItems] = useState<Product[]>(cart || []);
+const CartTable = ({
+  cart,
+  isLoadingCart,
+}: {
+  cart: CartItem[];
+  isLoadingCart?: boolean;
+}) => {
+  const finalProduct = cart.map((item) => {
+    return {
+      ...item.product,
+      quantity: item.quantity,
+    };
+  });
 
   const handleQuantityChange = (id: string, value: number) => {
-    const product = items.find((i) => i.id === id);
+    const product = cart.find((i) => i.id === id);
     if (!product) return;
 
     const oldQty = product.quantity ?? 1;
@@ -114,7 +135,7 @@ const CartTable = () => {
     }
   };
 
-  const columns: TableProps<Product>["columns"] = [
+  const columns: TableProps<CartTableItem>["columns"] = [
     {
       title: "Product",
       dataIndex: "title",
@@ -128,7 +149,11 @@ const CartTable = () => {
             height={70}
             className="h-20 w-20 object-contain object-center"
           />
-          <p className="font-poppins font-semibold text-black">{record.name}</p>
+          <Link href={`/product/${record.id}`}>
+            <p className="font-poppins hover:text-accent-danger font-semibold text-black">
+              {record.name}
+            </p>
+          </Link>
         </div>
       ),
     },
@@ -157,7 +182,7 @@ const CartTable = () => {
       key: "subtotal",
       render: (_, record) => (
         <p className="font-poppins font-semibold text-black">
-          ${(record.quantity ?? 0) * record.price}
+          ${record.quantity * record.price}
         </p>
       ),
     },
@@ -178,17 +203,11 @@ const CartTable = () => {
       ),
     },
   ];
-
-  useEffect(() => {
-    if (cart) {
-      setItems(cart);
-    }
-  }, [cart]);
-
   return (
     <Table
       columns={columns}
-      dataSource={items}
+      dataSource={finalProduct}
+      loading={isLoadingCart}
       rowKey="id"
       pagination={false}
       bordered={false}

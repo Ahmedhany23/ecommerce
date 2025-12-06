@@ -1,3 +1,4 @@
+"use client";
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
 import Link from "next/link";
 
@@ -7,11 +8,14 @@ import { Suspense } from "react";
 
 import { Product } from "@/generated/prisma/browser";
 import { ProductFallbackLoader } from "../../home/components/loader/ProductFallbackLoader";
+import { useGetCart } from "@/src/hooks/useGetCart";
 
 const JustForYouProducts = ({ products }: { products: Product[] }) => {
+  const { cart, isLoading } = useGetCart();
+
   if (!products) return null;
 
-  let shallowCopyProducts = structuredClone(products);
+  const shallowCopyProducts = structuredClone(products);
 
   return (
     <section className="section-container">
@@ -20,7 +24,12 @@ const JustForYouProducts = ({ products }: { products: Product[] }) => {
         <div className="mb-10 flex flex-wrap items-center justify-between gap-20">
           <SectionTitle title={"Just For You"} />
           <Link href={"/products"}>
-            <Button type="default" variant="outlined"  size="large" className="bg-white! text-black! border-black!">
+            <Button
+              type="default"
+              variant="outlined"
+              size="large"
+              className="border-black! bg-white! text-black!"
+            >
               See All
             </Button>
           </Link>
@@ -36,6 +45,8 @@ const JustForYouProducts = ({ products }: { products: Product[] }) => {
                   <ProductCard
                     product={product}
                     redirectPath={`/products/${product.id}`}
+                    cart={cart}
+                    isLoadingCart={isLoading}
                   />
                 </Col>
               ))}

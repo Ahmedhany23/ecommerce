@@ -13,10 +13,10 @@ import {
   increment,
   removeFromCart,
   toggleWishlistProduct,
-  useCart,
 } from "../store/useProductsStore";
 import { productInTheCart } from "../utils/productInTheCart";
 import { productInTheWishlist } from "../utils/productInTheWishlist";
+import { useGetCart } from "@/src/hooks/useGetCart";
 
 interface ProductDetailsProps {
   product: Product | null;
@@ -24,21 +24,23 @@ interface ProductDetailsProps {
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { cart } = useGetCart();
+
+
 
   if (!product) return null;
 
-  const inCart = productInTheCart(product.id);
+  const inCart = productInTheCart(product.id, cart);
   const inWhishlist = productInTheWishlist(product.id);
-  const cart = useCart();
 
-  const currentProduct = cart.find((item) => item.id === product.id);
+  const currentItem = cart.find((item) => item.product.id === product.id);
 
   const handleIncrement = () => {
     increment(product.id);
   };
 
   const handleDecrement = () => {
-    if (currentProduct?.quantity === 1) {
+    if (currentItem?.quantity === 1) {
       removeFromCart(product.id);
     } else {
       decrement(product.id);
@@ -56,7 +58,6 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
   return (
     <div className="py-10">
       <Row gutter={[16, 16]} justify="center" align="middle">
-        {/* Product Images */}
         <Col xs={24} lg={12}>
           <div className="flex flex-col-reverse justify-center gap-[30px] sm:flex-row">
             <div className="flex w-full max-w-[130px] justify-center gap-4 sm:flex-col sm:justify-normal">
@@ -85,7 +86,6 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             </div>
           </div>
         </Col>
-        {/* Product Details */}
         <Col xs={24} lg={8}>
           <h3 className="font-inter mb-4 text-2xl font-semibold">
             {product.name}
@@ -106,7 +106,6 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           </div>
           <p className="font-inter mb-6 text-2xl">${product.price}</p>
           <p className="mb-6 text-sm lg:max-w-[373px]">{product.description}</p>
-          {/* Divider */}
           <div className="mb-6 w-full border border-black opacity-50"></div>
 
           <div className="mb-10 flex flex-col items-center justify-center gap-[19px] sm:flex-row lg:items-stretch lg:justify-normal">
@@ -115,9 +114,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                 <Button onClick={handleDecrement} size="large">
                   -
                 </Button>
-                <p className="text-xl font-medium">
-                  {currentProduct?.quantity}
-                </p>
+                <p className="text-xl font-medium">{currentItem?.quantity}</p>
                 <Button onClick={handleIncrement} size="large">
                   +
                 </Button>
@@ -138,9 +135,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
               onClick={handleToggleWishlist}
               className="w-fit! px-2!"
             >
-              <HeartOutlined
-                className={`cursor-pointer text-3xl transition group-hover:text-white`}
-              />
+              <HeartOutlined className="cursor-pointer text-3xl transition group-hover:text-white" />
             </Button>
           </div>
 
@@ -188,7 +183,6 @@ export const ProductDetailsSkeleton = () => {
   return (
     <div className="py-20">
       <div className="flex flex-col items-center justify-center gap-20 px-1 lg:flex-row lg:items-stretch xl:gap-[71px]">
-        {/* Images Skeleton */}
         <div className="flex flex-col-reverse justify-center gap-[30px] sm:flex-row">
           <div className="flex justify-center gap-4 sm:flex-col sm:justify-normal">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -206,7 +200,6 @@ export const ProductDetailsSkeleton = () => {
           </div>
         </div>
 
-        {/* Details Skeleton */}
         <div className="w-full max-w-[500px]">
           <Skeleton active paragraph={{ rows: 1 }} />
 
@@ -226,7 +219,6 @@ export const ProductDetailsSkeleton = () => {
             <Skeleton active title={false} paragraph={{ rows: 3 }} />
           </div>
 
-          {/* Buttons */}
           <div className="mb-10 flex flex-col items-center justify-center gap-[19px] sm:flex-row lg:items-stretch lg:justify-normal">
             <Skeleton.Button
               active
@@ -245,7 +237,6 @@ export const ProductDetailsSkeleton = () => {
             />
           </div>
 
-          {/* Delivery box */}
           <div className="mx-auto w-full max-w-[400px] rounded border border-black/10 p-4 lg:mx-0">
             <div className="flex items-center gap-4 py-4">
               <Skeleton.Avatar shape="square" size={40} />

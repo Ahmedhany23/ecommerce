@@ -6,6 +6,7 @@ import { Stars } from "./Stars";
 
 import {
   addToCart,
+  CartItem,
   removeFromCart,
   toggleWishlistProduct,
 } from "@/src/features/products/store/useProductsStore";
@@ -17,40 +18,59 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 
-import { productInTheWishlist } from "@/src/features/products/utils/productInTheWishlist";
-import { message } from "antd";
 import { Product } from "@/generated/prisma/browser";
+import { productInTheWishlist } from "@/src/features/products/utils/productInTheWishlist";
+import { useAddProductIntoCart } from "@/src/hooks/useAddProductIntoCart";
+import { message } from "antd";
+import { useSession } from "next-auth/react";
 
 const { Meta } = Card;
 
 type ProductCardProps = {
   product: Product;
   redirectPath: string;
+  cart: CartItem[];
+  isLoadingCart?: boolean;
 };
 
 export default function ProductCard({
   product,
   redirectPath,
+  cart,
+  isLoadingCart = false,
 }: ProductCardProps) {
-  if (!product) return null;
-
+  const { status } = useSession();
   const [messageApi, contextHolder] = message.useMessage();
 
   const percentage = Math.round(
     ((product.price - product.removedPrice) / product.price) * 100,
   );
 
-  const inCart = productInTheCart(product.id);
+  const inCart = productInTheCart(product.id, cart);
 
   const inWhishlist = productInTheWishlist(product.id);
 
-  const handleCartToggle = () => {
-    if (inCart) {
-      removeFromCart(product.id);
-      messageApi.success("Product removed from cart");
+  const { mutationAddProductIntoCart, loadingAddProductIntoCart } =
+    useAddProductIntoCart();
+
+  const handleCartToggle = async () => {
+    if (isLoadingCart) return;
+    if (status === "authenticated") {
+      mutationAddProductIntoCart(product.id)
+        .then(() => {
+          messageApi.success("Product added to cart");
+        })
+        .catch(() => {
+          messageApi.error("Failed to add product to cart");
+        });
     } else {
-      addToCart(product);
-      messageApi.success("Product added to cart");
+      if (inCart) {
+        removeFromCart(product.id);
+        messageApi.success("Product removed from cart");
+      } else {
+        addToCart(product);
+        messageApi.success("Product added to cart");
+      }
     }
   };
 
@@ -63,6 +83,8 @@ export default function ProductCard({
       messageApi.success("Product added to wishlist");
     }
   };
+
+  if (!product) return null;
 
   return (
     <>
@@ -102,8 +124,15 @@ export default function ProductCard({
                   inCart ? "bg-accent-danger! text-white!" : "bg-white!",
                 )}
                 onClick={handleCartToggle}
+                loading={loadingAddProductIntoCart || isLoadingCart}
               >
-                {inCart ? <DeleteOutlined /> : <ShoppingCartOutlined />}
+                {isLoadingCart ? (
+                  ""
+                ) : inCart ? (
+                  <DeleteOutlined />
+                ) : (
+                  <ShoppingCartOutlined />
+                )}
               </Button>
             </div>
 
