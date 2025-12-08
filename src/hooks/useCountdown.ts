@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useEffectEvent, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 export function useCountdown(targetDate: string | number | Date) {
-  const calc = () => {
-    const now = new Date().getTime();
+  const calc = useCallback(() => {
+    const now = Date.now();
     const target = new Date(targetDate).getTime();
     const diff = target - now;
 
@@ -25,19 +25,17 @@ export function useCountdown(targetDate: string | number | Date) {
       seconds: Math.floor((diff / 1000) % 60),
       isFinished: false,
     };
-  };
+  }, [targetDate]);
 
-  const [timeLeft, setTimeLeft] = useState(calc);
-
-  const eventCalc = useEffectEvent(calc);
+  const [timeLeft, setTimeLeft] = useState(() => calc());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft(eventCalc);
+      setTimeLeft(calc());
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [targetDate]);
+  }, [calc]);
 
   return timeLeft;
 }
