@@ -29,9 +29,8 @@ export function useGetCart() {
     queryKey: ["cart"],
     queryFn: fetchCart,
     enabled: isAuthenticated, // Only fetch when authenticated
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
-    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
     retry: 2,
+    refetchOnWindowFocus: true,
   });
 
   // Return appropriate cart based on auth status

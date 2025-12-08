@@ -1,64 +1,68 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 import { prisma } from "@/src/lib/prisma";
+import { getUserFromDatabase } from "@/src/lib/getUserFromDatabase";
 
 export async function POST(req: Request) {
-  const session = await getServerSession();
-  if (!session)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const user = await getUserFromDatabase();
+
+  if (!user)
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
 
   const { productId } = await req.json();
+
   if (!productId)
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
-  const userId = session.user.id;
-
   try {
-    // 1. get cart
-    const cart = await prisma.cart.findUnique({
-      where: { userId },
+    // 1. Find or create cart
+    const cart = await prisma.cart.upsert({
+      where: { userId: user.id },
+      update: {},
+      create: { userId: user.id },
     });
 
-    if (!cart)
-      return NextResponse.json({ error: "Cart not found" }, { status: 404 });
+    // 2. First try to find existing item
+    const existingItem = await prisma.cartItem.findFirst({
+      where: {
+        cartId: cart.id,
+        productId: productId,
+      },
+    });
 
-    // 2. find the item in cart
-    const itemIndex = cart.items.findIndex(
-      (i) => i.productId.toString() === productId.toString(),
-    );
-
-    if (itemIndex === -1) {
-      // item not exists → add it with quantity 1
-      const updatedItems = [...cart.items, { productId, quantity: 1 }];
-
-      await prisma.cart.update({
-        where: { userId },
-        data: { items: updatedItems },
+    if (existingItem) {
+      // Update quantity if exists
+      await prisma.cartItem.update({
+        where: { id: existingItem.id },
+        data: {
+          quantity: existingItem.quantity + 1,
+        },
       });
-
-      return NextResponse.json({ success: true, created: true });
+    } else {
+      // Create if doesn't exist
+      await prisma.cartItem.create({
+        data: {
+          cartId: cart.id,
+          productId: productId,
+          quantity: 1,
+        },
+      });
     }
 
-    // 3. increment quantity
-    const updatedItems = [...cart.items];
-    const item = updatedItems[itemIndex];
-
-    updatedItems[itemIndex] = {
-      ...item,
-      quantity: item.quantity + 1,
-    };
-
-    // 4. update cart
-    await prisma.cart.update({
-      where: { userId },
-      data: { items: updatedItems },
+    // 3. Fetch updated cart
+    const updatedCart = await prisma.cart.findUnique({
+      where: { userId: user.id },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, cart: updatedCart });
   } catch (error) {
-    return NextResponse.json(
-      { error: error || "Server error" },
-      { status: 500 },
-    );
+    console.error("Error adding to cart:", error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

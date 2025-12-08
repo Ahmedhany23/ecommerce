@@ -23,6 +23,7 @@ import { productInTheWishlist } from "@/src/features/products/utils/productInThe
 import { useAddProductIntoCart } from "@/src/hooks/useAddProductIntoCart";
 import { message } from "antd";
 import { useSession } from "next-auth/react";
+import { useRemoveProductFromCart } from "@/src/hooks/useRemoveProductFromCart";
 
 const { Meta } = Card;
 
@@ -53,16 +54,29 @@ export default function ProductCard({
   const { mutationAddProductIntoCart, loadingAddProductIntoCart } =
     useAddProductIntoCart();
 
+  const { mutationRemoveProductFromCart, loadingRemoveProductFromCart } =
+    useRemoveProductFromCart();
+
   const handleCartToggle = async () => {
     if (isLoadingCart) return;
     if (status === "authenticated") {
-      mutationAddProductIntoCart(product.id)
-        .then(() => {
-          messageApi.success("Product added to cart");
-        })
-        .catch(() => {
-          messageApi.error("Failed to add product to cart");
-        });
+      if (inCart) {
+        mutationRemoveProductFromCart(product.id)
+          .then(() => {
+            messageApi.success("Product removed from cart");
+          })
+          .catch(() => {
+            messageApi.error("Failed to remove product from cart");
+          });
+      } else {
+        mutationAddProductIntoCart(product.id)
+          .then(() => {
+            messageApi.success("Product added to cart");
+          })
+          .catch(() => {
+            messageApi.error("Failed to add product to cart");
+          });
+      }
     } else {
       if (inCart) {
         removeFromCart(product.id);
@@ -124,7 +138,11 @@ export default function ProductCard({
                   inCart ? "bg-accent-danger! text-white!" : "bg-white!",
                 )}
                 onClick={handleCartToggle}
-                loading={loadingAddProductIntoCart || isLoadingCart}
+                loading={
+                  loadingAddProductIntoCart ||
+                  loadingRemoveProductFromCart ||
+                  isLoadingCart
+                }
               >
                 {isLoadingCart ? (
                   ""

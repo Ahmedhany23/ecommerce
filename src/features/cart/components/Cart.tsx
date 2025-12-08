@@ -23,6 +23,10 @@ import {
   removeFromCart,
 } from "../../products/store/useProductsStore";
 import { useGetCart } from "@/src/hooks/useGetCart";
+import { useRemoveProductFromCart } from "@/src/hooks/useRemoveProductFromCart";
+import { useIncrementProduct } from "@/src/hooks/useIncrementProduct";
+import { useDecrementProduct } from "@/src/hooks/useDecrementProduct";
+import { useSession } from "next-auth/react";
 
 const Cart = () => {
   const { cart, isLoading } = useGetCart();
@@ -60,7 +64,8 @@ const CartDetails = ({
 
   if (isLoadingCart) return <Skeleton active />;
 
-  if(!cart) return null
+
+  if (!cart?.length) return null;
 
   return (
     <Card
@@ -115,23 +120,56 @@ const CartTable = ({
     };
   });
 
-  const handleQuantityChange = (id: string, value: number) => {
-    const product = cart.find((i) => i.id === id);
+  const { status } = useSession();
+
+  const { mutationRemoveProductFromCart, loadingRemoveProductFromCart } =
+    useRemoveProductFromCart();
+
+  const { mutationIncrementProduct, loadingIncrementProduct } =
+    useIncrementProduct();
+
+  const { mutationDecrementProduct, loadingDecrementProduct } =
+    useDecrementProduct();
+
+  const handleQuantityChange = async (id: string, value: number) => {
+    const product = cart.find((i) => i.productId === id);
+    console.log(product);
     if (!product) return;
 
     const oldQty = product.quantity ?? 1;
 
     if (value <= 0) {
-      removeFromCart(id);
+      if (status === "authenticated") {
+        await mutationRemoveProductFromCart(id);
+        return;
+      } else {
+        removeFromCart(id);
+      }
       return;
     }
 
     const diff = value - oldQty;
 
     if (diff > 0) {
-      increment(id);
+      if (status === "authenticated") {
+        await mutationIncrementProduct(id);
+      } else {
+        increment(id);
+      }
     } else if (diff < 0) {
-      decrement(id);
+      if (status === "authenticated") {
+        await mutationDecrementProduct(id);
+      } else {
+        decrement(id);
+      }
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (status === "authenticated") {
+      await mutationRemoveProductFromCart(id);
+    } else {
+      removeFromCart(id);
     }
   };
 
@@ -174,6 +212,7 @@ const CartTable = ({
           min={1}
           value={qty}
           onChange={(val) => handleQuantityChange(record.id, Number(val))}
+          disabled={loadingIncrementProduct || loadingDecrementProduct}
         />
       ),
     },
@@ -193,10 +232,15 @@ const CartTable = ({
         <Popconfirm
           title="Are you sure you want to remove this item?"
           onConfirm={() => {
-            removeFromCart(record.id);
+            handleDelete(record.id);
           }}
         >
-          <Button type="primary" danger>
+          <Button
+            type="primary"
+            danger
+            loading={loadingRemoveProductFromCart}
+            disabled={loadingRemoveProductFromCart}
+          >
             Remove
           </Button>
         </Popconfirm>

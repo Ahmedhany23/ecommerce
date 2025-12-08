@@ -1,60 +1,72 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
+import { getUserFromDatabase } from "@/src/lib/getUserFromDatabase";
 import { prisma } from "@/src/lib/prisma";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const session = await getServerSession();
-  if (!session)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const user = await getUserFromDatabase();
+
+  if (!user)
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
 
   const { productId } = await req.json();
+
   if (!productId)
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
-  const userId = session.user.id;
+  const userId = user.id;
 
   try {
-    // 1. get cart
+    // 1. Get cart with items
     const cart = await prisma.cart.findUnique({
       where: { userId },
+      include: {
+        items: true,
+      },
     });
 
     if (!cart)
       return NextResponse.json({ error: "Cart not found" }, { status: 404 });
 
-    // 2. find item
-    const itemIndex = cart.items.findIndex(
-      (i) => i.productId.toString() === productId.toString(),
-    );
-
-    if (itemIndex === -1)
-      return NextResponse.json({ error: "Item not in cart" }, { status: 404 });
-
-    // 3. decrement
-    const updatedItems = [...cart.items];
-    const item = updatedItems[itemIndex];
-
-    if (item.quantity <= 1) {
-      // remove item if quantity becomes 0
-      updatedItems.splice(itemIndex, 1);
-    } else {
-      updatedItems[itemIndex] = {
-        ...item,
-        quantity: item.quantity - 1,
-      };
-    }
-
-    // 4. update cart
-    await prisma.cart.update({
-      where: { userId },
-      data: { items: updatedItems },
+    // 2. Find the specific cart item
+    const cartItem = await prisma.cartItem.findFirst({
+      where: {
+        cartId: cart.id,
+        productId: productId,
+      },
     });
 
-    return NextResponse.json({ success: true });
+    if (!cartItem)
+      return NextResponse.json({ error: "Item not in cart" }, { status: 404 });
+
+    // 3. Decrement quantity or remove item
+    if (cartItem.quantity <= 1) {
+      // Remove item if quantity is 1 or less
+      await prisma.cartItem.delete({
+        where: { id: cartItem.id },
+      });
+    } else {
+      // Decrement quantity
+      await prisma.cartItem.update({
+        where: { id: cartItem.id },
+        data: { quantity: cartItem.quantity - 1 },
+      });
+    }
+
+    // 4. Fetch updated cart
+    const updatedCart = await prisma.cart.findUnique({
+      where: { userId },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+
+    return NextResponse.json({ success: true, cart: updatedCart });
   } catch (error) {
-    return NextResponse.json(
-      { error: error || "Server error" },
-      { status: 500 },
-    );
+    console.error("Error decrementing cart item:", error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

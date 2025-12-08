@@ -1,4 +1,4 @@
-import AccountDetails from "@/src/features/profile/AccountDetails";
+import AccountDetails from "@/src/features/profile/components/AccountDetails";
 import { prisma } from "@/src/lib/prisma";
 import { Breadcrumb, Col, Row } from "antd";
 import { Metadata } from "next";

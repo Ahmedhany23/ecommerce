@@ -1,15 +1,12 @@
 "use client";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ConfigProvider } from "antd";
-import React from "react";
 import {
-  useQuery,
-  useMutation,
-  useQueryClient,
   QueryClient,
-  QueryClientProvider,
+  QueryClientProvider
 } from "@tanstack/react-query";
+import { ConfigProvider } from "antd";
 import { SessionProvider } from "next-auth/react";
+import React from "react";
 
 const antdStyle = {
   contentBg: "#f5f5f5", // background

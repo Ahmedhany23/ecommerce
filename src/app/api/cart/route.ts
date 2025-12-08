@@ -1,7 +1,6 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { prisma } from "@/src/lib/prisma";
 import { getUserFromDatabase } from "@/src/lib/getUserFromDatabase";
+import { prisma } from "@/src/lib/prisma";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   const user = await getUserFromDatabase();
@@ -65,26 +64,59 @@ export async function POST(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const session = await getServerSession();
-  if (!session)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const user = await getUserFromDatabase();
+
+  if (!user) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  }
 
   const { productId } = await req.json();
 
   if (!productId)
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
-  const userId = session.user.id;
-
   try {
-    const cart = await prisma.cart.delete({
-      where: { userId, items: { some: { productId } } },
+    // Find the cart item directly
+    const cartItem = await prisma.cartItem.findFirst({
+      where: {
+        cart: {
+          userId: user.id,
+        },
+        productId: productId,
+      },
     });
-    return NextResponse.json({ success: true, cart });
+
+    if (!cartItem) {
+      return NextResponse.json(
+        { error: "Item not found in cart" },
+        { status: 404 },
+      );
+    }
+
+    // Delete the cart item
+    await prisma.cartItem.delete({
+      where: { id: cartItem.id },
+    });
+
+    // Return updated cart
+    const updatedCart = await prisma.cart.findFirst({
+      where: { userId: user.id },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "Item removed from cart",
+      cart: updatedCart,
+    });
   } catch (error) {
-    return NextResponse.json(
-      { error: error || "Server error" },
-      { status: 500 },
-    );
+    console.error("Error removing item from cart:", error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

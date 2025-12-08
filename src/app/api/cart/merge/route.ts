@@ -37,7 +37,6 @@ export async function POST(req: Request) {
         userId: user.id,
         items: items.map((item: Product) => ({
           productId: item.id,
-          quantity: item.quantity,
         })),
       },
     });
