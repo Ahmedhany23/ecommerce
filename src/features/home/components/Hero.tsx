@@ -1,5 +1,6 @@
 "use client";
 import { Product } from "@/generated/prisma/client";
+import { formatCurrency } from "@/src/lib/formatCurrency";
 import { ArrowRightOutlined as ArrowRight } from "@ant-design/icons";
 import { Carousel } from "antd";
 import Image from "next/image";
@@ -13,12 +14,7 @@ const Hero = ({ products }: { products: Product[] }) => {
 
   const shallowCopyProducts = structuredClone(products);
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(amount);
-  };
+
 
   if (products.length === 0) {
     return (
