@@ -131,15 +131,24 @@ export const Footer = () => {
                 </p>
 
                 <div className="mb-2 flex gap-2">
-                  <img src="/icons/qrcode.png" alt="Qr Code" />
+                  <Image
+                    width={100}
+                    height={100}
+                    src="/icons/qrcode.png"
+                    alt="Qr Code"
+                  />
 
                   <div className="space-y-3">
-                    <img
+                    <Image
+                      width={100}
+                      height={100}
                       src="/images/googleplay.png"
                       alt="Google Play"
                       className="cursor-pointer hover:opacity-75"
                     />
-                    <img
+                    <Image
+                      width={100}
+                      height={100}
                       src="/images/appstore.png"
                       alt="App Store"
                       className="cursor-pointer hover:opacity-75"
@@ -150,16 +159,16 @@ export const Footer = () => {
 
               <div className="flex items-center gap-6">
                 <Link href="#">
-                  <FacebookOutlined className="hover:text-accent-danger! text-white! transition duration-200 text-xl" />
+                  <FacebookOutlined className="hover:text-accent-danger! text-xl text-white! transition duration-200" />
                 </Link>
                 <Link href="#">
-                  <TwitterOutlined className="hover:text-accent-danger! text-white! transition duration-200 text-xl" />
+                  <TwitterOutlined className="hover:text-accent-danger! text-xl text-white! transition duration-200" />
                 </Link>
                 <Link href="#">
-                  <InstagramOutlined className="hover:text-accent-danger! text-white! transition duration-200 text-xl" />
+                  <InstagramOutlined className="hover:text-accent-danger! text-xl text-white! transition duration-200" />
                 </Link>
                 <Link href="#">
-                  <LinkedinOutlined className="hover:text-accent-danger! text-white! transition duration-200 text-xl" />
+                  <LinkedinOutlined className="hover:text-accent-danger! text-xl text-white! transition duration-200" />
                 </Link>
               </div>
             </div>

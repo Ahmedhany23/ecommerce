@@ -4,6 +4,12 @@ import { getServerSession } from "next-auth";
 import { prisma } from "@/src/lib/prisma";
 import { Product } from "@/generated/prisma/client";
 
+type CartItem = {
+  productId: string;
+  quantity?: number;
+  product: Product;
+};
+
 export async function POST(req: Request) {
   try {
     const session = await getServerSession();
@@ -32,12 +38,24 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Empty cart" }, { status: 200 });
     }
 
-    await prisma.cart.create({
-      data: {
+    await prisma.cart.upsert({
+      where: { userId: user.id },
+      update: {
+        items: {
+          create: items.map((item: CartItem) => ({
+            productId: item.productId,
+            quantity: 1,
+          })),
+        },
+      },
+      create: {
         userId: user.id,
-        items: items.map((item: Product) => ({
-          productId: item.id,
-        })),
+        items: {
+          create: items.map((item: CartItem) => ({
+            productId: item.productId,
+            quantity: 1,
+          })),
+        },
       },
     });
 

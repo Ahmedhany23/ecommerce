@@ -1,14 +1,13 @@
 "use client";
-import { type Session } from "next-auth";
 
+import { Col, Row } from "antd";
 import { Suspense, useState } from "react";
 import BillingDetailsForm, {
   BillingDetailsSkeleton,
 } from "./BillingDetailsForm";
-import { Col, Row } from "antd";
 import StripeCheckout, { IBillingDetails } from "./StripeCheckout";
 
-const Checkout = ({ user }: { user?: Session["user"] }) => {
+const Checkout = () => {
   const [billingDetails, setBillingDetails] = useState<IBillingDetails>(
     {} as IBillingDetails,
   );

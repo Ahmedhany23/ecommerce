@@ -1,5 +1,6 @@
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
 import { Col, Row } from "antd";
+import Image from "next/image";
 import Link from "next/link";
 
 const BrowseByCategory = () => {
@@ -78,12 +79,16 @@ export const CategoryCard = ({
   return (
     <Link href={`/products?categories=${title.toLocaleLowerCase()}`}>
       <div className="border-surface-alt group hover:bg-accent-danger transtion mx-auto flex h-[145px] w-[170px] flex-col items-center justify-center gap-4 rounded border py-[25px] duration-200 hover:border-none">
-        <img
+        <Image
+          width={56}
+          height={56}
           src={image}
           alt={title}
           className="mx-auto hidden h-14 w-14 group-hover:block"
         />
-        <img
+        <Image
+          width={56}
+          height={56}
           src={imageHover}
           alt={title}
           className="mx-auto block h-14 w-14 group-hover:hidden"

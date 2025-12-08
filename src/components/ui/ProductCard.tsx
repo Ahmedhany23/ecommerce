@@ -31,6 +31,7 @@ type ProductCardProps = {
   product: Product;
   redirectPath: string;
   cart: CartItem[];
+  whistlist: Product[];
   isLoadingCart?: boolean;
 };
 
@@ -38,6 +39,7 @@ export default function ProductCard({
   product,
   redirectPath,
   cart,
+  whistlist,
   isLoadingCart = false,
 }: ProductCardProps) {
   const { status } = useSession();
@@ -49,7 +51,7 @@ export default function ProductCard({
 
   const inCart = productInTheCart(product.id, cart);
 
-  const inWhishlist = productInTheWishlist(product.id);
+  const inWhishlist = productInTheWishlist(product.id, whistlist);
 
   const { mutationAddProductIntoCart, loadingAddProductIntoCart } =
     useAddProductIntoCart();

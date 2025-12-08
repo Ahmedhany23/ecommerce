@@ -7,6 +7,7 @@ import { useRef } from "react";
 import { Product } from "@/generated/prisma/browser";
 import { CarouselRef } from "antd/es/carousel";
 import { useGetCart } from "@/src/hooks/useGetCart";
+import { useWishlist } from "../../products/store/useProductsStore";
 
 const ProductsCarousel = ({ products }: { products: Product[] }) => {
   const carouselRef = useRef<CarouselRef>(null);
@@ -15,6 +16,7 @@ const ProductsCarousel = ({ products }: { products: Product[] }) => {
   const handlePrev = () => carouselRef.current?.prev();
 
   const { cart, isLoading } = useGetCart();
+  const whishlist = useWishlist();
 
   return (
     <>
@@ -67,6 +69,7 @@ const ProductsCarousel = ({ products }: { products: Product[] }) => {
               redirectPath={`/products/${product.id}`}
               cart={cart}
               isLoadingCart={isLoading}
+              whistlist={whishlist}
             />
           </div>
         ))}

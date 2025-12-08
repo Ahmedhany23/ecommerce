@@ -1,5 +1,3 @@
-import ContactForm from "@/src/features/contact/components/ContactForm";
-import ContactUs from "@/src/features/contact/components/ContactUs";
 import JustForYouProducts from "@/src/features/wishlist/components/JustForYouProducts";
 import WishlistProducts from "@/src/features/wishlist/components/WishlistProducts";
 import { prisma } from "@/src/lib/prisma";

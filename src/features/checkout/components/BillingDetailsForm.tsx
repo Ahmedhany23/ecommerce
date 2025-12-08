@@ -17,7 +17,7 @@ const BillingDetailsForm = ({
 }) => {
   const [form] = Form.useForm();
 
-  const [stored, setStored] = useState(() => {
+  const [stored] = useState(() => {
     if (typeof window !== "undefined") {
       const item = localStorage.getItem("billingDetails");
       return item ? JSON.parse(item) : null;
@@ -32,6 +32,7 @@ const BillingDetailsForm = ({
       else localStorage.removeItem("billingDetails");
     });
   };
+  
 
   useEffect(() => {
     if (stored) {

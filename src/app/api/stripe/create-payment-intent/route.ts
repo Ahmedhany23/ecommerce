@@ -1,6 +1,4 @@
-import { CartItem } from "@/src/features/products/store/useProductsStore";
 import { getUserFromDatabase } from "@/src/lib/getUserFromDatabase";
-import { prisma } from "@/src/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 

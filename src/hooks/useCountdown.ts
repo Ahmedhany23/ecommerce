@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
 
 export function useCountdown(targetDate: string | number | Date) {
   const calc = () => {
@@ -29,9 +29,11 @@ export function useCountdown(targetDate: string | number | Date) {
 
   const [timeLeft, setTimeLeft] = useState(calc);
 
+  const eventCalc = useEffectEvent(calc);
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft(calc());
+      setTimeLeft(eventCalc);
     }, 1000);
 
     return () => clearInterval(interval);

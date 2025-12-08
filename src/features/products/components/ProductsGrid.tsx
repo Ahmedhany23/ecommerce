@@ -3,9 +3,11 @@ import { Product } from "@/generated/prisma/browser";
 import ProductCard from "@/src/components/ui/ProductCard";
 import { useGetCart } from "@/src/hooks/useGetCart";
 import { Col, Row } from "antd";
+import { useWishlist } from "../store/useProductsStore";
 
 const ProductsGrid = ({ products }: { products: Product[] }) => {
   const { cart, isLoading } = useGetCart();
+  const whishlist = useWishlist();
 
   if (!products) return null;
 
@@ -18,6 +20,7 @@ const ProductsGrid = ({ products }: { products: Product[] }) => {
             redirectPath={`/products/${product.id}`}
             cart={cart}
             isLoadingCart={isLoading}
+            whistlist={whishlist}
           />
         </Col>
       ))}

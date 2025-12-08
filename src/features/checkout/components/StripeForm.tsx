@@ -21,7 +21,6 @@ const StripeForm = ({ amount, billingDetails }: StripeFormProps) => {
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [clientSecret, setClientSecret] = useState("");
-  const [paymentIntentId, setPaymentIntentId] = useState("");
   const [loading, setLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -48,9 +47,8 @@ const StripeForm = ({ amount, billingDetails }: StripeFormProps) => {
     if (amount > 0) {
       mutationCreatePaymentIntent({ amount })
         .then((data) => {
-          if (data.clientSecret && data.paymentIntentId) {
+          if (data.clientSecret) {
             setClientSecret(data.clientSecret);
-            setPaymentIntentId(data.paymentIntentId);
           } else {
             throw new Error("No client secret received");
           }
@@ -120,21 +118,25 @@ const StripeForm = ({ amount, billingDetails }: StripeFormProps) => {
         // Handle successful payment without redirect
         messageApi.success("Payment successful!");
 
-        const response = await mutationCheckoutCart({
+        await mutationCheckoutCart({
           amount,
           cartItems,
           billingDetails,
           paymentIntentId: result.paymentIntent.id, // important!
-        }).then(
-          (data) =>
-            (window.location.href = `/payment-success?amount=${amount}&&orderId=${data.orderId}`),
-        ).catch((error) => {
-          console.error("Error:", error);
-          messageApi.error(error.message || "Failed to checkout");
         })
+          .then(
+            (data) =>
+              (window.location.href = `/payment-success?amount=${amount}&&orderId=${data.orderId}`),
+          )
+          .catch((error) => {
+            console.error("Error:", error);
+            messageApi.error(error.message || "Failed to checkout");
+          });
       }
-    } catch (error) {
-      setErrorMessage("An unexpected error occurred");
+    } catch (error: unknown) {
+      setErrorMessage(
+        error instanceof Error ? error.message : "An unexpected error occurred",
+      );
       messageApi.error("An unexpected error occurred");
     } finally {
       setLoading(false);

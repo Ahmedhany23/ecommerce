@@ -31,7 +31,7 @@ type ProductsState = {
 
 const useProductsStore = create<ProductsState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       cart: [],
       wishlist: [],
 

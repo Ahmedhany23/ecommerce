@@ -19,6 +19,7 @@ import {
   increment,
   removeFromCart,
   toggleWishlistProduct,
+  useWishlist,
 } from "../store/useProductsStore";
 import { productInTheCart } from "../utils/productInTheCart";
 import { productInTheWishlist } from "../utils/productInTheWishlist";
@@ -30,6 +31,7 @@ interface ProductDetailsProps {
 export default function ProductDetails({ product }: ProductDetailsProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { cart, isLoading: isLoadingCart } = useGetCart();
+  const whistlist = useWishlist();
   const { status } = useSession();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -48,7 +50,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
   if (!product) return null;
 
   const inCart = productInTheCart(product.id, cart);
-  const inWhishlist = productInTheWishlist(product.id);
+  const inWhishlist = productInTheWishlist(product.id, whistlist);
 
   const currentItem = cart.find((item) => item.product.id === product.id);
 

@@ -1,3 +1,4 @@
+import { ProductWhereInput } from "@/generated/prisma/models";
 import { ProductFallbackLoader } from "@/src/features/home/components/loader/ProductFallbackLoader";
 import ProductMenuFilters from "@/src/features/products/components/ProductMenuFilters";
 import ProductsGrid from "@/src/features/products/components/ProductsGrid";
@@ -13,14 +14,13 @@ export const metadata: Metadata = {
   description: "Products page",
 };
 
+
+
 export default async function Products({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  // ----------------------------
-  // Extract search parameters
-  // ----------------------------
 
   const params = await searchParams;
 
@@ -34,7 +34,6 @@ export default async function Products({
   const max = maxParam ? Number(maxParam) : undefined;
 
   // Convert category param to an array
-  // /products?categories=phones,laptops
   const categories =
     typeof categoriesParam === "string"
       ? categoriesParam.split(",")
@@ -42,11 +41,7 @@ export default async function Products({
         ? categoriesParam
         : undefined;
 
-  // ----------------------------
-  // Prisma Filtering
-  // ----------------------------
-
-  const where: any = {};
+  const where: ProductWhereInput = {};
 
   // Filter by categories (array)
   if (categories && categories.length > 0) {
@@ -66,7 +61,7 @@ export default async function Products({
   // Filter by search
   if (searchParam) {
     where.name = {
-      contains: searchParam,
+      contains: searchParam as string,
       mode: "insensitive",
     };
   }

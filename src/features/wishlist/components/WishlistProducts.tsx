@@ -27,6 +27,7 @@ const WishlistProducts = () => {
                   redirectPath={`/products/${product.id}`}
                   cart={cart}
                   isLoadingCart={isLoading}
+                  whistlist={wishlist}
                 />
               </Col>
             ))}

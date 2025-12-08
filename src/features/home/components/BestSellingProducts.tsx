@@ -8,9 +8,11 @@ import { Suspense } from "react";
 import { ProductFallbackLoader } from "./loader/ProductFallbackLoader";
 import { Product } from "@/generated/prisma/browser";
 import { useGetCart } from "@/src/hooks/useGetCart";
+import { useWishlist } from "../../products/store/useProductsStore";
 
 const BestSellingProducts = ({ products }: { products: Product[] }) => {
   const { cart, isLoading } = useGetCart();
+  const whishlist = useWishlist();
 
   if (!products) return null;
 
@@ -40,6 +42,7 @@ const BestSellingProducts = ({ products }: { products: Product[] }) => {
                     redirectPath={`/products/${product.id}`}
                     cart={cart}
                     isLoadingCart={isLoading}
+                    whistlist={whishlist}
                   />
                 </Col>
               ))}

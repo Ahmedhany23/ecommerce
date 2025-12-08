@@ -1,10 +1,12 @@
+import Image from "next/image";
+
 const ContactUs = () => {
   return (
-    <article className="h-full w-full rounded bg-white p-8 shadow-xl font-poppins">
+    <article className="font-poppins h-full w-full rounded bg-white p-8 shadow-xl">
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-4">
-          <img src="/icons/phone.png" alt="phone" />
-          <p className="text-black text-base font-medium">Call to Us</p>
+          <Image width={100} height={100} src="/icons/phone.png" alt="phone" />
+          <p className="text-base font-medium text-black">Call to Us</p>
         </div>
         <div className="flex flex-col gap-4">
           <p className="text-sm font-normal">
@@ -16,8 +18,8 @@ const ContactUs = () => {
       <div className="my-8 border-b border-b-black"></div>
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-4">
-          <img src="/icons/mail.png" alt="mail" />
-          <p className="text-black text-base font-medium">Write To US</p>
+          <Image width={100} height={100} src="/icons/mail.png" alt="mail" />
+          <p className="text-base font-medium text-black">Write To US</p>
         </div>
         <div className="flex flex-col gap-4">
           <p className="text-sm font-normal">

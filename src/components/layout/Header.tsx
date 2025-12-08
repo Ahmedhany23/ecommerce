@@ -1,7 +1,6 @@
 "use client";
 import {
-  useCart,
-  useWishlist,
+  useWishlist
 } from "@/src/features/products/store/useProductsStore";
 import { useGetCart } from "@/src/hooks/useGetCart";
 import { cn } from "@/src/lib/utils";
@@ -37,7 +36,7 @@ export const Header = ({ user }: { user?: Session["user"] }) => {
     ];
 
     if (!user) {
-      links.push({ link: "Sign Up", path: "/signup" });
+      links.push({ link: "Login", path: "/login" });
     }
 
     return links;

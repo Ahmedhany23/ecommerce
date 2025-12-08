@@ -1,10 +1,10 @@
 "use client";
 import { formatCurrency } from "@/src/lib/formatCurrency";
 import { formatDate } from "@/src/lib/formatDate";
-import { Avatar, Button, Card, Divider, Empty, List, Skeleton } from "antd";
+import { Button, Card, Divider, Empty, List, Skeleton } from "antd";
+import Image from "next/image";
 import Link from "next/link";
 import useGetOrders from "../hooks/useGetOrders";
-import Image from "next/image";
 
 const Orders = () => {
   const { orders, isLoading } = useGetOrders();

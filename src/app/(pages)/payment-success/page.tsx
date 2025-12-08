@@ -11,7 +11,7 @@ export const metadata = {
 const PaymentSuccess = async ({
   searchParams,
 }: {
-  searchParams: { amount: string };
+  searchParams: Promise<{ amount?: string }>;
 }) => {
   const { amount } = await searchParams;
   const session = await getServerSession();

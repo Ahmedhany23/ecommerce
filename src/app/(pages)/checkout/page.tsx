@@ -35,7 +35,7 @@ export default async function CheckoutPage() {
         />
 
         <Suspense>
-          <Checkout user={session?.user} />
+          <Checkout />
         </Suspense>
       </section>
     </main>
