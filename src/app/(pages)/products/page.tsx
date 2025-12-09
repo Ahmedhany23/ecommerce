@@ -1,4 +1,4 @@
-import { ProductWhereInput } from "@/src/generated/prisma/models";
+import { ProductWhereInput } from "@/generated/prisma/models";
 import { ProductFallbackLoader } from "@/src/features/home/components/loader/ProductFallbackLoader";
 import ProductMenuFilters from "@/src/features/products/components/ProductMenuFilters";
 import ProductsGrid from "@/src/features/products/components/ProductsGrid";

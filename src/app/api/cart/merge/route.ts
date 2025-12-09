@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { getServerSession } from "next-auth";
 import { prisma } from "@/src/lib/prisma";
-import { Product } from "@/src/generated/prisma/client";
+import { Product } from "@/generated/prisma/client";
 
 type CartItem = {
   productId: string;

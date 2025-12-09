@@ -1,5 +1,5 @@
 "use client";
-import { Product } from "@/src/generated/prisma/browser";
+import { Product } from "@/generated/prisma/browser";
 import ProductCard from "@/src/components/ui/ProductCard";
 import { useGetCart } from "@/src/hooks/useGetCart";
 import { Col, Row } from "antd";

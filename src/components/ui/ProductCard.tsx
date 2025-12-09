@@ -18,7 +18,7 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 
-import { Product } from "@/src/generated/prisma/browser";
+import { Product } from "@/generated/prisma/browser";
 import { productInTheWishlist } from "@/src/features/products/utils/productInTheWishlist";
 import { useAddProductIntoCart } from "@/src/hooks/useAddProductIntoCart";
 import { message } from "antd";

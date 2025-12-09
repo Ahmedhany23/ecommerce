@@ -1,5 +1,5 @@
 "use client";
-import { Product } from "@/src/generated/prisma/browser";
+import { Product } from "@/generated/prisma/browser";
 import ProductCard from "@/src/components/ui/ProductCard";
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
 import { useGetCart } from "@/src/hooks/useGetCart";

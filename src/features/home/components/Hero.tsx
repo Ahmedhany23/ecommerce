@@ -1,5 +1,5 @@
 "use client";
-import { Product } from "@/src/generated/prisma/client";
+import { Product } from "@/generated/prisma/client";
 import { formatCurrency } from "@/src/lib/formatCurrency";
 import { ArrowRightOutlined as ArrowRight } from "@ant-design/icons";
 import { Carousel } from "antd";
