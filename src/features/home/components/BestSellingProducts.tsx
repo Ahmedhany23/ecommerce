@@ -6,7 +6,7 @@ import ProductCard from "@/src/components/ui/ProductCard";
 import { Button, Col, Row } from "antd";
 import { Suspense } from "react";
 import { ProductFallbackLoader } from "./loader/ProductFallbackLoader";
-import { Product } from "@/generated/prisma/browser";
+import { Product } from "@/src/generated/prisma/browser";
 import { useGetCart } from "@/src/hooks/useGetCart";
 import { useWishlist } from "../../products/store/useProductsStore";
 

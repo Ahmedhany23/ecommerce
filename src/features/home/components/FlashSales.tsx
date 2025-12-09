@@ -8,7 +8,7 @@ import { Suspense } from "react";
 import { CountdownSalesTimer } from "./CountdownSalesTimer";
 import ProductsCarousel from "./ProductsCarousel";
 import { ProductFallbackLoader } from "./loader/ProductFallbackLoader";
-import { Product } from "@/generated/prisma/browser";
+import { Product } from "@/src/generated/prisma/browser";
 
 const FlashSales = ({ products }: { products: Product[] }) => {
   if (!products) return null;

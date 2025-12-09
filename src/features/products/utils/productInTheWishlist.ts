@@ -1,4 +1,4 @@
-import { Product } from "@/generated/prisma/browser";
+import { Product } from "@/src/generated/prisma/browser";
 
 export const productInTheWishlist = (
   id: Product["id"],

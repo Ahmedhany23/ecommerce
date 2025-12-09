@@ -4,7 +4,7 @@ import { Button, Carousel } from "antd";
 import { ArrowRightOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import ProductCard from "@/src/components/ui/ProductCard";
 import { useRef } from "react";
-import { Product } from "@/generated/prisma/browser";
+import { Product } from "@/src/generated/prisma/browser";
 import { CarouselRef } from "antd/es/carousel";
 import { useGetCart } from "@/src/hooks/useGetCart";
 import { useWishlist } from "../../products/store/useProductsStore";

@@ -5,7 +5,7 @@ import { Button, Col, message, Row, Skeleton } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 
-import { Product } from "@/generated/prisma/browser";
+import { Product } from "@/src/generated/prisma/browser";
 import { useAddProductIntoCart } from "@/src/hooks/useAddProductIntoCart";
 import { useDecrementProduct } from "@/src/hooks/useDecrementProduct";
 import { useGetCart } from "@/src/hooks/useGetCart";

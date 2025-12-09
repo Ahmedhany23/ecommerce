@@ -1,5 +1,5 @@
 "use client";
-import { Product } from "@/generated/prisma/client";
+import { Product } from "@/src/generated/prisma/client";
 import { formatCurrency } from "@/src/lib/formatCurrency";
 import { ArrowRightOutlined as ArrowRight } from "@ant-design/icons";
 import { Carousel } from "antd";
@@ -13,8 +13,6 @@ const Hero = ({ products }: { products: Product[] }) => {
   if (!products) return null;
 
   const shallowCopyProducts = structuredClone(products);
-
-
 
   if (products.length === 0) {
     return (
@@ -63,7 +61,7 @@ const Hero = ({ products }: { products: Product[] }) => {
               {/* Pattern Overlay */}
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.1),transparent_50%)]" />
 
-              <div className="relative flex flex-col items-center justify-between p-6 h-[900px] lg:h-[550px] lg:flex-row lg:p-12">
+              <div className="relative flex h-[900px] flex-col items-center justify-between p-6 lg:h-[550px] lg:flex-row lg:p-12">
                 {/* Content */}
                 <div className="z-10 max-w-xl text-center lg:text-left">
                   {/* Category Badge */}
@@ -127,7 +125,7 @@ const Hero = ({ products }: { products: Product[] }) => {
                       href={`/products/${product.id}`}
                       tabIndex={isActive ? 0 : -1}
                       aria-hidden={!isActive}
-                      className="inline-flex items-center justify-center gap-3 rounded-full bg-accent-danger! px-8 py-4 text-lg font-semibold text-white! transition-all hover:scale-105"
+                      className="bg-accent-danger! inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 text-lg font-semibold text-white! transition-all hover:scale-105"
                     >
                       View Details
                       <ArrowRight />
