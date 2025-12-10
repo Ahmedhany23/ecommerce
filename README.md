@@ -5,7 +5,7 @@ Excluvio is a full-stack e-commerce application built with the Next.js App Route
 
 ## Key Features
 
--   **Modern Frontend:** Built with Next.js 14+ (App Router) and React 19.
+-   **Modern Frontend:** Built with Next.js 15+ (App Router) and React 19.
 -   **Complete E-commerce Flow:** Browse products, add items to a cart and wishlist, and complete purchases through a secure checkout.
 -   **User Authentication:** Secure sign-up, login, and session management using NextAuth.js.
 -   **Product Catalog & Filtering:**
