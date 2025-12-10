@@ -23,6 +23,7 @@ import {
 } from "../store/useProductsStore";
 import { productInTheCart } from "../utils/productInTheCart";
 import { productInTheWishlist } from "../utils/productInTheWishlist";
+import Link from "next/link";
 
 interface ProductDetailsProps {
   product: Product | null;
@@ -211,10 +212,11 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                   Add To Cart
                 </Button>
               )}
-
-              <Button type="primary" size="large">
-                Buy Now
-              </Button>
+              <Link href="/checkout">
+                <Button type="primary" size="large">
+                  Buy Now
+                </Button>
+              </Link>
 
               <Button
                 type={inWhishlist ? "primary" : "default"}
