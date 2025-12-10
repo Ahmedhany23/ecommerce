@@ -132,7 +132,7 @@ const CartTable = ({
 
   const handleQuantityChange = async (id: string, value: number) => {
     const product = cart.find((i) => i.productId === id);
-    console.log(product);
+
     if (!product) return;
 
     const oldQty = product.quantity ?? 1;
@@ -186,7 +186,7 @@ const CartTable = ({
             height={70}
             className="h-20 w-20 object-contain object-center"
           />
-          <Link href={`/product/${record.id}`}>
+          <Link href={`/products/${record.id}`}>
             <p className="font-poppins hover:text-accent-danger font-semibold text-black">
               {record.name}
             </p>

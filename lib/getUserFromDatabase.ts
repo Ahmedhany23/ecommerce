@@ -1,10 +1,10 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
+import { prisma } from "./prisma";
 
 export const getUserFromDatabase = async () => {
   const session = await getServerSession();
-  const prisma = new PrismaClient();
 
   if (!session) {
     console.log("No session found");

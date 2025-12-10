@@ -1,18 +1,21 @@
 "use client";
-import { Product } from "@prisma/client";
+
 import ProductCard from "@/components/ui/ProductCard";
 import { useGetCart } from "@/hooks/useGetCart";
 import { Col, Row } from "antd";
 import { useWishlist } from "../store/useProductsStore";
+import { useGetProducts } from "../hooks/useGetProducts";
+import { ProductFallbackLoader } from "@/features/home/components/loader/ProductFallbackLoader";
 
-const ProductsGrid = ({ products }: { products: Product[] }) => {
+const ProductsGrid = () => {
   const { cart, isLoading } = useGetCart();
   const whishlist = useWishlist();
+  const { products, isLoading: isLoadingProducts } = useGetProducts();
 
-  if (!products) return null;
+  if (isLoadingProducts) return <ProductFallbackLoader />;
 
   return (
-    <Row gutter={[16, 16]}>
+    <Row gutter={[16, 16]} justify="center" align="middle">
       {products.map((product) => (
         <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
           <ProductCard

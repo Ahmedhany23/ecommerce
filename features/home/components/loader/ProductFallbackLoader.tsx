@@ -1,9 +1,12 @@
 import { ProductCardSkeleton } from "@/components/ui/ProductCardSkeleton";
+import { Col, Row } from "antd";
 
 export const ProductFallbackLoader = () => (
-  <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+  <Row gutter={[16, 16]} justify="center" align="middle">
     {Array.from({ length: 4 }).map((_, i) => (
-      <ProductCardSkeleton key={i} />
+      <Col key={i} xs={24} sm={12} md={8} lg={6}>
+        <ProductCardSkeleton />
+      </Col>
     ))}
-  </div>
+  </Row>
 );

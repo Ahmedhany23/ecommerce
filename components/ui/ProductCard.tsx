@@ -18,7 +18,6 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 
-
 import { productInTheWishlist } from "@/features/products/utils/productInTheWishlist";
 import { useAddProductIntoCart } from "@/hooks/useAddProductIntoCart";
 import { message } from "antd";
@@ -107,7 +106,7 @@ export default function ProductCard({
     <>
       {contextHolder}
       <Card
-        className="mx-auto! w-full max-w-[270px] rounded-xl"
+        className="animate-in fade-in duration-500 mx-auto! w-full max-w-[270px] rounded-xl"
         cover={
           <div className="bg-surface-alt relative flex h-[250px] items-center justify-center overflow-hidden rounded-t-xl">
             <Link href={redirectPath}>

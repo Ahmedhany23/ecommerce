@@ -12,6 +12,7 @@ import NewArrival from "@/features/home/components/NewArrival";
 
 import { Metadata } from "next";
 import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
   title: "E-commerce App",
@@ -19,7 +20,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const prisma = new PrismaClient();
   const products = await prisma.product.findMany();
 
   return (

@@ -1,4 +1,5 @@
 import { getUserFromDatabase } from "@/lib/getUserFromDatabase";
+import { prisma } from "@/lib/prisma";
 import { PrismaClient } from "@prisma/client";
 
 import { NextResponse } from "next/server";
@@ -7,7 +8,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const user = await getUserFromDatabase();
-    const prisma = new PrismaClient();
 
   if (!user)
     return NextResponse.json({ error: "User not found" }, { status: 404 });

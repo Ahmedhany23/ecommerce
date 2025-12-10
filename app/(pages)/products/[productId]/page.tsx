@@ -3,7 +3,8 @@ import ProductDetails, {
   ProductDetailsSkeleton,
 } from "@/features/products/components/ProductDetails";
 import Relateditems from "@/features/products/components/Relateditems";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+
 
 import { Breadcrumb } from "antd";
 import { Metadata } from "next";
@@ -11,7 +12,6 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 
-const prisma = new PrismaClient();
 
 export async function generateMetadata({
   params,

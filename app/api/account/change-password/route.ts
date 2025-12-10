@@ -2,10 +2,10 @@ import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
-    const prisma = new PrismaClient();
     // 1) Get session (must be logged in)
     const session = await getServerSession();
 

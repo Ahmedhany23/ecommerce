@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { getServerSession } from "next-auth";
 import { PrismaClient, Product } from "@prisma/client";
-
+import { prisma } from "@/lib/prisma";
 
 type CartItem = {
   productId: string;
@@ -13,8 +13,6 @@ type CartItem = {
 export async function POST(req: Request) {
   try {
     const session = await getServerSession();
-
-      const prisma = new PrismaClient();
 
     if (!session?.user.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

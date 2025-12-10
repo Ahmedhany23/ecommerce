@@ -1,8 +1,7 @@
 import { getUserFromDatabase } from "@/lib/getUserFromDatabase";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
 
 export async function GET() {
   const user = await getUserFromDatabase();

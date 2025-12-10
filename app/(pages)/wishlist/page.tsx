@@ -1,5 +1,6 @@
 import JustForYouProducts from "@/features/wishlist/components/JustForYouProducts";
 import WishlistProducts from "@/features/wishlist/components/WishlistProducts";
+import { prisma } from "@/lib/prisma";
 import { PrismaClient } from "@prisma/client";
 
 import { Breadcrumb, Col, Row } from "antd";
@@ -11,7 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Wishlist() {
-  const prisma = new PrismaClient();
   const products = await prisma.product.findMany();
 
   return (

@@ -1,4 +1,5 @@
 import AccountDetails from "@/features/profile/components/AccountDetails";
+import { prisma } from "@/lib/prisma";
 import { PrismaClient } from "@prisma/client";
 
 import { Breadcrumb, Col, Row } from "antd";
@@ -14,7 +15,6 @@ export const metadata: Metadata = {
 
 export default async function Profile() {
   const session = await getServerSession();
-  const prisma = new PrismaClient();
 
   if (!session || !session.user?.email) {
     redirect("/login");
