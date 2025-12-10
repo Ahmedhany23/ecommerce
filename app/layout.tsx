@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   title: {
     absolute: "",
     default: "Welcome",
-    template: "%s | E-commerce App",
+    template: "%s | Excluvio",
   },
-  description: "E-commerce App with Next.js 16",
+  description: "Excluvio is an Ecommerce App",
 };
 
 export default async function RootLayout({
@@ -33,7 +33,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const session = await getServerSession();
 
   return (

@@ -5,7 +5,7 @@ const ContactUs = () => {
     <article className="font-poppins h-full w-full rounded bg-white p-8 shadow-xl">
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-4">
-          <Image width={100} height={100} src="/icons/phone.png" alt="phone" />
+          <Image width={32} height={32} src="/icons/phone.png" alt="phone" />
           <p className="text-base font-medium text-black">Call to Us</p>
         </div>
         <div className="flex flex-col gap-4">
@@ -18,7 +18,7 @@ const ContactUs = () => {
       <div className="my-8 border-b border-b-black"></div>
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-4">
-          <Image width={100} height={100} src="/icons/mail.png" alt="mail" />
+          <Image width={32} height={32} src="/icons/mail.png" alt="mail" />
           <p className="text-base font-medium text-black">Write To US</p>
         </div>
         <div className="flex flex-col gap-4">
