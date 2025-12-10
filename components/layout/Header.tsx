@@ -109,7 +109,7 @@ export const Header = ({ user }: { user?: Session["user"] }) => {
             <Col xs={8} md={12} lg={6}>
               <h1 className="font-poppins text-3xl font-bold">
                 <Link href="/" className="text-black!">
-                  Exclusive
+                  Excluvio
                 </Link>
               </h1>
             </Col>
