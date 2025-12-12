@@ -50,7 +50,7 @@ const StripeCheckout = ({
   return (
     <div className="w-full">
       <div className="flex flex-col gap-3">
-        <div className="flex h-[400px] flex-col gap-3 overflow-y-auto">
+        <div className="flex h-[100px] jutify-end flex-col gap-3 overflow-y-auto">
           {finalProduct?.map((item) => (
             <div key={item.id} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
