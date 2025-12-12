@@ -1,6 +1,5 @@
 import { getUserFromDatabase } from "@/lib/getUserFromDatabase";
 import { prisma } from "@/lib/prisma";
-import { PrismaClient } from "@prisma/client";
 
 import { NextResponse } from "next/server";
 

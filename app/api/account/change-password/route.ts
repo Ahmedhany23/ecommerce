@@ -1,8 +1,7 @@
-import bcrypt from "bcryptjs";
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { PrismaClient } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import bcrypt from "bcryptjs";
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {

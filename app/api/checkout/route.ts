@@ -1,7 +1,6 @@
 import { CartItem } from "@/features/products/store/useProductsStore";
 import { getUserFromDatabase } from "@/lib/getUserFromDatabase";
 import { prisma } from "@/lib/prisma";
-import { PrismaClient } from "@prisma/client";
 
 import { NextRequest, NextResponse } from "next/server";
 

@@ -10,9 +10,8 @@ import BrowseByCategory from "@/features/home/components/BrowseByCategory";
 import ExploreOurProducts from "@/features/home/components/ExploreOurProducts";
 import NewArrival from "@/features/home/components/NewArrival";
 
-import { Metadata } from "next";
-import { PrismaClient } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Excluvio",

@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
-import { getServerSession } from "next-auth";
-import { PrismaClient, Product } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { Product } from "@prisma/client";
+import { getServerSession } from "next-auth";
 
 type CartItem = {
   productId: string;
