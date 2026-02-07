@@ -1,40 +1,39 @@
 # Excluvio E-commerce Platform
 
-
 Excluvio is a full-stack e-commerce application built with the Next.js App Router. It features a complete shopping experience, including user authentication, product browsing and filtering, a shopping cart, wishlists, and a secure checkout process powered by Stripe. The backend is built with Next.js API Routes and interacts with a MongoDB database via Prisma.
 
 ## Key Features
 
--   **Modern Frontend:** Built with Next.js 15+ (App Router) and React 19.
--   **Complete E-commerce Flow:** Browse products, add items to a cart and wishlist, and complete purchases through a secure checkout.
--   **User Authentication:** Secure sign-up, login, and session management using NextAuth.js.
--   **Product Catalog & Filtering:**
-    -   Dynamic product listing, detail pages, and related item suggestions.
-    -   Advanced filtering by category and price range.
-    -   Full-text search functionality across the product catalog.
--   **Advanced Shopping Cart:**
-    -   Client-side cart management for guests using Zustand for a fast UX.
-    -   Automatic server-side cart synchronization for authenticated users.
-    -   Seamless merging of guest and user carts upon login.
--   **Secure Payments:** Integration with Stripe Elements for handling payments, including a custom-built checkout form that supports saved billing details.
--   **User Profile Management:**
-    -   Dedicated user dashboard to view account details.
-    *   Comprehensive order history tracking.
-    -   Securely change account passwords.
--   **Robust Backend:**
-    -   Backend logic and API endpoints are built using Next.js API Routes.
-    -   Utilizes MongoDB for data storage with Prisma as a type-safe ORM.
+- **Modern Frontend:** Built with Next.js 15+ (App Router) and React 19.
+- **Complete E-commerce Flow:** Browse products, add items to a cart and wishlist, and complete purchases through a secure checkout.
+- **User Authentication:** Secure sign-up, login, and session management using NextAuth.js.
+- **Product Catalog & Filtering:**
+  - Dynamic product listing, detail pages, and related item suggestions.
+  - Advanced filtering by category and price range.
+  - Full-text search functionality across the product catalog.
+- **Advanced Shopping Cart:**
+  - Client-side cart management for guests using Zustand for a fast UX.
+  - Automatic server-side cart synchronization for authenticated users.
+  - Seamless merging of guest and user carts upon login.
+- **Secure Payments:** Integration with Stripe Elements for handling payments, including a custom-built checkout form that supports saved billing details.
+- **User Profile Management:**
+  - Dedicated user dashboard to view account details.
+  * Comprehensive order history tracking.
+  - Securely change account passwords.
+- **Robust Backend:**
+  - Backend logic and API endpoints are built using Next.js API Routes.
+  - Utilizes MongoDB for data storage with Prisma as a type-safe ORM.
 
 ## Technology Stack
 
-| Frontend                                                                 | Backend                                                  |
-| ------------------------------------------------------------------------ | -------------------------------------------------------- |
-| [Next.js](https://nextjs.org/) (App Router)                              | [Node.js](https://nodejs.org/)                           |
-| [TypeScript](https://www.typescriptlang.org/)                            | Next.js API Routes                                       |
-| [Ant Design](https://ant.design/)                                        | [MongoDB](https://www.mongodb.com/)                      |
-| [Tailwind CSS](https://tailwindcss.com/)                                 | [Prisma](https://www.prisma.io/)                         |
-| [Zustand](https://zustand-demo.pmnd.rs/) (Client-side State)             | [NextAuth.js](https://next-auth.js.org/) (Authentication) |
-| [TanStack Query](https://tanstack.com/query/latest) (Server-side State)  | [Stripe](https://stripe.com/) (Payments)                 |
+| Frontend                                                                | Backend                                                   |
+| ----------------------------------------------------------------------- | --------------------------------------------------------- |
+| [Next.js](https://nextjs.org/) (App Router)                             | [Node.js](https://nodejs.org/)                            |
+| [TypeScript](https://www.typescriptlang.org/)                           | Next.js API Routes                                        |
+| [Ant Design](https://ant.design/)                                       | [MongoDB](https://www.mongodb.com/)                       |
+| [Tailwind CSS](https://tailwindcss.com/)                                | [Prisma](https://www.prisma.io/)                          |
+| [Zustand](https://zustand-demo.pmnd.rs/) (Client-side State)            | [NextAuth.js](https://next-auth.js.org/) (Authentication) |
+| [TanStack Query](https://tanstack.com/query/latest) (Server-side State) | [Stripe](https://stripe.com/) (Payments)                  |
 
 ## Getting Started
 
@@ -42,20 +41,22 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 ### Prerequisites
 
--   Node.js (v18 or later)
--   npm, yarn, or pnpm
--   A MongoDB database instance
--   A Stripe account for payment processing
+- Node.js (v18 or later)
+- npm, yarn, or pnpm
+- A MongoDB database instance
+- A Stripe account for payment processing
 
 ### Installation & Setup
 
 1.  **Clone the repository:**
+
     ```bash
     git clone https://github.com/ahmedhany23/excluvio.git
     cd excluvio
     ```
 
 2.  **Install dependencies:**
+
     ```bash
     npm install
     ```
@@ -79,11 +80,13 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 4.  **Generate the Prisma Client:**
     This command reads your `prisma/schema.prisma` file and generates the type-safe Prisma Client.
+
     ```bash
     npx prisma generate
     ```
 
 5.  **Run the development server:**
+
     ```bash
     npm run dev
     ```
@@ -94,7 +97,7 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 The project follows a feature-sliced architecture within the Next.js App Router paradigm, promoting scalability and maintainability.
 
-```
+````
 /
 ├── app/                  # Next.js App Router
 │   ├── (auth)/             # Authentication pages (login, signup)
@@ -109,3 +112,18 @@ The project follows a feature-sliced architecture within the Next.js App Router 
 ├── prisma/               # Prisma schema, migrations, and client
 ├── providers/            # Application-wide context providers (React Query, Auth)
 └── public/               # Static assets (images, icons)
+
+
+## Testing
+
+The project includes a basic testing setup to ensure core UI and authentication flows work as expected.
+
+### Tools
+- Jest
+- React Testing Library
+- @testing-library/user-event
+
+### Running Tests
+```bash
+npm run test
+````

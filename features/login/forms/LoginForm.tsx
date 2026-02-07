@@ -1,17 +1,33 @@
 "use client";
 
 import { Button, Form, Input, message } from "antd";
+
 import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { emptyCart, useCart } from "../../products/store/useProductsStore";
 
+type LoginValues = { email: string; password: string };
+
+const DEMO = {
+  email: "ahmedhany.22@hotmail.com",
+  password: "123456",
+} as const;
+
 const LoginForm = () => {
+  const [form] = Form.useForm<LoginValues>();
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
   const cart = useCart();
 
-  const handleLogin = async (values: { email: string; password: string }) => {
+  const handleFillDemo = () => {
+    form.setFieldsValue({
+      email: DEMO.email,
+      password: DEMO.password,
+    });
+  };
+
+  const handleLogin = async (values: LoginValues) => {
     try {
       const res = await signIn("credentials", {
         email: values.email.toLowerCase(),
@@ -24,34 +40,36 @@ const LoginForm = () => {
         return;
       }
 
-      if (res.ok) {
-        messageApi.success("Logged in successfully");
-
-        router.push("/");
-        router.refresh();
-
-        const newSession = await getSession();
-
-        if (newSession?.user) {
-          // Merge guest cart
-          const resMerge = await fetch("/api/cart/merge", {
-            method: "POST",
-            body: JSON.stringify({ items: cart }),
-          });
-
-          if (!resMerge.ok) {
-            messageApi.error("Error merging cart");
-            return;
-          } else {
-            emptyCart();
-          }
-        }
-      } else {
-        // Show proper message
-        if (res.error === "CredentialsSignin")
+      if (!res.ok) {
+        if (res.error === "CredentialsSignin") {
           messageApi.error("Invalid email or password");
-        else messageApi.error(res.error || "Login failed");
+          return;
+        }
+        messageApi.error(res.error || "Login failed");
+        return;
       }
+
+      messageApi.success("Logged in successfully");
+
+      const newSession = await getSession();
+
+      if (newSession?.user) {
+        const resMerge = await fetch("/api/cart/merge", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items: cart }),
+        });
+
+        if (!resMerge.ok) {
+          messageApi.error("Error merging cart");
+          return;
+        }
+
+        emptyCart();
+      }
+
+      router.push("/");
+      router.refresh();
     } catch (error) {
       console.error("LOGIN ERROR CATCH:", error);
       messageApi.error("Unexpected error");
@@ -61,12 +79,13 @@ const LoginForm = () => {
   return (
     <>
       {contextHolder}
-      <Form
+
+      <Form<LoginValues>
+        form={form}
         className="w-full space-y-10"
         layout="vertical"
         onFinish={handleLogin}
       >
-        {/* Header */}
         <div className="space-y-5">
           <h4 className="font-poppins text-4xl font-medium">
             Log in to Exclusive
@@ -74,7 +93,18 @@ const LoginForm = () => {
           <p className="font-poppins text-md">Enter your details below</p>
         </div>
 
-        {/* Email */}
+        <div className="rounded-2xl border p-4 text-sm">
+          <div className="font-semibold">Demo Account</div>
+          <div>Email: {DEMO.email}</div>
+          <div>Password: {DEMO.password}</div>
+
+          <div className="mt-3 flex gap-2">
+            <Button type="primary" onClick={handleFillDemo}>
+              Fill Demo Data
+            </Button>
+          </div>
+        </div>
+
         <Form.Item
           name="email"
           rules={[
@@ -85,7 +115,6 @@ const LoginForm = () => {
           <Input placeholder="Email" size="large" />
         </Form.Item>
 
-        {/* Password */}
         <Form.Item
           name="password"
           rules={[
@@ -96,14 +125,12 @@ const LoginForm = () => {
           <Input.Password placeholder="Password" size="large" />
         </Form.Item>
 
-        {/* Submit */}
         <Form.Item>
           <Button type="primary" htmlType="submit" size="large" block>
             Login
           </Button>
         </Form.Item>
 
-        {/* Footer */}
         <div className="space-y-5">
           <p className="font-poppins text-md">
             Don&apos;t have an account?{" "}
