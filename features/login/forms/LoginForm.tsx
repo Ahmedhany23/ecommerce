@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { emptyCart, useCart } from "../../products/store/useProductsStore";
 
-type LoginValues = { email: string; password: string };
+export type LoginValues = { email: string; password: string };
 
 const DEMO = {
   email: "ahmedhany.22@hotmail.com",

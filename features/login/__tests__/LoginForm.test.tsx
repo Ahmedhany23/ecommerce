@@ -69,6 +69,14 @@ jest.mock("antd", () => {
     return <div>{children}</div>;
   };
 
+  Form.useForm = () => [
+    {
+      setFieldsValue: jest.fn(),
+      getFieldsValue: jest.fn(),
+      resetFields: jest.fn(),
+    },
+  ];
+
   function Input(props: any) {
     return <input {...props} />;
   }
@@ -146,11 +154,11 @@ describe("LoginForm handleLogin", () => {
 
     expect(global.fetch).toHaveBeenCalledWith("/api/cart/merge", {
       method: "POST",
+       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items: [{ id: 1, quantity: 2 }] }),
     });
 
-    expect(emptyCart).toHaveBeenCalledTimes(1)
-
+    expect(emptyCart).toHaveBeenCalledTimes(1);
   });
 
   it("invalid credentials: shows error and does not navigate", async () => {

@@ -4,7 +4,7 @@ import { Button, Form, Input, message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-type FieldForm = {
+export type RegsiterFieldForm = {
   name: string;
   email: string;
   password: string;
@@ -15,7 +15,7 @@ const SignupForm = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
 
-  const handleSignup = async (values: FieldForm) => {
+  const handleSignup = async (values: RegsiterFieldForm) => {
     try {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
@@ -56,7 +56,7 @@ const SignupForm = () => {
         </div>
 
         {/* Name */}
-        <Form.Item<FieldForm>
+        <Form.Item<RegsiterFieldForm>
           name="name"
           rules={[{ required: true, message: "Please enter your name" }]}
         >
@@ -64,7 +64,7 @@ const SignupForm = () => {
         </Form.Item>
 
         {/* Email */}
-        <Form.Item<FieldForm>
+        <Form.Item<RegsiterFieldForm>
           name="email"
           rules={[
             { required: true, message: "Please enter your email" },
@@ -75,7 +75,7 @@ const SignupForm = () => {
         </Form.Item>
 
         {/* Password */}
-        <Form.Item<FieldForm>
+        <Form.Item<RegsiterFieldForm>
           name="password"
           rules={[
             { required: true, message: "Please enter your password" },
@@ -86,7 +86,7 @@ const SignupForm = () => {
         </Form.Item>
 
         {/* Confirm Password */}
-        <Form.Item<FieldForm>
+        <Form.Item<RegsiterFieldForm>
           name="confirmPassword"
           dependencies={["password"]}
           rules={[
