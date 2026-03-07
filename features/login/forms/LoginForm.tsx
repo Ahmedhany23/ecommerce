@@ -6,6 +6,7 @@ import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { emptyCart, useCart } from "../../products/store/useProductsStore";
+import { useState } from "react";
 
 export type LoginValues = { email: string; password: string };
 
@@ -19,6 +20,7 @@ const LoginForm = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
   const cart = useCart();
+  const [loading, setLoading] = useState(false);
 
   const handleFillDemo = () => {
     form.setFieldsValue({
@@ -28,6 +30,7 @@ const LoginForm = () => {
   };
 
   const handleLogin = async (values: LoginValues) => {
+    setLoading(true);
     try {
       const res = await signIn("credentials", {
         email: values.email.toLowerCase(),
@@ -73,6 +76,8 @@ const LoginForm = () => {
     } catch (error) {
       console.error("LOGIN ERROR CATCH:", error);
       messageApi.error("Unexpected error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -126,7 +131,14 @@ const LoginForm = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" size="large" block>
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="large"
+            block
+            loading={loading}
+            disabled={loading}
+          >
             Login
           </Button>
         </Form.Item>

@@ -3,6 +3,7 @@
 import { Button, Form, Input, message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export type RegsiterFieldForm = {
   name: string;
@@ -14,8 +15,10 @@ export type RegsiterFieldForm = {
 const SignupForm = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const handleSignup = async (values: RegsiterFieldForm) => {
+    setLoading(true);
     try {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
@@ -37,6 +40,8 @@ const SignupForm = () => {
       messageApi.error("Failed to sign up. Try again later.");
       console.error("Signup request failed:", error);
     }
+
+    setLoading(false);
   };
 
   return (
@@ -106,7 +111,14 @@ const SignupForm = () => {
 
         {/* Submit */}
         <Form.Item>
-          <Button type="primary" htmlType="submit" size="large" block>
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="large"
+            block
+            loading={loading}
+            disabled={loading}
+          >
             Sign Up
           </Button>
         </Form.Item>
