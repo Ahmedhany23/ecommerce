@@ -179,7 +179,7 @@ const CartTable = ({
       key: "product",
       render: (_, record) => (
         <div className="flex items-center gap-10">
-          <Image
+          <img
             src={record.image[0]?.img}
             alt={record.name}
             width={70}

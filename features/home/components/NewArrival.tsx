@@ -21,11 +21,10 @@ const NewArrival = () => {
           {/* Left PS5 Card */}
           <Col xs={24} xl={12}>
             <div className="relative mx-auto h-[400px] w-full max-w-[570px] rounded bg-black px-[30px] pt-[89px] sm:h-[600px]">
-              <Image
+              <img
                 src="/images/ps5.png"
                 alt="ps5"
-                fill
-                className="right-0 bottom-0 left-0 object-contain object-center"
+                className="absolute inset-0 right-0 bottom-0 left-0 size-full object-contain object-center"
               />
               <div className="relative z-10 flex h-full max-w-[255px] flex-col justify-end gap-4 pb-6 pl-6">
                 <h4 className="font-inter text-2xl font-semibold whitespace-nowrap text-white">
@@ -65,7 +64,7 @@ const NewArrival = () => {
                     </Link>
                   </div>
 
-                  <Image
+                  <img
                     src="/images/woman.png"
                     alt="woman"
                     width={570}
@@ -78,7 +77,7 @@ const NewArrival = () => {
               {/* Speakers + Perfume */}
               <Col xs={24} sm={12}>
                 <div className="relative mx-auto flex h-[284px] w-full max-w-[270px] items-center justify-center bg-black py-[30px] pr-[55px] pl-6">
-                  <Image
+                  <img
                     src="/images/speakers.png"
                     alt="speakers"
                     width={200}
@@ -105,7 +104,7 @@ const NewArrival = () => {
 
               <Col xs={24} sm={12}>
                 <div className="relative mx-auto flex h-[284px] w-full max-w-[270px] items-center justify-center bg-black py-[30px] pr-[55px] pl-6">
-                  <Image
+                  <img
                     src="/images/perfume.png"
                     alt="perfume"
                     width={200}

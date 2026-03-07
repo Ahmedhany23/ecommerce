@@ -25,7 +25,7 @@ const AdvertisementBanner = () => {
           </div>
         </div>
         <div className="relative flex h-full w-full max-w-[600px] items-center">
-          <Image
+          <img
             src="/images/jbl-speaker.png"
             alt="Jbl Speaker"
             width={600}

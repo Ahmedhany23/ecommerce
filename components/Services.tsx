@@ -39,7 +39,7 @@ const Services = () => {
               {/* Icon */}
               <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#2F2E30]/30 transition duration-200">
                 <div className="flex h-[58px] w-[58px] items-center justify-center rounded-full bg-black transition duration-200">
-                  <Image
+                  <img
                     width={42}
                     height={42}
                     src={service.imgLink}

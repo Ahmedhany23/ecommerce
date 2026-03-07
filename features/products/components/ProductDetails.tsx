@@ -130,22 +130,20 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                     key={i}
                     className="bg-surface-alt group relative flex h-[130px] w-full cursor-pointer items-center justify-center"
                   >
-                    <Image
+                    <img
                       onClick={() => setCurrentImageIndex(i)}
                       src={image.img}
                       alt="product"
-                      fill
-                      className="object-contain object-center transition duration-200 group-hover:scale-105"
+                      className="absolute inset-0 size-full object-contain object-center transition duration-200 group-hover:scale-105"
                     />
                   </div>
                 ))}
               </div>
               <div className="bg-surface-alt relative flex h-[600px] w-full max-w-[500px] items-center justify-center px-[27px]">
-                <Image
+                <img
                   src={product.image[currentImageIndex]?.img}
                   alt="product"
-                  fill
-                  className="object-contain object-center"
+                  className="absolute inset-0 size-full object-contain object-center"
                 />
               </div>
             </div>
@@ -230,7 +228,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
             <div className="mx-auto w-full max-w-[400px] justify-center rounded border border-black/20 lg:mx-0">
               <div className="flex items-center gap-4 py-6 pl-4">
-                <Image
+                <img
                   width={30}
                   height={30}
                   src="/icons/delivery_black.png"
@@ -247,7 +245,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
               <div className="w-full border border-black/20"></div>
 
               <div className="flex items-center gap-4 py-6 pl-4">
-                <Image
+                <img
                   width={30}
                   height={30}
                   src="/icons/return.png"

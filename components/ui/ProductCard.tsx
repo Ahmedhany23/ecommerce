@@ -106,19 +106,19 @@ export default function ProductCard({
     <>
       {contextHolder}
       <Card
-        className="animate-in fade-in duration-500 mx-auto! w-full max-w-[270px] rounded-xl"
+        className="animate-in fade-in mx-auto! w-full max-w-[270px] rounded-xl duration-500"
         cover={
           <div className="bg-surface-alt relative flex h-[250px] items-center justify-center overflow-hidden rounded-t-xl">
             <Link href={redirectPath}>
-              <Image
+              <img
                 src={
                   Array.isArray(product.image) && product.image[0]?.img
                     ? product.image[0].img
                     : "https://placehold.co/600x400"
                 }
                 alt={product.name}
-                fill
-                className="mx-auto max-w-[230px]! object-contain transition duration-300 ease-in-out hover:scale-110"
+                
+                className="mx-auto absolute w-full h-full max-w-[230px]! object-contain transition duration-300 ease-in-out hover:scale-110"
               />
             </Link>
 

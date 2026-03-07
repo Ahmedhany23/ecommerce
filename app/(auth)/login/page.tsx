@@ -24,7 +24,7 @@ const LoginPage = async () => {
           <Row gutter={[50, 50]} justify="center" align="middle">
             <Col xs={24} lg={12}>
               <div className="h-full w-full">
-                <Image
+                <img
                   src="/images/signup.webp"
                   alt="signup"
                   width={800}

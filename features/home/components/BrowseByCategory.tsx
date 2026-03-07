@@ -79,14 +79,14 @@ export const CategoryCard = ({
   return (
     <Link href={`/products?categories=${title.toLocaleLowerCase()}`}>
       <div className="border-surface-alt group hover:bg-accent-danger transtion mx-auto flex h-[145px] w-[170px] flex-col items-center justify-center gap-4 rounded border py-[25px] duration-200 hover:border-none">
-        <Image
+        <img
           width={56}
           height={56}
           src={image}
           alt={title}
           className="mx-auto hidden h-14 w-14 group-hover:block"
         />
-        <Image
+        <img
           width={56}
           height={56}
           src={imageHover}

@@ -50,7 +50,7 @@ const Orders = () => {
                     <List.Item>
                       <List.Item.Meta
                         avatar={
-                          <Image
+                          <img
                             src={item.product?.image?.[0]?.img}
                             alt={item.product?.name}
                             width={50}

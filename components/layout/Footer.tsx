@@ -29,7 +29,7 @@ export const Footer = () => {
                   className="bg-background-2 border-text-1 focus:ring-secondary-2 w-full rounded border-[1.5px] py-3 pl-4 focus:ring-2 focus:outline-none"
                 />
                 <button className="absolute top-0 right-0 h-full rounded-r-lg pr-4 pl-10 transition duration-300">
-                  <Image
+                  <img
                     width={20}
                     height={20}
                     src="/icons/send.png"
@@ -131,7 +131,7 @@ export const Footer = () => {
                 </p>
 
                 <div className="mb-2 flex gap-2">
-                  <Image
+                  <img
                     width={100}
                     height={100}
                     src="/icons/qrcode.png"
@@ -139,14 +139,14 @@ export const Footer = () => {
                   />
 
                   <div className="space-y-3">
-                    <Image
+                    <img
                       width={100}
                       height={100}
                       src="/images/googleplay.png"
                       alt="Google Play"
                       className="cursor-pointer hover:opacity-75"
                     />
-                    <Image
+                    <img
                       width={100}
                       height={100}
                       src="/images/appstore.png"

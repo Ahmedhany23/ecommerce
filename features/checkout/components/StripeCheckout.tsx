@@ -50,11 +50,11 @@ const StripeCheckout = ({
   return (
     <div className="w-full">
       <div className="flex flex-col gap-3">
-        <div className="flex h-[100px] jutify-end flex-col gap-3 overflow-y-auto">
+        <div className="jutify-end flex h-[100px] flex-col gap-3 overflow-y-auto">
           {finalProduct?.map((item) => (
             <div key={item.id} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Image
+                <img
                   src={item.image[0]?.img}
                   alt={item.name}
                   width={50}

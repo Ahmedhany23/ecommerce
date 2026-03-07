@@ -57,11 +57,11 @@ const AboutCarousel = () => {
         <div key={index} className="h-[564px] rounded-md">
           <div className="mx-auto flex w-full flex-col items-start justify-center md:w-[370px]">
             <div className="bg-surface-alt relative h-[340px] w-full">
-              <Image
+              <img
                 src={`/images/image${index + 1}.webp`}
                 alt={item.name}
-                fill
-                className="object-contain object-center"
+                
+                className="object-contain inset-0 absolute size-full object-center"
               />
             </div>
             <div className="mt-8 text-center xl:text-left">

@@ -158,12 +158,11 @@ const Hero = ({ products }: { products: Product[] }) => {
                 <div className="relative z-10 mt-8 lg:mt-0 lg:ml-8">
                   {firstImage ? (
                     <div className="relative h-64 w-64 lg:h-96 lg:w-96">
-                      <Image
+                      <img
                         src={firstImage}
                         alt={product.name}
-                        fill
-                        className="object-contain transition-transform duration-500 hover:scale-105"
-                        priority={index === 0}
+                        className="absolute inset-0 size-full object-contain transition-transform duration-500 hover:scale-105"
+                        fetchPriority="high"
                       />
 
                       {/* Floating Elements */}

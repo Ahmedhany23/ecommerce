@@ -48,7 +48,7 @@ export default function About() {
             </div>
           </Col>
           <Col xs={24} lg={14}>
-            <Image
+            <img
               src="/images/about.webp"
               alt="Two african Females"
               width={837}
